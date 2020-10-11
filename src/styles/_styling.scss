@@ -1,0 +1,40 @@
+.newJob__button {
+    border: none;
+    transform: skew(-17deg, 0deg) rotate(0deg) translate(5px, 1px);
+    cursor: pointer;
+    border-radius: 0.3em;
+    transition:ease all .3s;
+    padding:.3em .6em;
+}
+
+.newJob__controls {
+    display:flex;
+    height:3em;
+}
+
+.newJob__control {
+    border: none;
+    cursor: pointer;
+    border-radius: 0.3em;
+    transition: ease all .3s;
+    padding:.6em 1em;
+    background-color: #efefef;
+    color: #333;
+    margin:.3em;
+    width: 5em;
+}
+.newJob__control:hover {
+    background-color:#333;
+    color:#fff;
+}
+
+
+.newJob__button:hover {
+    background-color:#333;
+    color:#fff;
+}
+
+.newJob__jobInfo {
+    font-style:italic;
+    color:#333;
+}

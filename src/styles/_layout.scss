@@ -1,0 +1,154 @@
+
+.App {
+    padding:2em 15%;
+}
+
+.header {
+    display: flex;
+    justify-self: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    .logo__header {
+        font-family:Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
+        font-weight: 500;
+        font-size:2em;
+        padding: .5em 0;
+    }
+}
+
+.dashboard {
+    margin-top:1em;
+    .jobs {
+        display:flex;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.newjob {
+    display:flex;
+    flex: 1 0 60%;
+}
+
+.newjob__label {
+  width:100%;
+}
+
+.newjob__clientselect {
+    border-radius: .3em;
+    border: none;
+    background-color: #efefef;
+    margin-right: .2em;
+    padding: 0em 1em 0em 1em;
+    height: 2.5em;
+    cursor: pointer;
+}
+
+.newjob__input {
+    border-radius: .3em;
+    border:none;
+    background-color: #efefef;
+    margin-right: .2em;
+    padding:0em 0em 0em 1em;
+    height: 2.5em;
+}
+
+.newJob__jobInfo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.newJob__timer {
+    height: 2.6em;
+    display: flex;
+    align-items: center;
+    margin-right: 1em;
+}
+
+.newJob__pauses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newJob__resumes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.existingjobs {
+    display:flex;
+    flex:1 0 30%;
+    flex-direction: column;
+}
+
+.existingjobs h3 {
+    padding: .6em 0em;
+}
+
+.existingjobs ul {
+    width:100%;
+    transition:ease all 1s;
+    margin-left:.5em;
+    cursor: pointer;
+}
+
+.existingjobs__jobitem {
+    display: flex;
+    flex-direction: column;
+    background-color: #efefef;
+    padding: .5em;
+    border-radius: .5em;
+    margin:1em 0;
+    transition:ease all 1s;
+}
+
+.existingjobs__jobitem span {
+    padding:0 .6em;
+}
+
+.jobitem__pauses {
+    display: flex;
+    // flex-direction: column;
+    flex: 1 0 40%;
+}
+
+.jobitem__breaks {
+    display: flex;
+    flex-direction: row;
+}
+
+.newJob__timer span {
+    padding: 0 .5em 0 0;
+}
+
+.client__label {
+    display:flex;
+}
+
+.client__input {
+    border-radius: .3em 0 0 .3em;
+    border:none;
+    background-color: #efefef;
+    margin-right: .2em;
+    padding:0em 0em 0em 1em;
+}
+.client__add {
+    display:flex;
+    align-items: center;
+    padding:.5em 1em;
+    background-color: #efefef;
+    color:#555;
+    transition: ease all 1s;
+    cursor: pointer;
+    border-radius:0 .3em .3em 0;
+}
+
+.client__add:hover {
+    background-color:#333;
+    color:#efefef;
+}

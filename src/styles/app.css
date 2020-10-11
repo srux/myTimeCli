@@ -1,0 +1,372 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* Remove default padding */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Remove list styles on ul, ol elements with a class attribute */
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Natural flow and rhythm in articles by default */
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style-type: none;
+  /* Remove bullets */
+  padding: 0;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margins */
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    -webkit-animation-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+            animation-iteration-count: 1 !important;
+    -webkit-transition-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.App {
+  padding: 2em 15%;
+}
+
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-self: auto;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.header .logo__header {
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
+  font-weight: 500;
+  font-size: 2em;
+  padding: .5em 0;
+}
+
+.dashboard {
+  margin-top: 1em;
+}
+
+.dashboard .jobs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.newjob {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 60%;
+          flex: 1 0 60%;
+}
+
+.newjob__label {
+  width: 100%;
+}
+
+.newjob__clientselect {
+  border-radius: .3em;
+  border: none;
+  background-color: #efefef;
+  margin-right: .2em;
+  padding: 0em 1em 0em 1em;
+  height: 2.5em;
+  cursor: pointer;
+}
+
+.newjob__input {
+  border-radius: .3em;
+  border: none;
+  background-color: #efefef;
+  margin-right: .2em;
+  padding: 0em 0em 0em 1em;
+  height: 2.5em;
+}
+
+.newJob__jobInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.newJob__timer {
+  height: 2.6em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 1em;
+}
+
+.newJob__pauses {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.newJob__resumes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.existingjobs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 30%;
+          flex: 1 0 30%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.existingjobs h3 {
+  padding: .6em 0em;
+}
+
+.existingjobs ul {
+  width: 100%;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+  margin-left: .5em;
+  cursor: pointer;
+}
+
+.existingjobs__jobitem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #efefef;
+  padding: .5em;
+  border-radius: .5em;
+  margin: 1em 0;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+}
+
+.existingjobs__jobitem span {
+  padding: 0 .6em;
+}
+
+.jobitem__pauses {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 40%;
+          flex: 1 0 40%;
+}
+
+.jobitem__breaks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.newJob__timer span {
+  padding: 0 .5em 0 0;
+}
+
+.client__label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.client__input {
+  border-radius: .3em 0 0 .3em;
+  border: none;
+  background-color: #efefef;
+  margin-right: .2em;
+  padding: 0em 0em 0em 1em;
+}
+
+.client__add {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: .5em 1em;
+  background-color: #efefef;
+  color: #555;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+  cursor: pointer;
+  border-radius: 0 .3em .3em 0;
+}
+
+.client__add:hover {
+  background-color: #333;
+  color: #efefef;
+}
+
+.newJob__button {
+  border: none;
+  -webkit-transform: skew(-17deg, 0deg) rotate(0deg) translate(5px, 1px);
+          transform: skew(-17deg, 0deg) rotate(0deg) translate(5px, 1px);
+  cursor: pointer;
+  border-radius: 0.3em;
+  -webkit-transition: ease all .3s;
+  transition: ease all .3s;
+  padding: .3em .6em;
+}
+
+.newJob__controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 3em;
+}
+
+.newJob__control {
+  border: none;
+  cursor: pointer;
+  border-radius: 0.3em;
+  -webkit-transition: ease all .3s;
+  transition: ease all .3s;
+  padding: .6em 1em;
+  background-color: #efefef;
+  color: #333;
+  margin: .3em;
+  width: 5em;
+}
+
+.newJob__control:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.newJob__button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.newJob__jobInfo {
+  font-style: italic;
+  color: #333;
+}
+/*# sourceMappingURL=app.css.map */
