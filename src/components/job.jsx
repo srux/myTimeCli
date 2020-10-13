@@ -42,25 +42,34 @@ class Job extends Component {
     
 
     render() {
-        let {toggle} = this.state
-        let {client,task,startTime,pauses,resumes,logTime} = this.props
-        return (
-            <li className="existingjobs__jobitem" onClick={this.handleToggle}>{client}
-              <span style={toggle}>
-                <span>Task: {task}</span>
-                
-                <span className="jobitem__breaks">
-                    Breaks:
-                    <span className="jobitem__pauses">
-                        {pauses} <span/> {resumes}
-                    </span>
+          let {toggle} = this.state
+          let {client,task,startTime,logTime,timerTime} = this.props;
+          // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+          let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+          let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+          let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
 
-                </span>
-                <span>Start Time: {startTime}</span>
-                <span>Log Time: {logTime}</span>
-                <span>Time: {logTime}</span>
-                </span>
-            </li>
+        return (
+            <div className="existingjobs__jobitem" onClick={this.handleToggle}>{client}
+              <div style={toggle}>
+                <div>Task: {task}</div>
+                
+                <div className="jobitem__breaks">
+
+                    Breaks:
+                    <div  className="jobitem__pauses">
+                        {this.props.pauses.map((pause,i) => <div key={i}>{pause} to </div>)}
+                    </div>
+                    <div  className="jobitem__resumes">
+                        {this.props.resumes.map((resume,i) => <div key={i}>{resume}</div>)}
+                    </div>
+                </div>
+                <div>Start Time: {startTime}</div>
+                <div>Log Time: {logTime}</div>
+                <div>Total Time:
+                { (hours === '00') ? null : {hours}+' Hrs'  }{ (minutes === '00') ? null : {minutes}+' Mins'  } {seconds} Secs</div>
+                </div>
+            </div>
         )
     }
 }

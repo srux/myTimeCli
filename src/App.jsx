@@ -28,6 +28,9 @@ class App extends Component {
   constructor(props) {
     super(props)
       this.state = {
+        timerOn: false,
+        timerStart: 0,
+        timerTime: 0,
         styling:{
           logStatus:styles.close,
           timeStatus:styles.close,
@@ -44,7 +47,8 @@ class App extends Component {
           pauseTime:'',
           timer:'',
           pauses:[],
-          resumes:[]
+          resumes:[],
+          tasks:[],
         },
         clientInfo:{
           name:'',
@@ -54,6 +58,187 @@ class App extends Component {
         jobs:[]
       } 
   }
+
+  startTimer = () => {
+    this.setState({
+      timerOn: true,
+      timerTime: this.state.timerTime,
+      timerStart: Date.now() - this.state.timerTime
+    });
+    this.timer = setInterval(() => {
+      this.setState({
+        timerTime: Date.now() - this.state.timerStart
+      });
+    }, 10);
+
+    let newStart = new Date().toLocaleTimeString();
+    let id = Date.now();
+
+      this.setState ({
+        data: {
+          ...this.state.data,
+          startTime:newStart,
+          id
+        },
+        styling: {
+          ...this.state.styling,
+          logStatus:styles.open,
+          timeStatus:styles.open,
+          inputStatus:styles.close
+        },
+
+      });
+  };
+
+  stopTimer = () => {
+    this.setState({ timerOn: false });
+    clearInterval(this.timer);
+
+    let newLog = new Date().toLocaleTimeString();
+    let addtask = this.state.data
+    let addJob = this.state.jobs.concat(addtask);
+    
+    let currentClient = this.state.clientInfo.name
+    
+      
+
+    this.setState(prevState => ({
+      [currentClient]: {                   // object that we want to update
+          ...prevState.currentClient,    // keep all other key-value pairs
+          tasks: 'something'       // update the value of specific key
+      }
+  }))
+
+    // this.setState(prevState => ({
+    //   clients: {
+    //     ...prevState.clients,           // copy all other key-value pairs of food object
+    //     [currentClient]: {                     // specific object of food object
+    //       ...prevState.clients.tasks,   // copy all pizza key-value pairs
+    //       tasks: [addtask]          // update value of specific key
+    //     }
+    //   }
+    //  }))
+
+    this.setState ({
+      timerStart: 0,
+      timerTime: 0,
+      data: {
+        logTime:newLog,
+        ...this.state.data,
+      
+      },
+      slash:'',
+      jobs:addJob,
+
+      styling: {
+        ...this.state.styling,
+        inputStatus:styles.open,
+        logStatus:styles.close,
+        timeStatus:styles.close,
+        pauseStatus:styles.playing
+      },
+    });
+    setTimeout(()=> {
+      this.setState ({
+        data: {
+          pauseTime:'',
+          resumeTime:'',
+          client:'',
+          task:'',
+          startTime:'',
+          logTime:'',
+          id:0,
+          pauseTime:'',
+          timer:'',
+          pauses:[],
+          resumes:[],
+          tasks:[],
+        }
+    })
+    }, 300)
+  };
+
+  pauseTimer = () => {
+    this.setState({ timerOn: false });
+    clearInterval(this.timer);
+    let newPause = new Date().toLocaleTimeString();
+    let addPause = this.state.data.pauses.concat(newPause);
+    
+    this.setState ({
+      data: {
+        ...this.state.data,
+        pauseTime:newPause,
+        pauses:addPause,
+      },
+      styling: {
+        ...this.state.styling,
+        pauseStatus:styles.paused
+      },
+    })
+
+  };
+
+  resumeTimer = () => {
+
+    this.setState({ timerOn: true });
+    clearInterval(this.timer);
+    
+    this.setState({
+      timerOn: true,
+      timerTime: this.state.timerTime,
+      timerStart: Date.now() - this.state.timerTime
+    });
+    this.timer = setInterval(() => {
+      this.setState({
+        timerTime: Date.now() - this.state.timerStart
+      });
+    }, 10);
+
+
+    let newResume = new Date().toLocaleTimeString();
+    let addResume = this.state.data.resumes.concat(newResume)
+    this.setState ({
+      timerOn: true,
+      data: {
+        ...this.state.data,
+        resumeTime:newResume,
+        resumes:addResume
+      },
+      styling: {
+        ...this.state.styling,
+        pauseStatus:styles.playing
+      },
+    })
+
+  };
+
+  resetTimer = () => {
+
+    let newLog = new Date().toLocaleTimeString();
+    let addtask = this.state.data
+    let addJob = this.state.jobs.concat(addtask);
+
+    this.setState ({
+      timerStart: 0,
+      timerTime: 0,
+      data: {
+        logTime:newLog,
+        ...this.state.data,
+      
+      },
+      slash:'',
+      jobs:addJob,
+
+      styling: {
+        ...this.state.styling,
+        inputStatus:styles.open,
+        logStatus:styles.close,
+        timeStatus:styles.close,
+        pauseStatus:styles.playing
+      },
+    })
+
+  };
 
   addJob = (data) => {
       let task = { id:Date.now(),
@@ -91,7 +276,7 @@ class App extends Component {
     let id = Date.now()
     let addClientName = this.state.clientInfo
     let addClient = this.state.clients.concat(addClientName)
-
+    
     this.setState({
         clients:addClient,
         id:id
@@ -115,12 +300,13 @@ class App extends Component {
     e.preventDefault();
     
     let newLog = new Date().toLocaleTimeString();
-
-    this.setState ({
+    let timerTime = this.state.timerTime
+    this.setState ({ 
       data: {
         ...this.state.data,
-        logTime:newLog
-      }
+        logTime:newLog,
+        timerTime
+      },
     })
   } 
 
@@ -137,10 +323,16 @@ class App extends Component {
 
 
   render() {  
-    let {data,clientInput,clientInfo,clients} = this.state
+  
+    let {data,clientInput,clientInfo,clients,timerTime} = this.state
     let {pauseTime,task,client,startTime,logTime,resumeTime} = this.state.data
     let {timeStatus,logStatus,pauseStatus,inputStatus,addStatus} = this.state.styling
     let findClient = clients.find(client => client.name === clientInfo.name);
+
+        // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+        let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+        let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+        let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
     
     return (
       <div className="App">
@@ -157,105 +349,7 @@ class App extends Component {
             
             <form className="jobs" action="">
               <div className="newjob">
-              <Timer initialTime={0} startImmediately={false}
-                
-                onStart={() => {    
-                  let newStart = new Date().toLocaleTimeString();
-                  let id = Date.now()
-                    this.setState ({
-                      data: {
-                        ...this.state.data,
-                        startTime:newStart,
-                        id
-                      },
-                      styling: {
-                        ...this.state.styling,
-                        logStatus:styles.open,
-                        timeStatus:styles.open,
-                        inputStatus:styles.close
-                      },
-
-                    });
-                  }}
-
-                  onPause={() => {
-                    let newPause = new Date().toLocaleTimeString();
-                    let addPause = this.state.data.pauses.concat(newPause);
-                    
-                    this.setState ({
-                      data: {
-                        ...this.state.data,
-                        pauseTime:newPause,
-                        pauses:addPause,
-                      },
-                      styling: {
-                        ...this.state.styling,
-                        pauseStatus:styles.paused
-                      },
-                    })
-        
-                  }}
-                  onResume={() => {
-                    let newResume = new Date().toLocaleTimeString();
-                    let addResume = this.state.data.resumes.concat(newResume)
-                    this.setState ({
-                      data: {
-                        ...this.state.data,
-                        resumeTime:newResume,
-                        resumes:addResume
-                      },
-                      styling: {
-                        ...this.state.styling,
-                        pauseStatus:styles.playing
-                      },
-                    })
-                    
-                  
-                  }}
-
-                  onStop={() => {
-                    let newLog = new Date().toLocaleTimeString();
-                    let addtask = this.state.data
-                    let addJob = this.state.jobs.concat(addtask);
-
-                    this.setState ({
-                      data: {
-                        logTime:newLog,
-                        ...this.state.data,
-                      
-                      },
-                      slash:'',
-                      jobs:addJob,
-
-                      styling: {
-                        ...this.state.styling,
-                        inputStatus:styles.open,
-                        logStatus:styles.close,
-                        timeStatus:styles.close,
-                        pauseStatus:styles.playing
-                      },
-                    })
-                    // Cleanup
-                    // setTimeout( ()=> {
-                    //   this.setState ({
-                    //     data: {
-                    //       ...this.state.data,
-                    //       startTime:'',
-                    //       logTime:'',
-                    //       pauseTime:'',
-                    //       task:'',
-                    //       client:'',
-                    //       resumeTime:'',
-                    //       resumes:'',
-                    //       pauses:[]
-                    //     }
-                    //   })
-                    // }, 300);
-                  }
-                }
-
-              >
-                {({ start, resume, pause, stop }) => (
+              
               <div className="container">
                 <label className="newjob__label" htmlFor="nj">
                   <select style={inputStatus} onClick={this.handleClientSelect}className="newjob__clientselect" name="" id="">
@@ -271,30 +365,30 @@ class App extends Component {
                     }
                   </select>
                   <input style={inputStatus} value={task} onChange={this.handleNewJobInput}  name='nj' className="newjob__input" placeholder="Task Name..."/>
-                  { (client === '') || ( task === '' || data.client ==='Select Client' ) ? null : <span style={inputStatus} className="newJob__control" onClick={start}>Start</span> }
+                  { (client === '') || ( task === '' || data.client ==='Select Client' ) ? null : <span style={inputStatus} className="newJob__control" onClick={this.startTimer}>Start</span> }
             
                 </label>
                 <div className="newJob__jobInfo" style={styles.jobInfo}>
                   <div className="newJob__timer" style={timeStatus}> <span>{client}</span><span>{task}</span><span>{startTime}</span></div>
-                  <div className="newJob__timer" onChange={this.timeKeeper} style={timeStatus}> <Timer.Hours/> hours <Timer.Minutes/> minutes <Timer.Seconds/> Seconds </div>
+                  <div className="newJob__timer" onChange={this.timeKeeper} style={timeStatus}> {hours} Hrs : {minutes} Mins : {seconds} Secs </div>
                   {/* <div className="newJob__logtime" style={timeStatus}> {logTime} </div> */}
                   <div style={logStatus} className="newJob__pauses">
-                  <div style={pauseStatus} className="newJob__control" onClick={pause}>Pause{ pauseStatus === 'Paused' ? 'ed' : null }</div>
+                  <div style={pauseStatus} className="newJob__control" onClick={this.pauseTimer}>Pause{ pauseStatus === 'Paused' ? 'ed' : null }</div>
                     {pauseTime}
                   </div>
                   <div style={logStatus} className="newJob__resumes">
-                    <div  className="newJob__control" onClick={resume}>Resume </div>
+                    <div  className="newJob__control" onClick={this.resumeTimer}>Resume </div>
                     {resumeTime}
                   </div>
-                  <span style={logStatus} className="newJob__control" onMouseDown={this.handleLog} onMouseUp={stop}>Log</span>    
+                  <span style={logStatus} className="newJob__control" onMouseDown={this.handleLog} onMouseUp={this.stopTimer}>Log</span>    
               </div>
              </div>
-                    )}
-              </Timer>
+                  
+       
             </div>
               <div className="existingjobs">
                   <h4>Clients</h4>
-                    <ul>
+                    <div className="existingjobs__client">
                     {
                     this.state.jobs.map((job) => {
                       let jobProps = {
@@ -307,7 +401,7 @@ class App extends Component {
                       )
                     })
                     }
-                    </ul>
+                    </div>
               </div>
             </form>
           </div>

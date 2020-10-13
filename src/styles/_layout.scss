@@ -90,7 +90,7 @@
     padding: .6em 0em;
 }
 
-.existingjobs ul {
+.existingjobs__client {
     width:100%;
     transition:ease all 1s;
     margin-left:.5em;
@@ -111,10 +111,20 @@
     padding:0 .6em;
 }
 
+
 .jobitem__pauses {
+    padding: 0 .3em;
     display: flex;
-    // flex-direction: column;
-    flex: 1 0 40%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.jobitem__resumes {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 
 .jobitem__breaks {
