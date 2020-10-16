@@ -58,10 +58,10 @@ class Job extends Component {
 
                     Breaks:
                     <div  className="jobitem__pauses">
-                        {this.props.pauses.map((pause,i) => <div key={i}>{pause} to </div>)}
+                        {/* {this.props.pauses.map((pause,i) => <div key={i}>{pause} to </div>)} */}
                     </div>
                     <div  className="jobitem__resumes">
-                        {this.props.resumes.map((resume,i) => <div key={i}>{resume}</div>)}
+                        {/* {this.props.resumes.map((resume,i) => <div key={i}>{resume}</div>)} */}
                     </div>
                 </div>
                 <div>Start Time: {startTime}</div>

@@ -1,6 +1,6 @@
 
 .App {
-    padding:2em 15%;
+    padding:2em 10%;
 }
 
 .header {
@@ -23,17 +23,43 @@
     }
 }
 
+.overlay {
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    height: 100vh;
+    left: 0;
+    opacity: .5;
+    background-color: #cdcdcd;
+    z-index:1;
+}
+
 .container {
     display: flex;
     flex-direction: column;
 }
-.newjob {
-    display:flex;
-    flex: 1 0 60%;
+
+
+.clients__container {
+    display: flex;
+    flex: 1 0 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.newjob__label {
-  width:100%;
+.client-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+    border-radius: .3em;
+    width: 19%;
+    margin: 0.5em 1% 0.5em 0;
+    overflow:hidden;
+}
+
+.client-name {
+    padding: .7em;
+    cursor: pointer;
 }
 
 .newjob__clientselect {
@@ -51,18 +77,95 @@
     border:none;
     background-color: #efefef;
     margin-right: .2em;
-    padding:0em 0em 0em 1em;
-    height: 2.5em;
+    padding: .6em 1em;
+    margin: .3em 0;
+    
+}
+
+.newjob__input:focus {
+    outline:none;
 }
 
 .newJob__jobInfo {
-    display: flex;
+    background-color: #fafafa;
+    border-radius: .5em;
     align-items: flex-start;
-    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+    overflow-x: scroll;
+}
+
+.newJob__jobInfo::-webkit-scrollbar {
+    display: none;
+}
+
+.newJob__clientdash {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 1em;
+    font-weight: 500;
+}
+
+.newJob__clientdash div {
+    display: flex;
+    align-items: center;
+    margin:.5em;
+}
+
+span.dollar {
+    padding: .1em .1em 0em 0em;
+    opacity: .7;
+}
+
+label.newJob__clientratelabel {
+    width: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #efefef;
+    border-radius: .3em;
+    height: 2.5em;
+    margin: 0 1em;
+}
+
+.newJob__clientrate {
+    border-radius: .3em;
+    border: none;
+    background-color: #efefef;
+    margin-right: .2em;
+    // padding: 0em 0em 0em 1em;
+    height: 2.5em;
+    width: 8em;
+    // margin: 0 1em;
+}
+
+.newJob__clientrate:focus {
+    outline: none;
+}
+
+.newJob__cardclose {
+    cursor: pointer;
+}
+
+.newJob__task {
+    width: 100%;
+    display: flex;
+    height: auto;
+    transition: ease all .7s;
+    padding: 0 1em;
+    align-items: flex-start;
+}
+
+.newJob__tasklist {
+    width: 100%;
+    padding: 0 1em;
 }
 
 .newJob__timer {
-    height: 2.6em;
+    height:3.2em;
     display: flex;
     align-items: center;
     margin-right: 1em;
@@ -99,21 +202,21 @@
 
 .existingjobs__jobitem {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background-color: #efefef;
     padding: .5em;
-    border-radius: .5em;
-    margin:1em 0;
-    transition:ease all 1s;
+    border-radius: .3em;
+    margin: 1em 0;
+    transition: ease all 1s;
 }
 
-.existingjobs__jobitem span {
+.existingjobs__jobitem div {
     padding:0 .6em;
 }
 
 
 .jobitem__pauses {
-    padding: 0 .3em;
+    padding: 0 .3em !important;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -121,7 +224,9 @@
 }
 
 .jobitem__resumes {
+    padding: 0 !important;
     display: flex;
+    margin-left: -1.3em;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
