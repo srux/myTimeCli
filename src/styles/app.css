@@ -324,6 +324,36 @@ label.newJob__clientratelabel {
   margin-right: 1em;
 }
 
+.timer-notification {
+  position: absolute;
+  top: 6.5em;
+  right: 10%;
+  background-color: #628e92;
+  padding: .5em 1em;
+  border-radius: .3em;
+  color: #fafafa;
+}
+
+.timer-notification__control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.timer-notification__control .newJob__control {
+  font-size: .7em;
+}
+
 .newJob__pauses {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -507,6 +537,15 @@ label.newJob__clientratelabel {
   background-color: #efefef;
   color: #333;
   margin: .3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .newJob__control:hover {

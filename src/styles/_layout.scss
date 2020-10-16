@@ -171,6 +171,27 @@ label.newJob__clientratelabel {
     margin-right: 1em;
 }
 
+.timer-notification {
+    position: absolute;
+    top: 6.5em;
+    right: 10%;
+    background-color: #628e92;
+    padding: .5em 1em;
+    border-radius: .3em;
+    color: #fafafa;
+}
+
+.timer-notification__control {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.timer-notification__control .newJob__control {
+    font-size: .7em;
+}
+
 .newJob__pauses {
     display: flex;
     flex-direction: column;

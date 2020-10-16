@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Tasks from '../components/Tasks';
+import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
+
 
 let styles = {
     close:{
@@ -21,6 +23,15 @@ let styles = {
         zIndex:'2',
         left:'10%'
     },
+    flexRow: {
+        display:'flex',
+        alignItems: 'center'
+    },
+    flexCol: {
+        display:'flex',
+        flexDirection: 'column'
+    },
+
     paused:{
       backgroundColor:'#dfdfdf',
       pointerEvents:'none',
@@ -315,6 +326,25 @@ class Clients extends Component {
         return (
             
             <div className="client-card"> 
+             <div className="timer-notification" onChange={this.timeKeeper} style={timeStatus}> 
+             <div className="timer-notification__control">
+                
+                        
+                        <div style={styles.flexRow}>
+                            <h4>On the clock </h4>
+                            <div style={logStatus} className="newJob__pauses">
+                        
+                            <div style={pauseStatus} className="newJob__control" onClick={this.pauseTimer}> <GrPauseFill/> { pauseStatus === 'Paused' ? 'ed' : null }</div>
+                            </div>
+                            <div style={logStatus} className="newJob__resumes">
+                                <div style={resumeStatus} className="newJob__control" onClick={this.resumeTimer}> <GrPlayFill /> </div>
+                            </div>
+                            
+                            <span style={logStatus} className="newJob__control" onMouseDown={this.handleLog} onMouseUp={this.stopTimer}> <GrShare/> </span>  
+                            </div> {name} {task} {hours} Hrs : {minutes} Mins : {seconds} Secs  $ {total.toFixed(2)} 
+                        </div>
+                    
+             </div>
                 {clientToggle === name ? <h3 className="client-name" onClick={this.handleClientToggle} id=''>{name}</h3> : <h3 className="client-name" onClick={this.handleClientToggle} id={name}>{name}</h3>}
                 
                 {/* {this.props.pauses.map((pause,i) => <div key={i}>{pause} to </div>)} */}
