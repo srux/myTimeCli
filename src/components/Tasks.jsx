@@ -62,7 +62,7 @@ class Tasks extends Component {
 
               <div>Log Time: {logTime}</div>
               <div>Total Time:
-              { (hours === '00') ? null : {hours}+' Hrs'  }{ (minutes === '00') ? null : {minutes}+' Mins'  } {seconds} Secs</div>
+              { (hours === '00') ? null : ' '+hours+' Hrs'  }{ (minutes === '00') ? null : ' '+minutes+' Mins'  } {seconds} Secs</div>
               <div>$: {money.toFixed(2)}</div>
               </div>
         )

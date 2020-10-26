@@ -46,7 +46,7 @@ class Clients extends Component {
     constructor(props) {
         super(props)
 
-        this.state ={
+        this.state = {
             clientToggle:'',
             timerOn: false,
             timerStart: 0,
@@ -75,18 +75,33 @@ class Clients extends Component {
 
     }
 
+    timeStor = () => {
+   
+    }
+
     startTimer = () => {
+
         this.setState({
           timerOn: true,
           timerTime: this.state.timerTime,
           timerStart: Date.now() - this.state.timerTime
         });
+
         this.timer = setInterval(() => {
           this.setState({
             timerTime: Date.now() - this.state.timerStart
-          });
+        });
         }, 10);
-    
+
+        this.timeStor = setInterval(() => {
+          let client = this.state.data.client
+          let task = this.state.data.task
+          let timer = this.state.timerTime
+          localStorage.setItem('client',client)
+          localStorage.setItem('Task',task)
+          localStorage.setItem('Task Time',timer)
+        },60000)
+
         let newStart = new Date().toLocaleTimeString();
         let id = Date.now();
         let client = this.props.name;
@@ -196,12 +211,13 @@ class Clients extends Component {
       stopTimer = () => {
         this.setState({ timerOn: false });
         clearInterval(this.timer);
-    
+        clearInterval(this.timeStor);
+
         let newLog = new Date().toLocaleTimeString();
         let addtask = this.state.data
         let addJob = this.state.tasks.concat(addtask);
-        
-        let currentClient = this.props.name
+        localStorage.clear();
+        // let currentClient = this.props.name
     
     
         this.setState ({
@@ -283,8 +299,10 @@ class Clients extends Component {
         })
       } 
     
+
       timeKeeper = (e) => {
         console.log(this.state.data.timer)
+
         this.setState ({
           data: {
             ...this.state.data,
