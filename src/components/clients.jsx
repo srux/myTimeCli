@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Tasks from '../components/Tasks';
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
+// import firebase from '../FirebaseConfig';
+import firebase from "../api/FirebaseConfig";
 
 
 let styles = {
@@ -289,6 +291,20 @@ class Clients extends Component {
         let scale = rate/3600000
         let total = scale * timerTime
 
+        let data = this.state.data
+
+        // const clientRef = db.collection('clients').doc(data.client);
+        const db = firebase.firestore();
+        db.settings({
+          timestampsInSnapshots: true
+        });
+
+        let clientRef = db.collection('clients').doc(data.client);
+
+        let setWithMerge = clientRef.set({
+          tasks:[data]
+        }, { merge: true });
+
         this.setState ({ 
           data: {
             ...this.state.data,
@@ -297,6 +313,7 @@ class Clients extends Component {
             money:total
           },
         })
+
       } 
     
 

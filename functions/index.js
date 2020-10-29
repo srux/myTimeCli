@@ -1,44 +1,25 @@
 const functions = require('firebase-functions');
 const admin = require("firebase-admin");
-const express = require("express")
-const {ApolloServer, gql} = require("apollo-server-express")
+
 
 const serviceAccount = require("./mytime-client-firebase-adminsdk-unfnc-70952a86b0.json")
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://mytime-client.firebaseio.com"
+});
+
+const db = admin.firestore()
+
+exports.clients = functions.https.onRequest(async (req, res) => {
+     const snapshot = await db.collection('clients').get()
+     const clients = snapshot.empty ? []
+     : snapshot.docs.map(doc => Object.assign(doc.data(), { id:doc.id }))
+     res.send(clients)
 })
 
-const typeDefs = `
-
-    type Client {
-        name:String
-        id:String
-        tasks:Array
-    }
-    type Clients {
-        clients:[Client]
-    }
-`
-    const resolvers = {
-        Query: {
-        clients: () => {
-            return admin
-            .database()
-            .ref("clients")
-            .once("value")
-            .then(snap => snap.val())
-            .then(val => Object.keys(val).map((key)=> val[key]));
-        }
-    }
-}
-
-const app = express()
-const server = new ApolloServer({typeDefs, resolvers})
-
-server.applyMiddleware({ app,path:"/", cors: true})
-exports.graphql = functions.https.onRequest(app)
+// const express = require("express")
+// const {ApolloServer, gql} = require("apollo-server")
 
 
 // // Create and Deploy Your First Cloud Functions

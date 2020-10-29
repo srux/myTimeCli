@@ -1,6 +1,7 @@
 import './styles/app.css';
 import React, { Component } from 'react';
 import Clients from './components/clients';
+import firebase from './api/FirebaseConfig';
 
 let styles = {
   jobInfo:{
@@ -36,6 +37,7 @@ class App extends Component {
         clientInfo:{
           name:'',
           id:0,
+          tasks:[]
         },
         clients:[],
         jobs:[]
@@ -55,16 +57,27 @@ class App extends Component {
   }
 
   handleClientAdd = (e) => {
-    let addClientName = this.state.clientInfo
-    let addClient = this.state.clients.concat(addClientName)
-    
+    e.preventDefault();
+
+    let addClientData = this.state.clientInfo
+    let addClient = this.state.clients.concat(addClientData)
+    let name = this.state.clientInfo.name
 
     this.setState({
         clients:addClient,
         clientInfo:{
           ...this.state.clientInfo,
         }
+        
     })
+
+    const db = firebase.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    });
+
+    const clientRef = db.collection('clients').doc(name).set(addClientData);
+
   }
 
   handleClientSelect = (e) => {
@@ -81,32 +94,20 @@ class App extends Component {
 
   
 
-  findClient = () => {
-        // 1. Make a shallow copy of the items
-        let tasks = this.state.data
-        let clients = [...this.state.clients];
-        let clientName = this.state.data.client
-        let findClient = clients.find(c => c.name === clientName);
-        // 2. Make a shallow copy of the item you want to mutate
-        let client = {...clients[0]};
-        // 3. Replace the property you're intested in
-        client.tasks = [tasks];
-        // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
-        clients[0] = client;
-        // 5. Set the state to our new copy
+  handleClient = (e) => {
+    e.preventDefault();
+    
+    const db = firebase.firestore();
+    // db.settings({
+    //   timestampsInSnapshots: true
+    // });
 
-        console.log(findClient)
-
-        if ( findClient ) {
-          this.setState({
-            clients
-            });
-            console.log('match',client)
-        }
-        else {
-          return
-        }
-      
+    const clientRef = db.collection('clients').doc('1betMBnUVBh8GvwRgmYS').set({
+      id:444,
+      name:'notGubba'
+    })
+    console.log('clientInfo',clientRef)
+  
   }
 
 
@@ -118,10 +119,11 @@ class App extends Component {
     let findClient = clients.find(client => client.name === clientInfo.name);
 
         // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
-
+    let handleClient = this.handleClient
     
     return (
       <div className="App">
+        <button onClick={handleClient}>FIND</button>
           <header className="header">
             <div className="header_left">
               <div className="logo__header">myTime</div>
