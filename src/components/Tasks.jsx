@@ -3,42 +3,11 @@ import React, { Component } from 'react'
 class Tasks extends Component {
     constructor(props) {
         super(props)
-
     }
-
-    // componentWillMount() {
-
-    // }
-
-    // componentDidMount() {
-
-    // }
-
-    // componentWillReceiveProps(nextProps) {
-
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentWillUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-
-    // }
-
-    // componentWillUnmount() {
-
-    // }
-
 
 
     render() {
-        let {client,task,startTime,logTime,timerTime,money} = this.props;
-
+           let {client,task,startTime,logTime,timerTime,money} = this.props;
            // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
            let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
            let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
@@ -63,7 +32,7 @@ class Tasks extends Component {
               <div>Log Time: {logTime}</div>
               <div>Total Time:
               { (hours === '00') ? null : ' '+hours+' Hrs'  }{ (minutes === '00') ? null : ' '+minutes+' Mins'  } {seconds} Secs</div>
-              <div>$: {money.toFixed(2)}</div>
+              <div>$: {Math.round(money * 100) / 100}</div>
               </div>
         )
     }

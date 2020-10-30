@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Tasks from '../components/Tasks';
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
 // import firebase from '../FirebaseConfig';
-import firebase from "../api/FirebaseConfig";
+import firebase from "../config/FirebaseConfig";
 
 
 let styles = {
@@ -53,6 +53,7 @@ class Clients extends Component {
             timerOn: false,
             timerStart: 0,
             timerTime: 0,
+            tasks:[],
             styling:{
               logStatus:styles.close,
               timeStatus:styles.close,
@@ -65,21 +66,32 @@ class Clients extends Component {
               client:'',
               task:'',
               startTime:'',
+              rate:0,
+              money:0,
               logTime:'',
               id:0,
               pauseTime:'',
               pauses:[],
               resumes:[],
             },
-            rate:null,
-            tasks:[]
         }
 
     }
 
-    timeStor = () => {
-   
+    updatedProps = () => {
+      alert('props changed')
     }
+
+    getSnapshotBeforeUpdate(prevProps) {
+      return { updateProps: prevProps.clients !== this.props.clients };
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if (snapshot.updateProps) {
+        this.updatedProps();
+      }
+    }
+    
 
     startTimer = () => {
 
@@ -211,6 +223,7 @@ class Clients extends Component {
       };
     
       stopTimer = () => {
+        let data = this.state.data
         this.setState({ timerOn: false });
         clearInterval(this.timer);
         clearInterval(this.timeStor);
@@ -218,17 +231,15 @@ class Clients extends Component {
         let newLog = new Date().toLocaleTimeString();
         let addtask = this.state.data
         let addJob = this.state.tasks.concat(addtask);
+
         localStorage.clear();
-        // let currentClient = this.props.name
-    
-    
+
         this.setState ({
           timerStart: 0,
           timerTime: 0,
           data: {
             logTime:newLog,
             ...this.state.data,
-          
           },
           slash:'',
           tasks:addJob,
@@ -241,6 +252,20 @@ class Clients extends Component {
             pauseStatus:styles.playing
           },
         });
+
+        setTimeout(() => { 
+          const db = firebase.firestore();
+          db.settings({
+            timestampsInSnapshots: true
+          });
+
+          let clientRef = db.collection('clients').doc(data.client);
+          
+          clientRef.update({ 
+            tasks: firebase.firestore.FieldValue.arrayUnion({
+              ...data
+            })
+        }); }, 300);
         
         setTimeout(()=> {
           this.setState ({
@@ -255,10 +280,9 @@ class Clients extends Component {
               pauseTime:'',
               pauses:[],
               resumes:[],
-              tasks:[],
             }
         })
-        }, 300)
+        }, 600)
       };
     
       addJob = (data) => {
@@ -283,37 +307,23 @@ class Clients extends Component {
     
       handleLog = (e) => {
         e.preventDefault();
-        
-        let newLog = new Date().toLocaleTimeString();
-        let timerTime = this.state.timerTime
 
-        let rate = this.state.rate
+        let newLog = new Date().toLocaleTimeString();
+        // let timerTime = this.state.timerTime
+        let {timerStart,timerTime,} = this.state;
+        let rate = this.state.data.rate
         let scale = rate/3600000
         let total = scale * timerTime
-
-        let data = this.state.data
-
         // const clientRef = db.collection('clients').doc(data.client);
-        const db = firebase.firestore();
-        db.settings({
-          timestampsInSnapshots: true
-        });
-
-        let clientRef = db.collection('clients').doc(data.client);
-
-        let setWithMerge = clientRef.set({
-          tasks:[data]
-        }, { merge: true });
-
         this.setState ({ 
           data: {
             ...this.state.data,
             logTime:newLog,
             timerTime,
+            timerStart,
             money:total
           },
         })
-
       } 
     
 
@@ -340,21 +350,22 @@ class Clients extends Component {
       handleClientRate = (e) => {
         e.preventDefault()
         this.setState({
+          data: {
+            ...this.state.data,
             rate:e.target.value
-            
+          },
         })
       }
 
     render() {
         let {name,id} = this.props
-        let {data,clientInput,clientInfo,clients,timerTime,clientToggle} = this.state
-        let {pauseTime,task,client,startTime,logTime,resumeTime} = this.state.data
+        let {timerTime,clientToggle} = this.state
+        let {pauseTime,task,client,startTime,resumeTime,rate} = this.state.data
         let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
         let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
         let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
         let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
 
-        let rate = this.state.rate
         let scale = rate/3600000
         let total = scale * timerTime
         
@@ -411,7 +422,7 @@ class Clients extends Component {
                     </div>
                     <div className="newJob__tasklist">
                         {
-                            this.state.tasks.map((task) => {
+                            this.props.tasks.map((task) => {
                                 let taskProps = {
                                     ...task,
                                     key:task.id

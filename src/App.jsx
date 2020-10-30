@@ -1,7 +1,7 @@
 import './styles/app.css';
 import React, { Component } from 'react';
 import Clients from './components/clients';
-import firebase from './api/FirebaseConfig';
+import firebase from './config/FirebaseConfig';
 
 let styles = {
   jobInfo:{
@@ -23,6 +23,8 @@ let styles = {
   }
 }
 
+const clientsRef = firebase.firestore().collection("clients");
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -42,6 +44,37 @@ class App extends Component {
         clients:[],
         jobs:[]
       } 
+  }
+
+
+  componentDidMount() {
+    const db = firebase.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    });
+    db.collection("clients").get()
+    .then(querySnapshot => {
+      const data = querySnapshot.docs.map(doc => doc.data());
+      this.setState({
+        clients:data
+      })
+    });
+    
+  }
+
+  componentDidUpdate(){
+    const db = firebase.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    });
+    db.collection("clients")
+    .get()
+    .then(querySnapshot => {
+      const data = querySnapshot.docs.map(doc => doc.data());
+      this.setState({
+        clients:data
+      })
+    });
   }
 
   handleClientInput = (e) => {
@@ -92,38 +125,17 @@ class App extends Component {
   }
 
 
-  
-
-  handleClient = (e) => {
-    e.preventDefault();
-    
-    const db = firebase.firestore();
-    // db.settings({
-    //   timestampsInSnapshots: true
-    // });
-
-    const clientRef = db.collection('clients').doc('1betMBnUVBh8GvwRgmYS').set({
-      id:444,
-      name:'notGubba'
-    })
-    console.log('clientInfo',clientRef)
-  
-  }
-
 
   render() {  
   
-    let {data,clientInput,clientInfo,clients,timerTime} = this.state
+    let {clientInput,clientInfo,clients} = this.state
 
     let {addStatus} = this.state.styling
     let findClient = clients.find(client => client.name === clientInfo.name);
 
-        // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
-    let handleClient = this.handleClient
     
     return (
       <div className="App">
-        <button onClick={handleClient}>FIND</button>
           <header className="header">
             <div className="header_left">
               <div className="logo__header">myTime</div>
@@ -137,10 +149,7 @@ class App extends Component {
           <form className="jobs" action="">
 
               <div className="clients__container" htmlFor="nj">
-                {/* <select style={inputStatus} onClick={this.handleClientSelect}className="newjob__clientselect" name="" id="">
-                <option defaultValue="Select Client" >Select Client</option>
-                
-                </select> */}
+
                 {
                     this.state.clients.map((client) => {
                       let clientProps = {
