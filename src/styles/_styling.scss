@@ -7,12 +7,12 @@
     padding:.3em .6em;
 }
 
-.newJob__controls {
+.client__controls {
     display:flex;
     height:3em;
 }
 
-.newJob__control {
+.client__control {
     border: none;
     cursor: pointer;
     border-radius: 0.3em;
@@ -25,11 +25,42 @@
     justify-content: center;
     align-items: center;
 }
-.newJob__control:hover {
+.client__control:hover {
     background-color:#333;
     color:#fff;
 }
 
+
+// options panel
+
+.client__options {
+    position: absolute;
+    display: flex;
+    flex: 1 0 99%;
+    // background-color: #505050;
+    right: 1.5em;
+    margin-top: 3.7em;
+    padding: .5em 1em;
+    border-radius: .5em;
+    min-height:3em;
+}
+
+.options__colorpick {
+    display:flex;
+    width:30em;
+}
+.options__colorpick ul {
+    display:flex;
+    width:100%;
+}
+
+.options__colorpick li {
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    border-radius: 0.5em;
+    margin-right: .5em;
+}
 
 .newJob__button:hover {
     background-color:#333;
@@ -40,3 +71,5 @@
     font-style:italic;
     color:#333;
 }
+
+

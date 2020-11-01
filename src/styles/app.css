@@ -97,6 +97,13 @@ li {
 
 .App {
   padding: 2em 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .header {
@@ -128,6 +135,41 @@ li {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.dashboard__auth {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.dashboard__signin {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: .5em 1em;
+  border-radius: .3em;
+  -webkit-transition: ease all .5s;
+  transition: ease all .5s;
+}
+
+.dashboard__signin:hover {
+  background-color: #333;
+  color: #fafafa;
+}
+
+.dashboard__signout {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: .5em 1em;
+  border-radius: .3em;
+  -webkit-transition: ease all .5s;
+  transition: ease all .5s;
+}
+
+.dashboard__signout:hover {
+  background-color: #333;
+  color: #fafafa;
 }
 
 .overlay {
@@ -186,7 +228,13 @@ li {
   cursor: pointer;
 }
 
-.newjob__clientselect {
+.client-name.panel {
+  padding: .3em 1em;
+  border-radius: .4em;
+  margin-left: .4em;
+}
+
+.client__clientselect {
   border-radius: .3em;
   border: none;
   background-color: #efefef;
@@ -196,7 +244,7 @@ li {
   cursor: pointer;
 }
 
-.newjob__input {
+.task__input {
   border-radius: .3em;
   border: none;
   background-color: #efefef;
@@ -205,13 +253,13 @@ li {
   margin: .3em 0;
 }
 
-.newjob__input:focus {
+.client__input:focus {
   outline: none;
 }
 
-.newJob__jobInfo {
+.client__jobInfo {
   background-color: #fafafa;
-  border-radius: .5em;
+  border-radius: .3em;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
@@ -226,11 +274,11 @@ li {
   overflow-x: scroll;
 }
 
-.newJob__jobInfo::-webkit-scrollbar {
+.client__jobInfo::-webkit-scrollbar {
   display: none;
 }
 
-.newJob__clientdash {
+.client__clientdash {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -245,7 +293,7 @@ li {
   font-weight: 500;
 }
 
-.newJob__clientdash div {
+.client__clientdash div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -260,7 +308,7 @@ span.dollar {
   opacity: .7;
 }
 
-label.newJob__clientratelabel {
+label.client__clientratelabel {
   width: 10em;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -277,7 +325,7 @@ label.newJob__clientratelabel {
   margin: 0 1em;
 }
 
-.newJob__clientrate {
+.client__clientrate {
   border-radius: .3em;
   border: none;
   background-color: #efefef;
@@ -286,15 +334,20 @@ label.newJob__clientratelabel {
   width: 8em;
 }
 
-.newJob__clientrate:focus {
+.client__clientrate:focus {
   outline: none;
 }
 
-.newJob__cardclose {
+.client__cardclose {
   cursor: pointer;
 }
 
-.newJob__task {
+.client__optionbutton {
+  cursor: pointer;
+  padding-right: 1em;
+}
+
+.client__task {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -308,12 +361,12 @@ label.newJob__clientratelabel {
           align-items: flex-start;
 }
 
-.newJob__tasklist {
+.client__tasklist {
   width: 100%;
   padding: 0 1em;
 }
 
-.newJob__timer {
+.client__timer {
   height: 3.2em;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -350,11 +403,11 @@ label.newJob__clientratelabel {
           flex-direction: row;
 }
 
-.timer-notification__control .newJob__control {
+.timer-notification__control .client__control {
   font-size: .7em;
 }
 
-.newJob__pauses {
+.client__pauses {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -367,7 +420,7 @@ label.newJob__clientratelabel {
           align-items: center;
 }
 
-.newJob__resumes {
+.client__resumes {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -470,8 +523,8 @@ label.newJob__clientratelabel {
           flex-direction: row;
 }
 
-.newJob__timer span {
-  padding: 0 .5em 0 0;
+.client__timer span {
+  padding: 0 0.5em 0 .5em;
 }
 
 .client__label {
@@ -520,14 +573,14 @@ label.newJob__clientratelabel {
   padding: .3em .6em;
 }
 
-.newJob__controls {
+.client__controls {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   height: 3em;
 }
 
-.newJob__control {
+.client__control {
   border: none;
   cursor: pointer;
   border-radius: 0.3em;
@@ -548,9 +601,46 @@ label.newJob__clientratelabel {
           align-items: center;
 }
 
-.newJob__control:hover {
+.client__control:hover {
   background-color: #333;
   color: #fff;
+}
+
+.client__options {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 99%;
+          flex: 1 0 99%;
+  right: 1.5em;
+  margin-top: 3.7em;
+  padding: .5em 1em;
+  border-radius: .5em;
+  min-height: 3em;
+}
+
+.options__colorpick {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30em;
+}
+
+.options__colorpick ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.options__colorpick li {
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+  border-radius: 0.5em;
+  margin-right: .5em;
 }
 
 .newJob__button:hover {
@@ -561,5 +651,47 @@ label.newJob__clientratelabel {
 .newJob__jobInfo {
   font-style: italic;
   color: #333;
+}
+
+/* Color Option Swatches in RGBA */
+.clear {
+  background-color: #fff;
+  color: #333;
+  border: thin solid #cdcdcd;
+}
+
+.red {
+  background-color: #F2360C;
+  color: #fafafa;
+}
+
+.turq {
+  background-color: #1BA68C;
+  color: #fafafa;
+}
+
+.black {
+  background-color: #000000;
+  color: #fafafa;
+}
+
+.purple {
+  background-color: #7A30D9;
+  color: #fafafa;
+}
+
+.blue {
+  background-color: #0029FA;
+  color: #fafafa;
+}
+
+.yellow {
+  background-color: #F2B807;
+  color: #fafafa;
+}
+
+.green {
+  background-color: #1BBF15;
+  color: #fafafa;
 }
 /*# sourceMappingURL=app.css.map */

@@ -1,0 +1,43 @@
+/* Color Option Swatches in RGBA */
+$color-red: #F2360C;
+$color-turq: #1BA68C;
+$color-black: #000000;
+$color-purple: #7A30D9;
+$color-blue: #0029FA;
+$color-yellow:#F2B807;
+$color-green: #1BBF15;
+
+.clear {
+    background-color:#fff;
+    color: #333;
+    border: thin solid #cdcdcd;
+}
+.red {
+    background-color:$color-red;
+    color: #fafafa;
+}
+.turq {
+    background-color:$color-turq;
+    color: #fafafa;
+}
+.black {
+    background-color:$color-black;
+    color: #fafafa;
+}
+.purple {
+    background-color:$color-purple;
+    color: #fafafa;
+}
+.blue {
+    background-color:$color-blue;
+    color: #fafafa;
+}
+.yellow {
+    background-color:$color-yellow;
+    color: #fafafa;
+}
+.green {
+    background-color:$color-green;
+    color: #fafafa;
+}
+

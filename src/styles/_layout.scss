@@ -1,6 +1,8 @@
 
 .App {
     padding:2em 10%;
+    display:flex;
+    flex-direction: column;
 }
 
 .header {
@@ -21,6 +23,38 @@
     .jobs {
         display:flex;
     }
+}
+
+.dashboard__auth {
+    align-self: flex-end;
+}
+
+.dashboard__signin {
+    cursor: pointer;
+    border:none;
+    outline:none;
+    padding:.5em 1em;
+    border-radius: .3em;
+    transition: ease all .5s;
+}
+
+.dashboard__signin:hover {
+    background-color:#333;
+    color:#fafafa;
+}
+
+.dashboard__signout {
+    cursor: pointer;
+    border:none;
+    outline:none;
+    padding:.5em 1em;
+    border-radius: .3em;
+    transition: ease all .5s;
+}
+
+.dashboard__signout:hover {
+    background-color:#333;
+    color:#fafafa;
 }
 
 .overlay {
@@ -61,8 +95,13 @@
     padding: .7em;
     cursor: pointer;
 }
+.client-name.panel {
+    padding: .3em 1em;
+    border-radius: .4em;
+    margin-left: .4em;
+}
 
-.newjob__clientselect {
+.client__clientselect {
     border-radius: .3em;
     border: none;
     background-color: #efefef;
@@ -72,23 +111,22 @@
     cursor: pointer;
 }
 
-.newjob__input {
+.task__input {
     border-radius: .3em;
     border:none;
     background-color: #efefef;
     margin-right: .2em;
     padding: .6em 1em;
-    margin: .3em 0;
-    
+    margin: .3em 0;  
 }
 
-.newjob__input:focus {
+.client__input:focus {
     outline:none;
 }
 
-.newJob__jobInfo {
+.client__jobInfo {
     background-color: #fafafa;
-    border-radius: .5em;
+    border-radius: .3em;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -96,11 +134,11 @@
     overflow-x: scroll;
 }
 
-.newJob__jobInfo::-webkit-scrollbar {
+.client__jobInfo::-webkit-scrollbar {
     display: none;
 }
 
-.newJob__clientdash {
+.client__clientdash {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -109,7 +147,7 @@
     font-weight: 500;
 }
 
-.newJob__clientdash div {
+.client__clientdash div {
     display: flex;
     align-items: center;
     margin:.5em;
@@ -120,7 +158,7 @@ span.dollar {
     opacity: .7;
 }
 
-label.newJob__clientratelabel {
+label.client__clientratelabel {
     width: 10em;
     display: flex;
     align-items: center;
@@ -131,7 +169,7 @@ label.newJob__clientratelabel {
     margin: 0 1em;
 }
 
-.newJob__clientrate {
+.client__clientrate {
     border-radius: .3em;
     border: none;
     background-color: #efefef;
@@ -142,15 +180,20 @@ label.newJob__clientratelabel {
     // margin: 0 1em;
 }
 
-.newJob__clientrate:focus {
+.client__clientrate:focus {
     outline: none;
 }
 
-.newJob__cardclose {
+.client__cardclose {
     cursor: pointer;
 }
 
-.newJob__task {
+.client__optionbutton {
+    cursor: pointer;
+    padding-right: 1em;
+}
+
+.client__task {
     width: 100%;
     display: flex;
     height: auto;
@@ -159,12 +202,12 @@ label.newJob__clientratelabel {
     align-items: flex-start;
 }
 
-.newJob__tasklist {
+.client__tasklist {
     width: 100%;
     padding: 0 1em;
 }
 
-.newJob__timer {
+.client__timer {
     height:3.2em;
     display: flex;
     align-items: center;
@@ -188,21 +231,23 @@ label.newJob__clientratelabel {
     flex-direction: row;
 }
 
-.timer-notification__control .newJob__control {
+.timer-notification__control .client__control {
     font-size: .7em;
 }
 
-.newJob__pauses {
+.client__pauses {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.newJob__resumes {
+.client__resumes {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+
 
 .existingjobs {
     display:flex;
@@ -258,8 +303,8 @@ label.newJob__clientratelabel {
     flex-direction: row;
 }
 
-.newJob__timer span {
-    padding: 0 .5em 0 0;
+.client__timer span {
+    padding: 0 0.5em 0 .5em;
 }
 
 .client__label {
