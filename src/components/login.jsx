@@ -1,22 +1,44 @@
-import React, { Component } from 'react'
+import React, { useRef, useState } from "react"
+import {useAuth} from '../api/auth'
+import { Link, useHistory } from "react-router-dom"
 
-class Login extends Component {
-    constructor(props) {
-        super(props)
+export default function Login() {
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const { login } = useAuth()
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
 
+  async function handleSubmit(e) {
+    e.preventDefault()
+
+    try {
+      setError("")
+      setLoading(true)
+      await login(emailRef.current.value, passwordRef.current.value)
+      history.push("/")
+    } catch {
+      setError("Failed to log in")
     }
 
-    render() {
-        return (
-            <div>
-                <form action="">
-                    <input type="text" placeholder="Username:"/>
-                    <input type="text" placeholder="Password:"/>
-                </form>
-            </div>
-        )
-    }
+    setLoading(false)
+  }
+
+  return (
+    <>
+    <h1>Login</h1>
+    {error && <span variant="danger">{error}</span>}
+    <form action="">
+          <input type="email" ref={emailRef}/>
+          <input type="password" ref={passwordRef}/>
+          <button onSubmit={handleSubmit} disabled={loading} className="login-button">Log In</button>
+    </form>
+    <Link className="forgetpassword">Forgot Password?</Link>
+    <div className="account">
+        Need an account? <Link to="/signup">Sign Up</Link>
+    </div>
+      
+    </>
+  )
 }
-
-
-export default Login

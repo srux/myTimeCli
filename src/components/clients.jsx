@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Tasks from './tasks';
 
-// import firebase from '../FirebaseConfig';
-import firebase from "../config/FirebaseConfig";
+// import app from '../appConfig';
+import app from "firebase";
 
 //plugins
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
@@ -250,7 +250,7 @@ class Clients extends Component {
         });
 
         setTimeout(() => { 
-          const db = firebase.firestore();
+          const db = app.firestore();
           db.settings({
             timestampsInSnapshots: true
           });
@@ -258,7 +258,7 @@ class Clients extends Component {
           let clientRef = db.collection('clients').doc(data.client);
           
           clientRef.update({ 
-            tasks: firebase.firestore.FieldValue.arrayUnion({
+            tasks: app.firestore.FieldValue.arrayUnion({
               ...data
             })
         }); }, 300);
@@ -377,7 +377,7 @@ class Clients extends Component {
           const client = this.props.name
           const clientOptions = this.state.clientOptions
           const clientColor = clientOptions.clientColor
-          const db = firebase.firestore();
+          const db = app.firestore();
           db.settings({
             timestampsInSnapshots: true
           });

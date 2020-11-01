@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Clients from './clients';
 
-// import firebase from '../FirebaseConfig';
-import firebase from "../config/FirebaseConfig";
+// import app from '../appConfig';
+import app from "../firebase";
 
 
 let styles = {
@@ -25,7 +25,7 @@ let styles = {
   }
 }
 
-const clientsRef = firebase.firestore().collection("clients");
+const clientsRef = app.firestore().collection("clients");
 
 class Dashboard extends Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class Dashboard extends Component {
 
 
   componentDidMount() {
-    const db = firebase.firestore();
+    const db = app.firestore();
     db.settings({
       timestampsInSnapshots: true
     });
@@ -70,7 +70,7 @@ class Dashboard extends Component {
   }
 
   componentDidUpdate(){
-    const db = firebase.firestore();
+    const db = app.firestore();
     db.settings({
       timestampsInSnapshots: true
     });
@@ -113,7 +113,7 @@ class Dashboard extends Component {
         
     })
 
-    const db = firebase.firestore();
+    const db = app.firestore();
     db.settings({
       timestampsInSnapshots: true
     });

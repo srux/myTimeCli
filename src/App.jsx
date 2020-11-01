@@ -5,10 +5,13 @@ import './styles/app.css';
 import {BrowserRouter as Router, Route,Link } from "react-router-dom";
 
 // components
-import Dashboard from './components/dashboard';
+import Profile from './components/profile';
 import Signup from './components/signup';
 import Login from './components/login';
-// import {AuthProvider} from './api/auth';
+import {AuthProvider} from './api/auth';
+import PrivateRoute from './components/privateRoute';
+import { auth } from './firebase';
+
 
 class App extends Component {
   constructor(props) {
@@ -18,35 +21,17 @@ class App extends Component {
       }
   }
 
-  handleSignIn = () => {
-    this.setState({
-        signedIn:true
-    })
-}
-
-handleSignOut = () => {
-
-  this.setState({
-      signedIn:false
-  })
-}
-
   render() {
-    let {signedIn} = this.state;
     return (
-  
-        <Router>
-             <div className="dashboard__auth">   
-          { signedIn ? <Link to="/" className="dashboard__signout" onClick={this.handleSignOut} >Sign Out</Link> : <> <Link className="dashboard__signin" onClick={this.handleSignIn}>Sign In</Link> <Link  to="/Signup" className="dashboard__signin" onClick={this.handleSignIn}>Register</Link></> }   
-         </div>
-          <div>
-            { signedIn ? <Route exact path='/' component={Dashboard}/> : null }
-            
-            <Route exact path='/login' component={Login}/>
-            <Route exact path='/Signup' component={Signup}/>
-          </div>
-        </Router>
-
+      <AuthProvider>
+          <Router>
+            <div>
+              <PrivateRoute exact path='/' component={Profile}/>
+              <Route exact path='/login' component={Login}/>
+              <Route exact path='/Signup' component={Signup}/>
+            </div>
+          </Router>
+      </AuthProvider>
     )
   }
 }

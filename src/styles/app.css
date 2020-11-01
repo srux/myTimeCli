@@ -653,6 +653,21 @@ label.client__clientratelabel {
   color: #333;
 }
 
+.signup-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.submit {
+  width: 5em;
+  height: 1.9em;
+  cursor: pointer;
+}
+
 /* Color Option Swatches in RGBA */
 .clear {
   background-color: #fff;
