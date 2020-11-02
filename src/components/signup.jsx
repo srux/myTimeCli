@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react"
 import {useAuth} from '../api/auth'
+
 import { Link, useHistory } from "react-router-dom"
 
 export default function Signup() {
@@ -32,15 +33,18 @@ export default function Signup() {
           }
 
             return (
-                <div>
-                    {/* {currentUser.email} */}
+                <div className="auth">
+                    <div className="auth__container">
+                    <h1>Register</h1>
                     {error && <span>{error}</span>}
-                        <form className='signup-form' onSubmit={handleSubmit} action="">
+                        <form className="auth__form"  onSubmit={handleSubmit} action="">
                             <input type="email" ref={emailRef} placeholder="Email:"/>
                             <input type="password" ref={passwordRef} placeholder="Password:"/>
                             <input type="password" ref={passwordConfirmRef} placeholder="Password Confirmation:"/>
-                            <button className="submit" disabled={loading} type="submit"/>
+                            <button className="login-button" disabled={loading} type="submit">Register</button>
                         </form>
+                        <Link to="/">Cancel</Link>
+                        </div>
                 </div>
             )
         

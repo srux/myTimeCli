@@ -1,0 +1,91 @@
+
+// auth page
+
+.auth {
+    display:flex;
+    width:100vw;
+    height:100vh;
+    justify-content: center;
+    align-items:center;
+    background-image: linear-gradient(to right top, #000000, #151515, #232323, #313131, #404040, #4b4b4b, #565656, #616161, #6b6b6b, #747474, #7e7e7e, #888888);
+}
+
+.auth__container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-between ;
+    padding:2em;
+    background-color:#fafafa;
+    border-radius: .7em;
+}
+
+.auth__container h1 {
+    color:#ff4920;
+}
+
+.auth__form {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-between ;
+}
+
+
+.auth__form input {
+   padding:.5em 1em;
+   border-radius: .5em;
+   border:none;
+   background-color:#111;
+   color:$color-light;
+   margin:.5em;
+   width:18em;
+}
+.auth__form input:focus {
+    outline:none;
+ }
+
+ .auth__form input::placeholder {
+    color:$color-light;
+ }
+
+.auth__form button {
+    padding:.5em;
+    border-radius: .5em;
+    border:none;
+    background-color:#ebebeb;
+    margin:.5em;
+    width:18em;
+    cursor:pointer;
+    transition:ease all .5s;
+ }
+ 
+ .auth__form button:hover {
+    background-color:#F2360C;
+    color:#f3f3f3;
+ }
+
+// profile page
+
+.profile {
+    display:flex;
+    flex:1 0 99%;
+    flex-direction: column;
+    height:100vh;
+}
+
+.profile__container {
+    display:flex;
+    flex-direction: row;
+    justify-content:flex-end;
+ }
+
+ .profile__nav{
+    display:flex;
+    align-items: center;
+    width:22em;
+    justify-content: space-between;
+    margin-right:1.5em;
+    margin-top:1.5em;
+ }
+ 

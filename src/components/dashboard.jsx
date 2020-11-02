@@ -25,13 +25,12 @@ let styles = {
   }
 }
 
-const clientsRef = app.firestore().collection("clients");
+// const clientsRef = app.firestore().collection("clients");
 
 class Dashboard extends Component {
   constructor(props) {
     super(props)
       this.state = {
-          signedIn:false,
         styling:{
           logStatus:styles.close,
           timeStatus:styles.close,
@@ -56,26 +55,39 @@ class Dashboard extends Component {
 
   componentDidMount() {
     const db = app.firestore();
+
+    const {currentUser} = this.props
+    const userUid = currentUser.uid
+   
+    // let clientRef = db.collection('users').doc(userUid);
+
     db.settings({
       timestampsInSnapshots: true
     });
-    db.collection("clients").get()
+    db.collection('users').doc(userUid).collection('clients').get()
     .then(querySnapshot => {
       const data = querySnapshot.docs.map(doc => doc.data());
       this.setState({
         clients:data
       })
     });
+  
+    // db.collection('users').doc(userUid).collection('clients').doc(name).set({...data});
     
   }
 
   componentDidUpdate(){
     const db = app.firestore();
+
+    const {currentUser} = this.props
+    const userUid = currentUser.uid
+   
+
+
     db.settings({
       timestampsInSnapshots: true
     });
-    db.collection("clients")
-    .get()
+    db.collection('users').doc(userUid).collection('clients').get()
     .then(querySnapshot => {
       const data = querySnapshot.docs.map(doc => doc.data());
       this.setState({
@@ -98,66 +110,68 @@ class Dashboard extends Component {
     })
   }
 
-  handleClientAdd = (e) => {
+  handleClientAdd = (e,user) => {
     e.preventDefault();
 
-    let addClientData = this.state.clientInfo
-    let addClient = this.state.clients.concat(addClientData)
+    let data = this.state.clientInfo
+    let addClient = this.state.clients.concat(data)
     let name = this.state.clientInfo.name
-    
+    let clients = this.state.clients;
     this.setState({
+        ...clients,
         clients:addClient,
         clientInfo:{
           ...this.state.clientInfo,
         }
-        
     })
 
-    const db = app.firestore();
+    let db = app.firestore();
     db.settings({
       timestampsInSnapshots: true
     });
-
-    const clientRef = db.collection('clients').doc(name).set(addClientData);
-
+    
+    const {currentUser} = this.props
+    const userUid = currentUser.uid
+    
+    db.collection('users').doc(userUid).collection('clients').doc(name).set({...data});
+    
+    setTimeout(() => {
+      this.setState({
+        clientInfo:{
+          name:'',
+          colour:'',
+          id:0,
+          options:{
+            clientColor:'#fff'
+          },
+          tasks:[]
+        },
+      })
+    },300)
   }
-
-  handleClientSelect = (e) => {
-    e.preventDefault();
-
-    this.setState({
-      data:{
-        ...this.state.data,
-        client:e.target.value,
-      }
-    })
-  }
-
-
-
 
 
   render() {  
   
-    let {clientInput,clientInfo,clients} = this.state
+    let {clientInfo,clients} = this.state
 
     let {addStatus} = this.state.styling
     let findClient = clients.find(client => client.name === clientInfo.name);
     
     return (
         <>
-      <div className="App">
+      <div className="dashboard">
        
           <header className="header">
             <div className="header_left">
               <div className="logo__header">myTime</div>
               <div className="client__label">
-                <input style={null} value={clientInput} onChange={this.handleClientInput}  name='nc' className="client__input" placeholder="New Client..."/>
+                <input style={null} value={clientInfo.name} onChange={this.handleClientInput}  name='nc' className="client__input" placeholder="New Client..."/>
                 <div style={clientInfo.name ==='' || findClient ? addStatus : null } onClick={this.handleClientAdd} className="client__add">ADD</div>
               </div>
             </div>
           </header>
-          <div className="dashboard">
+          <div className="dashboard__clients">
           <form className="jobs" action="">
 
               <div className="clients__container" htmlFor="nj">

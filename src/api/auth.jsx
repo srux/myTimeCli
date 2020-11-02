@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
+import { GrUserAdmin } from "react-icons/gr";
 
 // firebase api
 import {auth} from "../firebase";
@@ -13,7 +14,7 @@ export function AuthProvider({ children }) {
 
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
-    
+
       function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password)
       }
@@ -55,7 +56,7 @@ export function AuthProvider({ children }) {
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
       }
     
     

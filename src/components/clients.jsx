@@ -28,9 +28,9 @@ let styles = {
     max: {
         position:'absolute',
         height:'60vh',
-        width:'80%',
+        width:'81%',
         zIndex:'2',
-        left:'10%'
+        left:'9%',
     },
     flexRow: {
         display:'flex',
@@ -251,12 +251,15 @@ class Clients extends Component {
 
         setTimeout(() => { 
           const db = app.firestore();
+          const {currentUser} = app.auth()
+          const userUid = currentUser.uid
+          const client = this.props.name
           db.settings({
             timestampsInSnapshots: true
           });
+         
+          const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client);
 
-          let clientRef = db.collection('clients').doc(data.client);
-          
           clientRef.update({ 
             tasks: app.firestore.FieldValue.arrayUnion({
               ...data
@@ -378,11 +381,14 @@ class Clients extends Component {
           const clientOptions = this.state.clientOptions
           const clientColor = clientOptions.clientColor
           const db = app.firestore();
+
+          let {currentUser} = app.auth()
+          let userUid = currentUser.uid
           db.settings({
             timestampsInSnapshots: true
           });
-          
-          let clientRef = db.collection('clients').doc(client);
+              
+          const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client);
           
           clientRef.update({ 
             options:{
@@ -419,6 +425,7 @@ class Clients extends Component {
                <div style={styles.flexRow}>
                   <h4>On the clock
                   </h4>
+                  
                   <div style={logStatus} className="client__pauses">
 
                       <div style={pauseStatus} className="client__control" onClick={this.pauseTimer}>
@@ -433,15 +440,16 @@ class Clients extends Component {
                           <GrPlayFill/>
                       </div>
                   </div>
-
-                  <span
-                      style={logStatus}
-                      className="client__control"
-                      onMouseDown={this.handleLog}
-                      onMouseUp={this.stopTimer}>
-                      <GrShare/>
-                  </span>
-                  </div> {name} {task} {hours} Hrs : {minutes} Mins : {seconds} Secs  $ {total.toFixed(2)} 
+                  <div style={logStatus} className="client__log"> 
+                    <div
+                        
+                        className="client__control"
+                        onMouseDown={this.handleLog}
+                        onMouseUp={this.stopTimer}>
+                        <GrShare/>
+                    </div>
+                  </div>
+                  </div> {name} {task} <span>{hours}</span> Hrs : <span>{minutes}</span> Mins : <span>{seconds}</span> Secs <span className="client__rate"> $ {total.toFixed(2)} </span>
               </div>
                     
             </div>
@@ -509,7 +517,7 @@ class Clients extends Component {
                             <span>{startTime}</span>
                         </div>
                         <div className="client__timer" onChange={this.timeKeeper} style={timeStatus}>
-                            {hours} Hrs : {minutes} Mins : {seconds} Secs at ${rate} per hour<span className="client__timer" style={logStatus}>/ $ {total.toFixed(2)}</span>
+                        <span className="client__time">{hours}</span> Hrs : <span className="client__time">{minutes}</span> Mins : <span className="client__time">{seconds}</span> Secs at ${rate} per hour<span className="client__rate" style={logStatus}>/ $ {total.toFixed(2)}</span>
                         </div>
                         <div style={logStatus} className="client__pauses">
                             <div style={pauseStatus} className="client__control" onClick={this.pauseTimer}>Pause{ pauseStatus === 'Paused' ? 'ed' : null }</div>

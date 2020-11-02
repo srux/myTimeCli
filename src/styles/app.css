@@ -1,3 +1,21 @@
+/* Color Option Swatches in RGBA */
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans:400italic,700italic,400,700);
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+a {
+  color: #fd4218;
+  -webkit-transition: ease all .3s;
+  transition: ease all .3s;
+}
+
+a:hover {
+  color: #d12600;
+}
+
+button:hover {
+  background-color: #fd4218;
+  color: #f3f3f3;
+}
+
 /* Box sizing rules */
 *,
 *::before,
@@ -49,6 +67,10 @@ a:not([class]) {
   text-decoration-skip-ink: auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Make images easier to work with */
 img {
   max-width: 100%;
@@ -95,8 +117,8 @@ li {
   }
 }
 
-.App {
-  padding: 2em 10%;
+.dashboard {
+  margin: 2em 8%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -104,6 +126,9 @@ li {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  height: 100%;
+  background-color: #fff;
+  border-radius: .7em;
 }
 
 .header {
@@ -118,6 +143,7 @@ li {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  padding: 0em 2em;
 }
 
 .header .logo__header {
@@ -127,11 +153,16 @@ li {
   padding: .5em 0;
 }
 
-.dashboard {
+.header .header_left {
+  width: 24%;
+}
+
+.dashboard__clients {
+  padding: 1em 2em;
   margin-top: 1em;
 }
 
-.dashboard .jobs {
+.dashboard__clients .jobs {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -165,11 +196,6 @@ li {
   border-radius: .3em;
   -webkit-transition: ease all .5s;
   transition: ease all .5s;
-}
-
-.dashboard__signout:hover {
-  background-color: #333;
-  color: #fafafa;
 }
 
 .overlay {
@@ -272,6 +298,10 @@ li {
           flex-direction: column;
   padding: .5em;
   overflow-x: scroll;
+  -webkit-box-shadow: 0px 0px 100px #0000002e;
+          box-shadow: 0px 0px 100px #0000002e;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
 }
 
 .client__jobInfo::-webkit-scrollbar {
@@ -377,11 +407,46 @@ label.client__clientratelabel {
   margin-right: 1em;
 }
 
+.client__pauses {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.client__resumes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.client__time {
+  width: 2em;
+  margin-left: .3em;
+}
+
+.client__rate {
+  width: 7em;
+}
+
 .timer-notification {
   position: absolute;
-  top: 6.5em;
-  right: 10%;
-  background-color: #628e92;
+  top: 7em;
+  right: 10.7%;
+  background-color: #333;
   padding: .5em 1em;
   border-radius: .3em;
   color: #fafafa;
@@ -407,30 +472,21 @@ label.client__clientratelabel {
   font-size: .7em;
 }
 
-.client__pauses {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+.timer-notification__control span {
+  width: 1.5em;
+  margin-left: .7em;
 }
 
-.client__resumes {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+.timer-notification .client__rate {
+  width: 7em;
+}
+
+.timer-notification__control .client__pauses {
+  margin-left: .7em;
+}
+
+.timer-notification__control .client__log {
+  margin-right: .7em;
 }
 
 .existingjobs {
@@ -531,6 +587,7 @@ label.client__clientratelabel {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  height: 3.3em;
 }
 
 .client__input {
@@ -539,6 +596,7 @@ label.client__clientratelabel {
   background-color: #efefef;
   margin-right: .2em;
   padding: 0em 0em 0em 1em;
+  width: 100%;
 }
 
 .client__add {
@@ -560,6 +618,174 @@ label.client__clientratelabel {
 .client__add:hover {
   background-color: #333;
   color: #efefef;
+}
+
+.auth {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-image: -webkit-gradient(linear, left bottom, right top, from(#000000), color-stop(#151515), color-stop(#232323), color-stop(#313131), color-stop(#404040), color-stop(#4b4b4b), color-stop(#565656), color-stop(#616161), color-stop(#6b6b6b), color-stop(#747474), color-stop(#7e7e7e), to(#888888));
+  background-image: linear-gradient(to right top, #000000, #151515, #232323, #313131, #404040, #4b4b4b, #565656, #616161, #6b6b6b, #747474, #7e7e7e, #888888);
+}
+
+.auth__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 2em;
+  background-color: #fafafa;
+  border-radius: .7em;
+}
+
+.auth__container h1 {
+  color: #ff4920;
+}
+
+.auth__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.auth__form input {
+  padding: .5em 1em;
+  border-radius: .5em;
+  border: none;
+  background-color: #111;
+  color: #f3f3f3;
+  margin: .5em;
+  width: 18em;
+}
+
+.auth__form input:focus {
+  outline: none;
+}
+
+.auth__form input::-webkit-input-placeholder {
+  color: #f3f3f3;
+}
+
+.auth__form input:-ms-input-placeholder {
+  color: #f3f3f3;
+}
+
+.auth__form input::-ms-input-placeholder {
+  color: #f3f3f3;
+}
+
+.auth__form input::placeholder {
+  color: #f3f3f3;
+}
+
+.auth__form button {
+  padding: .5em;
+  border-radius: .5em;
+  border: none;
+  background-color: #ebebeb;
+  margin: .5em;
+  width: 18em;
+  cursor: pointer;
+  -webkit-transition: ease all .5s;
+  transition: ease all .5s;
+}
+
+.auth__form button:hover {
+  background-color: #F2360C;
+  color: #f3f3f3;
+}
+
+.profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 99%;
+          flex: 1 0 99%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100vh;
+}
+
+.profile__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.profile__nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 22em;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-right: 1.5em;
+  margin-top: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h5 {
+  font-family: Poppins,Roboto;
+}
+
+a {
+  font-family: Poppins,Roboto;
+}
+
+div {
+  font-family: Poppins,Roboto;
+}
+
+span {
+  font-family: Poppins,Roboto;
+}
+
+button {
+  font-family: Poppins,Roboto;
+}
+
+input {
+  font-family: Poppins,Roboto;
 }
 
 .newJob__button {
@@ -602,8 +828,8 @@ label.client__clientratelabel {
 }
 
 .client__control:hover {
-  background-color: #333;
-  color: #fff;
+  background-color: #fd4218;
+  color: #f3f3f3;
 }
 
 .client__options {
@@ -668,7 +894,6 @@ label.client__clientratelabel {
   cursor: pointer;
 }
 
-/* Color Option Swatches in RGBA */
 .clear {
   background-color: #fff;
   color: #333;

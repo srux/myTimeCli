@@ -1,8 +1,11 @@
 
-.App {
-    padding:2em 10%;
+.dashboard {
+    margin:2em 8%;
     display:flex;
     flex-direction: column;
+    height:100%;
+    background-color:#fff;
+    border-radius:.7em;
 }
 
 .header {
@@ -10,15 +13,20 @@
     justify-self: auto;
     align-items: flex-start;
     flex-direction: column;
+    padding:0em 2em;
     .logo__header {
         font-family:Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
         font-weight: 500;
         font-size:2em;
         padding: .5em 0;
     }
+    .header_left {
+        width:24%;
+    }
 }
 
-.dashboard {
+.dashboard__clients {
+    padding:1em 2em;
     margin-top:1em;
     .jobs {
         display:flex;
@@ -52,10 +60,6 @@
     transition: ease all .5s;
 }
 
-.dashboard__signout:hover {
-    background-color:#333;
-    color:#fafafa;
-}
 
 .overlay {
     position: absolute;
@@ -132,6 +136,8 @@
     flex-direction: column;
     padding: .5em;
     overflow-x: scroll;
+    box-shadow: 0px 0px 100px #0000002e;
+    transition:ease all 1s;
 }
 
 .client__jobInfo::-webkit-scrollbar {
@@ -214,11 +220,32 @@ label.client__clientratelabel {
     margin-right: 1em;
 }
 
+.client__pauses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.client__resumes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.client__time {
+    width: 2em;
+    margin-left: .3em;
+}
+
+.client__rate {
+    width: 7em;
+}
+
 .timer-notification {
     position: absolute;
-    top: 6.5em;
-    right: 10%;
-    background-color: #628e92;
+    top: 7em;
+    right: 10.7%;
+    background-color: $color-dark;
     padding: .5em 1em;
     border-radius: .3em;
     color: #fafafa;
@@ -235,18 +262,25 @@ label.client__clientratelabel {
     font-size: .7em;
 }
 
-.client__pauses {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+
+.timer-notification__control span {
+    width: 1.5em;
+    margin-left: .7em;
 }
 
-.client__resumes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.timer-notification .client__rate {
+    width: 7em;
 }
 
+.timer-notification__control .client__pauses {
+    margin-left: .7em;
+}
+
+
+.timer-notification__control .client__log {
+    margin-right: .7em;
+}
 
 
 .existingjobs {
@@ -309,6 +343,7 @@ label.client__clientratelabel {
 
 .client__label {
     display:flex;
+    height:3.3em;
 }
 
 .client__input {
@@ -317,6 +352,7 @@ label.client__clientratelabel {
     background-color: #efefef;
     margin-right: .2em;
     padding:0em 0em 0em 1em;
+    width:100%;
 }
 .client__add {
     display:flex;

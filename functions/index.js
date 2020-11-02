@@ -19,6 +19,16 @@ exports.clients = functions.https.onRequest(async (req, res) => {
      res.send(clients)
 })
 
+exports.newUserSignup = functions.auth.user().onCreate(user => {
+    return db.collection('users').doc(user.uid).set({
+       clients:[]
+    })
+})
+
+exports.userDelete = functions.auth.user().onDelete(user => {
+    const doc = db.collection('users').doc(user.uid);
+    return doc.delete(); 
+})
 
 // const typeDefs = gql`
 // type data {

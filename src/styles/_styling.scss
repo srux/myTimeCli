@@ -1,3 +1,32 @@
+
+// fonts
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans:400italic,700italic,400,700);
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+h1,h2,h3,h4,h5,h5 {
+    font-family:Poppins,Roboto;
+}
+
+a {
+    font-family:Poppins,Roboto;
+}
+
+div {
+    font-family:Poppins,Roboto;
+}
+
+span {
+    font-family:Poppins,Roboto;
+}
+
+button {
+    font-family:Poppins,Roboto;
+}
+
+input {
+    font-family:Poppins,Roboto;
+}
+
 .newJob__button {
     border: none;
     transform: skew(-17deg, 0deg) rotate(0deg) translate(5px, 1px);
@@ -26,8 +55,8 @@
     align-items: center;
 }
 .client__control:hover {
-    background-color:#333;
-    color:#fff;
+    background-color:$color-link;
+    color:$color-light;
 }
 
 

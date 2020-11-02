@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react"
-import {useAuth} from '../api/auth'
 import { Link, useHistory } from "react-router-dom"
+
+import {useAuth} from '../api/auth'
 
 export default function Login() {
   const emailRef = useRef()
@@ -26,19 +27,20 @@ export default function Login() {
   }
 
   return (
-    <>
-    <h1>Login</h1>
-    {error && <span variant="danger">{error}</span>}
-    <form action="">
-          <input type="email" ref={emailRef}/>
-          <input type="password" ref={passwordRef}/>
-          <button onSubmit={handleSubmit} disabled={loading} className="login-button">Log In</button>
-    </form>
-    <Link className="forgetpassword">Forgot Password?</Link>
-    <div className="account">
-        Need an account? <Link to="/signup">Sign Up</Link>
+    <div className="auth">
+      <div className="auth__container">
+        <h1>Login</h1>
+        {error && <span variant="danger">{error}</span>}
+        <form className="auth__form"  onSubmit={handleSubmit} action="">
+              <input placeholder='Email:' type="email" ref={emailRef}/>
+              <input placeholder='Password:' type="password" ref={passwordRef}/>
+              <button disabled={loading} className="login-button">Log In</button>
+        </form>
+        <Link className="forgetpassword" to="/forgot-password">Forgot Password?</Link>
+        <div className="account">
+            Need an account? <Link to="/signup">Register here</Link>
+        </div>
+      </div>
     </div>
-      
-    </>
   )
 }

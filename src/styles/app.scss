@@ -1,5 +1,36 @@
 
+/* Color Option Swatches in RGBA */
+$color-red: #F2360C;
+$color-turq: #1BA68C;
+$color-black: #000000;
+$color-purple: #7A30D9;
+$color-blue: #0029FA;
+$color-yellow:#F2B807;
+$color-green: #1BBF15;
+
+// theme styles
+$color-link:#fd4218;
+$color-link-alt:#d12600;
+
+$color-light:#f3f3f3;
+$color-dark:#333;
+
+a {
+ color:$color-link;
+ transition:ease all .3s;
+}
+
+a:hover {
+    color:$color-link-alt;
+}
+
+button:hover {
+    background-color:$color-link;
+    color:$color-light;
+}
+
 @import "_reset.scss";
 @import "_layout.scss";
+@import "_auth.scss";
 @import "_styling.scss";
 @import "_color.scss";
