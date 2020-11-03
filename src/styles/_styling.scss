@@ -66,17 +66,15 @@ input {
     position: absolute;
     display: flex;
     flex: 1 0 99%;
-    // background-color: #505050;
-    right: 1.5em;
-    margin-top: 3.7em;
+    right: 13em;
+    margin-top: .2em;
     padding: .5em 1em;
     border-radius: .5em;
-    min-height:3em;
+    min-height: 3em;
 }
 
 .options__colorpick {
     display:flex;
-    width:30em;
 }
 .options__colorpick ul {
     display:flex;

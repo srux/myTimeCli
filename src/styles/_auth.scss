@@ -65,6 +65,26 @@
     color:#f3f3f3;
  }
 
+ .auth_google {
+     background-color:#4285f4 !important;
+     color:#fafafa !important;
+ }
+
+ .auth_google:hover {
+    background-color:#1d5bc0 !important;
+}
+
+
+ .login-button {
+    background-color:$color-link !important;
+    color:#fafafa !important;
+ }
+
+ .login-button:hover {
+    background-color:$color-link-alt !important;
+    color:#fafafa !important;
+ }
+
 // profile page
 
 .profile {
@@ -72,6 +92,7 @@
     flex:1 0 99%;
     flex-direction: column;
     height:100vh;
+    overflow:hidden;
 }
 
 .profile__container {
@@ -83,9 +104,17 @@
  .profile__nav{
     display:flex;
     align-items: center;
-    width:22em;
     justify-content: space-between;
     margin-right:1.5em;
     margin-top:1.5em;
  }
+
+//  .profile__email {
+//      margin:0em 1em;
+//  }
+
+ .profile__update {
+    margin:0em 1.5em;
+}
+
  

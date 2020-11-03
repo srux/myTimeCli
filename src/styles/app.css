@@ -258,6 +258,8 @@ li {
   padding: .3em 1em;
   border-radius: .4em;
   margin-left: .4em;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
 }
 
 .client__clientselect {
@@ -276,7 +278,7 @@ li {
   background-color: #efefef;
   margin-right: .2em;
   padding: .6em 1em;
-  margin: .3em 0;
+  margin: .3em 1em 0 0;
 }
 
 .client__input:focus {
@@ -514,6 +516,10 @@ label.client__clientratelabel {
   cursor: pointer;
 }
 
+.existingjobs__jobContainer {
+  margin-top: 1em;
+}
+
 .existingjobs__jobitem {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -525,13 +531,19 @@ label.client__clientratelabel {
   background-color: #efefef;
   padding: .5em;
   border-radius: .3em;
-  margin: 1em 0;
   -webkit-transition: ease all 1s;
   transition: ease all 1s;
 }
 
 .existingjobs__jobitem div {
   padding: 0 .6em;
+}
+
+.existingjobs__jobtab {
+  padding: 0 1em;
+  background-color: #fd4218;
+  border-radius: .3em .3em 0 0;
+  color: #f3f3f3;
 }
 
 .jobitem__pauses {
@@ -577,6 +589,32 @@ label.client__clientratelabel {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+}
+
+.jobitem__remove {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: center;
+      align-self: center;
+  font-size: 1.2em;
+  position: absolute;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  right: 1em;
+  color: #f3f3f3;
+  position: absolute;
+  -webkit-transition: ease all .7s;
+  transition: ease all .7s;
+  cursor: pointer;
+  border-radius: .2em;
+  background-color: #333;
+}
+
+.jobitem__remove:hover {
+  color: #f3f3f3;
+  background-color: #fd4218;
 }
 
 .client__timer span {
@@ -722,6 +760,25 @@ label.client__clientratelabel {
   color: #f3f3f3;
 }
 
+.auth_google {
+  background-color: #4285f4 !important;
+  color: #fafafa !important;
+}
+
+.auth_google:hover {
+  background-color: #1d5bc0 !important;
+}
+
+.login-button {
+  background-color: #fd4218 !important;
+  color: #fafafa !important;
+}
+
+.login-button:hover {
+  background-color: #d12600 !important;
+  color: #fafafa !important;
+}
+
 .profile {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -734,6 +791,7 @@ label.client__clientratelabel {
       -ms-flex-direction: column;
           flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
 .profile__container {
@@ -756,12 +814,15 @@ label.client__clientratelabel {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 22em;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-right: 1.5em;
   margin-top: 1.5em;
+}
+
+.profile__update {
+  margin: 0em 1.5em;
 }
 
 h1, h2, h3, h4, h5, h5 {
@@ -840,8 +901,8 @@ input {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 99%;
           flex: 1 0 99%;
-  right: 1.5em;
-  margin-top: 3.7em;
+  right: 13em;
+  margin-top: .2em;
   padding: .5em 1em;
   border-radius: .5em;
   min-height: 3em;
@@ -851,7 +912,6 @@ input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 30em;
 }
 
 .options__colorpick ul {

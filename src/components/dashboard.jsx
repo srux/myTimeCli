@@ -45,10 +45,9 @@ class Dashboard extends Component {
           options:{
             clientColor:'#fff'
           },
-          tasks:[]
         },
         clients:[],
-        jobs:[]
+      
       } 
   }
 
@@ -104,7 +103,7 @@ class Dashboard extends Component {
       clientInfo:{
         ...clientInfo,
         name:e.target.value,
-        tasks:[],
+        jobs:[],
         id
       }
     })
@@ -114,12 +113,10 @@ class Dashboard extends Component {
     e.preventDefault();
 
     let data = this.state.clientInfo
-    let addClient = this.state.clients.concat(data)
     let name = this.state.clientInfo.name
     let clients = this.state.clients;
     this.setState({
         ...clients,
-        clients:addClient,
         clientInfo:{
           ...this.state.clientInfo,
         }
@@ -144,7 +141,7 @@ class Dashboard extends Component {
           options:{
             clientColor:'#fff'
           },
-          tasks:[]
+          jobs:[]
         },
       })
     },300)
@@ -157,7 +154,7 @@ class Dashboard extends Component {
 
     let {addStatus} = this.state.styling
     let findClient = clients.find(client => client.name === clientInfo.name);
-    
+    let currentUser = this.props
     return (
         <>
       <div className="dashboard">
@@ -182,7 +179,7 @@ class Dashboard extends Component {
                         ...client,
                         key:client.id
                       } 
-                      return (<Clients {...clientProps}/>) 
+                      return (<Clients {...clientProps} currentUser={currentUser}/>) 
                     })
                   }
                 

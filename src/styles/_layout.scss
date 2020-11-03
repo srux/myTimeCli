@@ -103,6 +103,7 @@
     padding: .3em 1em;
     border-radius: .4em;
     margin-left: .4em;
+    transition:ease all 1s;
 }
 
 .client__clientselect {
@@ -121,7 +122,8 @@
     background-color: #efefef;
     margin-right: .2em;
     padding: .6em 1em;
-    margin: .3em 0;  
+    margin: .3em 1em 0 0;  
+    
 }
 
 .client__input:focus {
@@ -300,13 +302,16 @@ label.client__clientratelabel {
     cursor: pointer;
 }
 
+.existingjobs__jobContainer {
+    margin-top: 1em;
+}
+
 .existingjobs__jobitem {
     display: flex;
     flex-direction: row;
     background-color: #efefef;
     padding: .5em;
     border-radius: .3em;
-    margin: 1em 0;
     transition: ease all 1s;
 }
 
@@ -314,6 +319,13 @@ label.client__clientratelabel {
     padding:0 .6em;
 }
 
+
+.existingjobs__jobtab {
+    padding: 0 1em;
+    background-color: $color-link;
+    border-radius: .3em .3em 0 0;
+    color:$color-light;
+}
 
 .jobitem__pauses {
     padding: 0 .3em !important;
@@ -335,6 +347,27 @@ label.client__clientratelabel {
 .jobitem__breaks {
     display: flex;
     flex-direction: row;
+}
+
+.jobitem__remove {
+    display: flex;
+    align-self: center;
+    font-size: 1.2em;
+    position: absolute;
+    justify-content: flex-end;
+    right: 1em;
+    color:$color-light;
+    position:absolute;
+    transition:ease all .7s;
+    cursor: pointer;
+    border-radius: .2em;
+    background-color:$color-dark;
+}
+
+.jobitem__remove:hover {
+    color:$color-light;
+    background-color:$color-link;
+    
 }
 
 .client__timer span {

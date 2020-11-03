@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Tasks from './tasks';
+// import Tasks from './tasks';
+import Jobs from './jobs';
 
 // import app from '../appConfig';
 import app from "firebase";
@@ -62,7 +63,7 @@ class Clients extends Component {
             timerOn: false,
             timerStart: 0,
             timerTime: 0,
-            tasks:[],
+            jobs:[],
             clientOptions:{
               clientColor:'#fff',
             },
@@ -79,6 +80,7 @@ class Clients extends Component {
             },
             data:{
               client:'',
+              job:'',
               task:'',
               startTime:'',
               rate:0,
@@ -110,11 +112,13 @@ class Clients extends Component {
 
         this.timeStor = setInterval(() => {
           let client = this.state.data.client
+          let job = this.state.data.job
           let task = this.state.data.task
           let timer = this.state.timerTime
           localStorage.setItem('client',client)
+          localStorage.setItem('Job',job)
           localStorage.setItem('Task',task)
-          localStorage.setItem('Task Time',timer)
+          localStorage.setItem('Job Time',timer)
         },10000)
 
         let newStart = new Date().toLocaleTimeString();
@@ -195,51 +199,25 @@ class Clients extends Component {
     
       };
     
-      resetTimer = () => {
     
-        let newLog = new Date().toLocaleTimeString();
-        let addtask = this.state.data
-        let addJob = this.state.jobs.concat(addtask);
-    
-        this.setState ({
-          timerStart: 0,
-          timerTime: 0,
-          data: {
-            logTime:newLog,
-            ...this.state.data,
-          
-          },
-          slash:'',
-          jobs:addJob,
-    
-          styling: {
-            ...this.state.styling,
-            inputStatus:styles.open,
-            logStatus:styles.close,
-            timeStatus:styles.close,
-            pauseStatus:styles.playing
-          },
-        })
-    
-      };
-    
-      stopTimer = () => {
+      handleStoreData = () => {
         
         this.setState({ timerOn: false });
         clearInterval(this.timer);
         clearInterval(this.timeStor);
 
         let data = this.state.data
-        let addtask = this.state.data
-        let addJob = this.state.tasks.concat(addtask);
-
+        let addJob = this.state.jobs.concat(data);
+        let job = data.job
+        let rate = data.rate
+        // let task = data.task
         localStorage.clear();
 
         this.setState ({
           data: {
             ...data,
           },
-          tasks:addJob,
+          jobs:addJob,
           styling: {
             ...this.state.styling,
             inputStatus:styles.open,
@@ -261,16 +239,21 @@ class Clients extends Component {
           const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client);
 
           clientRef.update({ 
-            tasks: app.firestore.FieldValue.arrayUnion({
-              ...data
+            jobs:app.firestore.FieldValue.arrayUnion({
+              job,
+              tasks:
+                [data]
             })
+
         }); }, 300);
         
         setTimeout(()=> {
           this.setState ({
             timerStart: 0,
             timerTime: 0,
+           
             data: {
+              ...data,
               pauseTime:'',
               resumeTime:'',
               client:'',
@@ -297,6 +280,17 @@ class Clients extends Component {
       }
     
       handleNewJobInput = (e) => {
+        this.setState({
+          data: {
+            ...this.state.data,
+            job:e.target.value
+          }
+        })
+    
+      }
+
+          
+      handleNewTaskInput = (e) => {
         this.setState({
           data: {
             ...this.state.data,
@@ -373,8 +367,12 @@ class Clients extends Component {
           clientOptions:{ 
             ...clientOptions,
             clientColor:e.target.className
-          }
+          },
+     
         })
+        this.setState(prevState=>({
+          optionToggle: !prevState.optionToggle
+        }))
         
         setTimeout(() => { 
           const client = this.props.name
@@ -402,7 +400,7 @@ class Clients extends Component {
     render() {
         let {name} = this.props
         let {timerTime,clientToggle} = this.state
-        let {pauseTime,task,client,startTime,resumeTime,rate} = this.state.data
+        let {pauseTime,job,task,client,startTime,resumeTime,rate} = this.state.data
         let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
         let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
         let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
@@ -445,11 +443,11 @@ class Clients extends Component {
                         
                         className="client__control"
                         onMouseDown={this.handleLog}
-                        onMouseUp={this.stopTimer}>
+                        onMouseUp={this.handleStoreData}>
                         <GrShare/>
                     </div>
                   </div>
-                  </div> {name} {task} <span>{hours}</span> Hrs : <span>{minutes}</span> Mins : <span>{seconds}</span> Secs <span className="client__rate"> $ {total.toFixed(2)} </span>
+                  </div> {name} {job} <span>{hours}</span> Hrs : <span>{minutes}</span> Mins : <span>{seconds}</span> Secs <span className="client__rate"> $ {total.toFixed(2)} </span>
               </div>
                     
             </div>
@@ -479,7 +477,7 @@ class Clients extends Component {
                         </div>
                         <div className="client__optionsdash">
                             <div onClick={this.handleOptionToggle} className="client__optionbutton">
-                                Options
+                                Color Label
                             </div>
                             <div onClick={this.handleClientToggle} className="client__cardclose">Close</div>
                         </div>
@@ -501,18 +499,25 @@ class Clients extends Component {
                     </div>
                     : null }
                     <div className="client__task">
-                        <input
+                      <input
                             style={inputStatus}
-                            value={task}
+                            value={job}
                             onChange={this.handleNewJobInput}
                             name='nj'
                             className="task__input"
+                            placeholder="Job Name..."/>
+                            <input
+                            style={inputStatus}
+                            value={task}
+                            onChange={this.handleNewTaskInput}
+                            name='nt'
+                            className="task__input"
                             placeholder="Task Name..."/>
-                        { task === '' ? null :
+                        { job === '' ? null :
                         <span style={inputStatus} className="client__control" onClick={this.startTimer}>Start</span>
                         }
                         <div className="client__timer" style={timeStatus}>
-                            <span>{client}</span>
+                            <span>{job}</span>
                             <span>{task}</span>
                             <span>{startTime}</span>
                         </div>
@@ -536,12 +541,15 @@ class Clients extends Component {
                             style={logStatus}
                             className="client__control"
                             onMouseDown={this.handleLog}
-                            onMouseUp={this.stopTimer}>Log</span>
+                            onMouseUp={this.handleStoreData}>Log</span>
 
                     </div>
                     <div className="client__tasklist">
-                        { this.props.tasks.map((task) => { let taskProps = { ...task, key:task.id }
-                        return <Tasks {...taskProps}/>}) }
+                      {/* { this.props.tasks.map((task) => { let taskProps = { ...task, key:task.id }
+                        return <Tasks {...taskProps}/>}) } */}
+
+                        { this.props.jobs.map((job) => { let jobProps = { ...job, key:job.id }
+                        return <Jobs {...jobProps}/> }) }
                     </div>
                 </div>
                 <div onClick={this.handleClientToggle} className="overlay"></div> 

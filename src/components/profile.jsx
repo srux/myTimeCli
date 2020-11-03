@@ -27,8 +27,8 @@ export default function Profile() {
         <div className="profile__container">
           <div className="profile__nav">
             {error && <span>{error}</span>}
-            {currentUser.email}
-            <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+            <span className="profile__email">{currentUser.email}</span>
+            <Link to="/update-profile" className="profile__update">
               Update Profile
             </Link>
             <button className="dashboard__signout" variant="link" onClick={handleLogout}>
