@@ -27,6 +27,20 @@ input {
     font-family:Poppins,Roboto;
 }
 
+.alert {
+    color:$color-link-alt;
+}
+
+.alert-button {
+    background-color:$color-link-alt;
+    color:$color-light;
+    padding:.5em;
+    width:10em;
+    border-radius: .2em;
+    align-self: center;
+    margin:.5em;
+}
+
 .newJob__button {
     border: none;
     transform: skew(-17deg, 0deg) rotate(0deg) translate(5px, 1px);
@@ -62,13 +76,15 @@ input {
 
 // options panel
 
-.client__options {
+.color__options {
     position: absolute;
     display: flex;
     flex: 1 0 99%;
-    right: 13em;
-    margin-top: .2em;
+    right: 0;
+    transition: ease all 1s;
+    margin-top: -6.8em;
     padding: .5em 1em;
+    top: 0;
     border-radius: .5em;
     min-height: 3em;
 }

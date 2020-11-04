@@ -102,7 +102,7 @@
 .client-name.panel {
     padding: .3em 1em;
     border-radius: .4em;
-    margin-left: .4em;
+    margin-right: .5em;
     transition:ease all 1s;
 }
 
@@ -136,8 +136,7 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    padding: .5em;
-    overflow-x: scroll;
+    padding: .5em 1em;
     box-shadow: 0px 0px 100px #0000002e;
     transition:ease all 1s;
 }
@@ -155,18 +154,19 @@
     font-weight: 500;
 }
 
-.client__clientdash div {
-    display: flex;
-    align-items: center;
-    margin:.5em;
-}
 
 span.dollar {
     padding: .1em .1em 0em 0em;
     opacity: .7;
 }
 
-label.client__clientratelabel {
+.client__name {
+    display: flex;
+    align-items: center;
+    margin: .5em 0;
+}
+
+.client__clientratelabel {
     width: 10em;
     display: flex;
     align-items: center;
@@ -174,7 +174,7 @@ label.client__clientratelabel {
     background-color: #efefef;
     border-radius: .3em;
     height: 2.5em;
-    margin: 0 1em;
+    margin: .5em 0em;
 }
 
 .client__clientrate {
@@ -196,9 +196,46 @@ label.client__clientratelabel {
     cursor: pointer;
 }
 
+.client__optionsdash {
+    display: flex;
+}
+
 .client__optionbutton {
     cursor: pointer;
     padding-right: 1em;
+}
+
+.client__optionpopup {
+    transition: ease all 1s;
+    display: flex;
+    border: solid thin #0000000d;
+    box-shadow: 0px 0px 50px #00000021;
+    transform: translate(0px, -5.5em);
+    border-radius: .3em;
+    position: absolute;
+    justify-content: flex-end;
+    padding: 0.7em;
+    padding-left:1.5em;
+    right: 0;
+    
+}
+
+.client__delete {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    margin-top: -10em;
+    border-radius: .3em;
+    padding: 1em;
+    background-color: #fafafa;
+    text-align: center;
+}
+
+#confirm-client {
+    width: 10em;
+    margin: .3em;
+    align-self: center;
 }
 
 .client__task {
@@ -206,7 +243,7 @@ label.client__clientratelabel {
     display: flex;
     height: auto;
     transition: ease all .7s;
-    padding: 0 1em;
+    padding: .5em 0em;
     align-items: flex-start;
 }
 

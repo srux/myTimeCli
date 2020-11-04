@@ -1,15 +1,32 @@
-import React, { useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import {useAuth} from '../api/auth'
+
 import { Link, useHistory } from "react-router-dom"
 import Dashboard from './dashboard'
 import bgImg from '../assets/profile-bg.jpg';
+import app from "../firebase";
+import {getData,queryData,setData} from "../api/data";
 
 
 export default function Profile() {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth()
-  const history = useHistory()
   const [profileBg, setBg] = useState("../assets/profile-bg.jpg")
+
+  const history = useHistory()
+  const db = app.firestore();
+  const userUid = currentUser.uid
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => { 
+          const updateData = db.collection('users').doc(userUid).collection('clients').onSnapshot(snap => {
+          const data = snap.docs.map(doc => doc.data())
+          setData(data)
+        });
+        //remember to unsubscribe from your realtime listener on unmount or you will create a memory leak
+        return () => updateData()
+  }, []);
   
   async function handleLogout() {
     setError("")
@@ -36,7 +53,7 @@ export default function Profile() {
         </button>
           </div>
         </div>
-      <Dashboard currentUser={currentUser}/>
+      <Dashboard currentUser={currentUser} data={data} />
       </div>
   )
 }

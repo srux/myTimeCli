@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-// import Tasks from './tasks';
+
 import Jobs from './jobs';
 
 // import app from '../appConfig';
 import app from "firebase";
 
+//api
+import {getData,queryData,setData,deleteClient} from "../api/data"
+import {useAuth} from '../api/auth'
+
 //plugins
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
 import { Beforeunload  } from 'react-beforeunload';
-// import { GithubPicker  } from 'react-color'
+import Scrollbar from "react-scrollbars-custom";
 
 let styles = {
     close:{
@@ -24,7 +28,8 @@ let styles = {
         display:'flex'
     },
     shrinkHor:{
-      width:'0'
+      opacity:0,
+      transform: `scale(${1}, ${0})` 
     },
     max: {
         position:'absolute',
@@ -32,6 +37,8 @@ let styles = {
         width:'81%',
         zIndex:'2',
         left:'9%',
+        top:'14.8em',
+        marginTop:'2em',
     },
     flexRow: {
         display:'flex',
@@ -41,7 +48,10 @@ let styles = {
         display:'flex',
         flexDirection: 'column'
     },
-
+    disabled:{
+      pointerEvents:'none',
+      opacity:.5,
+    },
     paused:{
       backgroundColor:'#dfdfdf',
       pointerEvents:'none',
@@ -60,6 +70,10 @@ class Clients extends Component {
         this.state = {
             clientToggle:'',
             optionToggle:false,
+            colorToggle:false,
+            
+            deleteClientInput:'',
+
             timerOn: false,
             timerStart: 0,
             timerTime: 0,
@@ -333,22 +347,6 @@ class Clients extends Component {
     
       }
 
-      handleClientToggle = (e) => {
-          e.preventDefault()
-        this.setState({
-            clientToggle:e.target.id
-        })
-
-      } 
-
-        handleOptionToggle = (e) => {
-          e.preventDefault()
-
-          this.setState(prevState => ({
-            optionToggle: !prevState.optionToggle
-          }));
-        
-       } 
 
       handleClientRate = (e) => {
         e.preventDefault()
@@ -371,8 +369,9 @@ class Clients extends Component {
      
         })
         this.setState(prevState=>({
-          optionToggle: !prevState.optionToggle
+          colorToggle: !prevState.colorToggle
         }))
+
         
         setTimeout(() => { 
           const client = this.props.name
@@ -395,6 +394,54 @@ class Clients extends Component {
             }
             
         }); }, 300);
+      }
+
+      
+      handleClientToggle = (e) => {
+        e.preventDefault()
+       this.setState({
+          clientToggle:e.target.id
+      })
+
+    } 
+
+
+
+   handleToggle=(e)=>{
+    e.preventDefault()
+    const target = e.target.getAttribute('value');
+   
+    this.setState(state  => ({
+      [target]: !this.state[target]
+    }));
+   }
+
+   handleClearToggles=(e)=>{
+    e.preventDefault()
+   
+   
+    this.setState({
+      optionToggle:false,
+      colorToggle:false,
+      deleteToggle:false,
+    });
+   }
+
+
+   handleDeleteConfirm=(e)=>{
+    e.preventDefault()
+
+    this.setState({
+        deleteClientInput:e.target.value,
+    })
+
+   }
+
+      handleDeleteClient=()=>{
+        let name = this.props.name
+        const {currentUser} = app.auth()
+        let userUid = currentUser.uid
+        deleteClient(userUid,name)
       }
 
     render() {
@@ -459,7 +506,7 @@ class Clients extends Component {
 
                     <div className="client__clientdash">
 
-                        <div>
+                        <div className="client__name">
                             <h3 className={"client-name panel "+clientOptions.clientColor}>{name}</h3>
                             <label
                                 style={inputStatus}
@@ -476,14 +523,32 @@ class Clients extends Component {
                             </label>
                         </div>
                         <div className="client__optionsdash">
-                            <div onClick={this.handleOptionToggle} className="client__optionbutton">
-                                Color Label
-                            </div>
-                            <div onClick={this.handleClientToggle} className="client__cardclose">Close</div>
+                            
+                            
+                            <div style={ this.state.optionToggle ? null : styles.shrinkHor } className="client__optionpopup"> 
+                                
+                                <div className="client__optionbutton" value={'colorToggle'} onClick={this.handleToggle} >
+                                    Color Label
+                                </div>
+                                <div className="client__optionbutton alert" value={'deleteToggle'} onClick={this.handleToggle} >
+                                  Delete
+                                  { this.state.deleteToggle ?  <span class="client__delete">
+                                    <label htmlFor="confirm-client .alert">Enter clients name to confirm deletion</label>
+                                    <input id={'confirm-client'} onChange={this.handleDeleteConfirm} placeholder={name} type="text"/>
+                                  { name === this.state.deleteClientInput
+                                    ?   <div onClick={this.handleDeleteClient} className="alert-button">CONFIRM</div>
+                                    :   <div onClick={this.handleDeleteClient} style={{ pointerEvents:'none', cursor:'no-drop', opacity:.3,}} className="alert-button">CONFIRM</div>
+                                  }
+                                  </span> : null }
+                                 
+                                </div>
+                              </div>
+                              <div className="client__optionbutton" value={'optionToggle'} onClick={this.handleToggle} onMouseUp={this.handleClearToggles}>Options</div>
+                              <div onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} className="client__cardclose">Close</div>
                         </div>
                     </div>
-                    { this.state.optionToggle ?
-                    <div className="client__options">
+                    { this.state.colorToggle && !this.state.deleteToggle ?
+                    <div className="color__options">
                         <div className="options__colorpick">
                             <ul>
                                 <li className='red' onClick={this.handleColor}></li>
@@ -544,15 +609,13 @@ class Clients extends Component {
                             onMouseUp={this.handleStoreData}>Log</span>
 
                     </div>
-                    <div className="client__tasklist">
-                      {/* { this.props.tasks.map((task) => { let taskProps = { ...task, key:task.id }
-                        return <Tasks {...taskProps}/>}) } */}
-
+                
+                <Scrollbar className="client__tasklist" style={{ padding: '1em' }}>
                         { this.props.jobs.map((job) => { let jobProps = { ...job, key:job.id }
                         return <Jobs {...jobProps}/> }) }
-                    </div>
+                   </Scrollbar>
                 </div>
-                <div onClick={this.handleClientToggle} className="overlay"></div> 
+                <div onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} className="overlay"></div> 
                 </>
                 : 
                 <div className={"client__jobInfo"} style={styles.hide} ></div>}

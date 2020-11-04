@@ -257,7 +257,7 @@ li {
 .client-name.panel {
   padding: .3em 1em;
   border-radius: .4em;
-  margin-left: .4em;
+  margin-right: .5em;
   -webkit-transition: ease all 1s;
   transition: ease all 1s;
 }
@@ -298,8 +298,7 @@ li {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: .5em;
-  overflow-x: scroll;
+  padding: .5em 1em;
   -webkit-box-shadow: 0px 0px 100px #0000002e;
           box-shadow: 0px 0px 100px #0000002e;
   -webkit-transition: ease all 1s;
@@ -325,22 +324,22 @@ li {
   font-weight: 500;
 }
 
-.client__clientdash div {
+span.dollar {
+  padding: .1em .1em 0em 0em;
+  opacity: .7;
+}
+
+.client__name {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: .5em;
+  margin: .5em 0;
 }
 
-span.dollar {
-  padding: .1em .1em 0em 0em;
-  opacity: .7;
-}
-
-label.client__clientratelabel {
+.client__clientratelabel {
   width: 10em;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -354,7 +353,7 @@ label.client__clientratelabel {
   background-color: #efefef;
   border-radius: .3em;
   height: 2.5em;
-  margin: 0 1em;
+  margin: .5em 0em;
 }
 
 .client__clientrate {
@@ -374,9 +373,61 @@ label.client__clientratelabel {
   cursor: pointer;
 }
 
+.client__optionsdash {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .client__optionbutton {
   cursor: pointer;
   padding-right: 1em;
+}
+
+.client__optionpopup {
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: solid thin #0000000d;
+  -webkit-box-shadow: 0px 0px 50px #00000021;
+          box-shadow: 0px 0px 50px #00000021;
+  -webkit-transform: translate(0px, -5.5em);
+          transform: translate(0px, -5.5em);
+  border-radius: .3em;
+  position: absolute;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 0.7em;
+  padding-left: 1.5em;
+  right: 0;
+}
+
+.client__delete {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  right: 0;
+  margin-top: -10em;
+  border-radius: .3em;
+  padding: 1em;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+#confirm-client {
+  width: 10em;
+  margin: .3em;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .client__task {
@@ -387,7 +438,7 @@ label.client__clientratelabel {
   height: auto;
   -webkit-transition: ease all .7s;
   transition: ease all .7s;
-  padding: 0 1em;
+  padding: .5em 0em;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
@@ -849,6 +900,22 @@ input {
   font-family: Poppins,Roboto;
 }
 
+.alert {
+  color: #d12600;
+}
+
+.alert-button {
+  background-color: #d12600;
+  color: #f3f3f3;
+  padding: .5em;
+  width: 10em;
+  border-radius: .2em;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin: .5em;
+}
+
 .newJob__button {
   border: none;
   -webkit-transform: skew(-17deg, 0deg) rotate(0deg) translate(5px, 1px);
@@ -893,7 +960,7 @@ input {
   color: #f3f3f3;
 }
 
-.client__options {
+.color__options {
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -901,9 +968,12 @@ input {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 99%;
           flex: 1 0 99%;
-  right: 13em;
-  margin-top: .2em;
+  right: 0;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+  margin-top: -6.8em;
   padding: .5em 1em;
+  top: 0;
   border-radius: .5em;
   min-height: 3em;
 }

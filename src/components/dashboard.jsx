@@ -25,8 +25,6 @@ let styles = {
   }
 }
 
-// const clientsRef = app.firestore().collection("clients");
-
 class Dashboard extends Component {
   constructor(props) {
     super(props)
@@ -39,9 +37,8 @@ class Dashboard extends Component {
           addStatus:styles.paused
         },
         clientInfo:{
-          name:'',
-          colour:'',
           id:0,
+          name:'',
           options:{
             clientColor:'#fff'
           },
@@ -51,54 +48,11 @@ class Dashboard extends Component {
       } 
   }
 
-
-  componentDidMount() {
-    const db = app.firestore();
-
-    const {currentUser} = this.props
-    const userUid = currentUser.uid
-   
-    // let clientRef = db.collection('users').doc(userUid);
-
-    db.settings({
-      timestampsInSnapshots: true
-    });
-    db.collection('users').doc(userUid).collection('clients').get()
-    .then(querySnapshot => {
-      const data = querySnapshot.docs.map(doc => doc.data());
-      this.setState({
-        clients:data
-      })
-    });
-  
-    // db.collection('users').doc(userUid).collection('clients').doc(name).set({...data});
-    
-  }
-
-  componentDidUpdate(){
-    const db = app.firestore();
-
-    const {currentUser} = this.props
-    const userUid = currentUser.uid
-   
-
-
-    db.settings({
-      timestampsInSnapshots: true
-    });
-    db.collection('users').doc(userUid).collection('clients').get()
-    .then(querySnapshot => {
-      const data = querySnapshot.docs.map(doc => doc.data());
-      this.setState({
-        clients:data
-      })
-    });
-  }
-
   handleClientInput = (e) => {
     e.preventDefault();
     let id = Date.now()
     let clientInfo = this.state.clientInfo
+    
     this.setState({
       clientInfo:{
         ...clientInfo,
@@ -109,12 +63,13 @@ class Dashboard extends Component {
     })
   }
 
-  handleClientAdd = (e,user) => {
+  handleClientAdd = (e) => {
     e.preventDefault();
 
     let data = this.state.clientInfo
     let name = this.state.clientInfo.name
     let clients = this.state.clients;
+
     this.setState({
         ...clients,
         clientInfo:{
@@ -135,9 +90,8 @@ class Dashboard extends Component {
     setTimeout(() => {
       this.setState({
         clientInfo:{
-          name:'',
-          colour:'',
           id:0,
+          name:'',
           options:{
             clientColor:'#fff'
           },
@@ -151,14 +105,13 @@ class Dashboard extends Component {
   render() {  
   
     let {clientInfo,clients} = this.state
-
     let {addStatus} = this.state.styling
     let findClient = clients.find(client => client.name === clientInfo.name);
     let currentUser = this.props
+
     return (
         <>
-      <div className="dashboard">
-       
+      <div className="dashboard"> 
           <header className="header">
             <div className="header_left">
               <div className="logo__header">myTime</div>
@@ -170,11 +123,9 @@ class Dashboard extends Component {
           </header>
           <div className="dashboard__clients">
           <form className="jobs" action="">
-
               <div className="clients__container" htmlFor="nj">
-
                 {
-                    this.state.clients.map((client) => {
+                    this.props.data.map((client) => {
                       let clientProps = {
                         ...client,
                         key:client.id
@@ -182,7 +133,6 @@ class Dashboard extends Component {
                       return (<Clients {...clientProps} currentUser={currentUser}/>) 
                     })
                   }
-                
               </div>
               </form>
           </div>
