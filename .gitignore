@@ -11,6 +11,10 @@
 # production
 /build
 
+# security
+src/firebase.jsx
+.firebase/
+
 # misc
 .DS_Store
 .env.local
@@ -18,8 +22,6 @@
 .env.test.local
 .env.production.local
 .firebaserc
-/.firebase
-firebase.jsx
 database.rules.json
 firebase-debug.log
 firebase.json
