@@ -11,8 +11,8 @@ $color-green: #1BBF15;
 // theme styles
 $color-link:#fd4218;
 $color-link-alt:#d12600;
-
 $color-light:#f3f3f3;
+$color-light-alt:#fafafa;
 $color-dark:#333;
 
 a {
@@ -31,6 +31,7 @@ button:hover {
 
 @import "_reset.scss";
 @import "_layout.scss";
+@import "_clients.scss";
 @import "_auth.scss";
 @import "_styling.scss";
 @import "_color.scss";

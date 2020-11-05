@@ -37,8 +37,7 @@ let styles = {
         width:'81%',
         zIndex:'2',
         left:'9%',
-        top:'14.8em',
-        marginTop:'2em',
+        top:'15.8em',
     },
     flexRow: {
         display:'flex',
@@ -108,6 +107,7 @@ class Clients extends Component {
         }
 
     }
+
 
 
     startTimer = () => {
@@ -223,7 +223,7 @@ class Clients extends Component {
         let data = this.state.data
         let addJob = this.state.jobs.concat(data);
         let job = data.job
-        let rate = data.rate
+        
         // let task = data.task
         localStorage.clear();
 
@@ -300,7 +300,6 @@ class Clients extends Component {
             job:e.target.value
           }
         })
-    
       }
 
           
@@ -329,7 +328,7 @@ class Clients extends Component {
             logTime:newLog,
             timerTime,
             timerStart,
-            money:total
+            money:total,
           },
         })
       } 
@@ -359,7 +358,6 @@ class Clients extends Component {
       }
 
       handleColor = (e,clientOptions) => {
-      
         e.preventDefault();;
         this.setState({
           clientOptions:{ 
@@ -372,7 +370,6 @@ class Clients extends Component {
           colorToggle: !prevState.colorToggle
         }))
 
-        
         setTimeout(() => { 
           const client = this.props.name
           const clientOptions = this.state.clientOptions
@@ -409,7 +406,7 @@ class Clients extends Component {
 
    handleToggle=(e)=>{
     e.preventDefault()
-    const target = e.target.getAttribute('value');
+    let target = e.target.getAttribute('value');
    
     this.setState(state  => ({
       [target]: !this.state[target]
@@ -445,8 +442,8 @@ class Clients extends Component {
       }
 
     render() {
-        let {name} = this.props
-        let {timerTime,clientToggle} = this.state
+        let {name,settings} = this.props
+        let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle} = this.state
         let {pauseTime,job,task,client,startTime,resumeTime,rate} = this.state.data
         let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
         let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
@@ -459,97 +456,113 @@ class Clients extends Component {
    
         return (
           
-          <div className="client-card"> 
+        <div className="client"> 
             { timerTime > 0 ? <Beforeunload onBeforeunload={ () => "You have time running, please log time"} /> : null }
           
 
-            <div className="timer-notification" onChange={this.timeKeeper} style={timeStatus}> 
-             <div className="timer-notification__control">
-                
-                        
-               <div style={styles.flexRow}>
-                  <h4>On the clock
-                  </h4>
-                  
-                  <div style={logStatus} className="client__pauses">
+            <div
+              className="client__timer-notification"
+              onChange={this.timeKeeper}
+              style={timeStatus}>
+              <div className="client__timer-control">
 
-                      <div style={pauseStatus} className="client__control" onClick={this.pauseTimer}>
-                          <GrPauseFill/>
-                          { pauseStatus === 'Paused' ? 'ed' : null }</div>
-                  </div>
-                  <div style={logStatus} className="client__resumes">
-                      <div
-                          style={resumeStatus}
-                          className="client__control"
-                          onClick={this.resumeTimer}>
-                          <GrPlayFill/>
+                <div style={styles.flexRow}>
+                      <h4>On the clock
+                      </h4>
+
+                      <div style={logStatus} className="client-pauses">
+
+                          <div style={pauseStatus} className="client__timer-button" onClick={this.pauseTimer}>
+                              <GrPauseFill/>
+                              { pauseStatus === 'Paused' ? 'ed' : null }</div>
+                      </div>
+                      <div style={logStatus} className="client-resumes">
+                          <div
+                              style={resumeStatus}
+                              className="client__timer-button"
+                              onClick={this.resumeTimer}>
+                              <GrPlayFill/>
+                          </div>
+                      </div>
+                      <div style={logStatus} className="client-log">
+                          <div
+                              className="client__timer-button"
+                              onMouseDown={this.handleLog}
+                              onMouseUp={this.handleStoreData}>
+                              <GrShare/>
+                          </div>
                       </div>
                   </div>
-                  <div style={logStatus} className="client__log"> 
-                    <div
-                        
-                        className="client__control"
-                        onMouseDown={this.handleLog}
-                        onMouseUp={this.handleStoreData}>
-                        <GrShare/>
-                    </div>
-                  </div>
-                  </div> {name} {job} <span>{hours}</span> Hrs : <span>{minutes}</span> Mins : <span>{seconds}</span> Secs <span className="client__rate"> $ {total.toFixed(2)} </span>
+                  {name} {job}
+                  <span>{hours}</span>
+                  Hrs :
+                  <span>{minutes}</span>
+                  Mins :
+                  <span>{seconds}</span>
+                  Secs
+                  <span className="clpanel__rate">
+                      $ {total.toFixed(2)}
+                  </span>
               </div>
-                    
             </div>
-                {clientToggle === name ? <h3 className={"client-name "+clientOptions.clientColor} onClick={this.handleClientToggle} id=''>{name}</h3> : <h3 className={"client-name "+clientOptions.clientColor} onClick={this.handleClientToggle} id={name}>{name}</h3>}
+                {clientToggle === name ? <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} id=''>{name}</h3> : <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} id={name}>{name}</h3>}
                 
                 {clientToggle === name ? 
                 <> 
-                <div className={"client__jobInfo"} style={styles.max}>
+                <div className="clpanel" style={styles.max}>
 
-                    <div className="client__clientdash">
+                    <div className="clpanel__clientdash">
 
-                        <div className="client__name">
-                            <h3 className={"client-name panel "+clientOptions.clientColor}>{name}</h3>
+                        <div className="clpanel__clientname">
+                            <h3 className={"clientname-panel "+clientOptions.clientColor}>{name}</h3>
                             <label
                                 style={inputStatus}
-                                className="client__clientratelabel"
+                                className="clpanel__clientratelabel"
                                 htmlFor="clientrate">
-                                <span style={inputStatus} className="dollar">$</span><input
+
+
+                                <span style={inputStatus} className="dollar">$</span>
+                                {this.props.settings.map((setting,i) =>   <input key={i}
                                     style={inputStatus}
                                     id="clientrate"
-                                    className="client__clientrate"
+                                    className="clpanel__clientrate"
                                     onChange={this.handleClientRate}
-                                    value={rate}
+                                    // defaultValue={this.props.settings.globalRate}
+                                    value={ setting.setGlobalRate ? setting.globalRate : rate}
                                     placeholder="Hourly Rate..."
-                                    type="number"/>
+                                    type="number"/> )}
+                              
                             </label>
                         </div>
-                        <div className="client__optionsdash">
+                        <div className="clpanel__optionsdash">
                             
                             
-                            <div style={ this.state.optionToggle ? null : styles.shrinkHor } className="client__optionpopup"> 
+                            <div style={ optionToggle ? null : styles.shrinkHor } className="clpanel__optionpopup"> 
                                 
-                                <div className="client__optionbutton" value={'colorToggle'} onClick={this.handleToggle} >
+                                <div className="clpanel__optionbutton" value={'colorToggle'} onClick={this.handleToggle} >
                                     Color Label
                                 </div>
-                                <div className="client__optionbutton alert" value={'deleteToggle'} onClick={this.handleToggle} >
+                                <div className="clpanel__optionbutton alert" value={'deleteToggle'} onClick={this.handleToggle} >
                                   Delete
-                                  { this.state.deleteToggle ?  <span class="client__delete">
+                                  { deleteToggle ?  
+                                  <><div class="clpanel__delete">
                                     <label htmlFor="confirm-client .alert">Enter clients name to confirm deletion</label>
                                     <input id={'confirm-client'} onChange={this.handleDeleteConfirm} placeholder={name} type="text"/>
                                   { name === this.state.deleteClientInput
                                     ?   <div onClick={this.handleDeleteClient} className="alert-button">CONFIRM</div>
                                     :   <div onClick={this.handleDeleteClient} style={{ pointerEvents:'none', cursor:'no-drop', opacity:.3,}} className="alert-button">CONFIRM</div>
                                   }
-                                  </span> : null }
+                                  </div><div className="clpanel__overlay" onMouseUp={this.handleClearToggles}></div></> : null }
                                  
                                 </div>
                               </div>
-                              <div className="client__optionbutton" value={'optionToggle'} onClick={this.handleToggle} onMouseUp={this.handleClearToggles}>Options</div>
-                              <div onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} className="client__cardclose">Close</div>
+                              <div className="clpanel__optionbutton" value={'optionToggle'} onClick={this.handleToggle} onMouseUp={this.handleClearToggles}>Options</div>
+                              <div onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} className="clpanel__cardclose">Close</div>
                         </div>
                     </div>
-                    { this.state.colorToggle && !this.state.deleteToggle ?
-                    <div className="color__options">
-                        <div className="options__colorpick">
+                    { colorToggle && !deleteToggle ?
+                    <div className="clpanel__colorspanel">
+                        <div className="clpanel__colorpick">
                             <ul>
                                 <li className='red' onClick={this.handleColor}></li>
                                 <li className='turq' onClick={this.handleColor}></li>
@@ -563,7 +576,7 @@ class Clients extends Component {
                         </div>
                     </div>
                     : null }
-                    <div className="client__task">
+                    <div className="clpanel__task">
                       <input
                             style={inputStatus}
                             value={job}
@@ -579,24 +592,24 @@ class Clients extends Component {
                             className="task__input"
                             placeholder="Task Name..."/>
                         { job === '' ? null :
-                        <span style={inputStatus} className="client__control" onClick={this.startTimer}>Start</span>
+                        <div style={inputStatus} className="clpanel__control" onClick={this.startTimer}>Start</div>
                         }
-                        <div className="client__timer" style={timeStatus}>
+                        <div className="clpanel__timer" style={timeStatus}>
                             <span>{job}</span>
                             <span>{task}</span>
                             <span>{startTime}</span>
                         </div>
-                        <div className="client__timer" onChange={this.timeKeeper} style={timeStatus}>
-                        <span className="client__time">{hours}</span> Hrs : <span className="client__time">{minutes}</span> Mins : <span className="client__time">{seconds}</span> Secs at ${rate} per hour<span className="client__rate" style={logStatus}>/ $ {total.toFixed(2)}</span>
+                        <div className="clpanel__timer" onChange={this.timeKeeper} style={timeStatus}>
+                        <span className="clpanel__time">{hours}</span> Hrs : <span className="clpanel__time">{minutes}</span> Mins : <span className="clpanel__time">{seconds}</span> Secs at ${rate} per hour<span className="clpanel__rate" style={logStatus}>/ $ {total.toFixed(2)}</span>
                         </div>
-                        <div style={logStatus} className="client__pauses">
-                            <div style={pauseStatus} className="client__control" onClick={this.pauseTimer}>Pause{ pauseStatus === 'Paused' ? 'ed' : null }</div>
+                        <div style={logStatus} className="clpanel__pauses">
+                            <div style={pauseStatus} className="clpanel__control" onClick={this.pauseTimer}>Pause{ pauseStatus === 'Paused' ? 'ed' : null }</div>
                             {pauseTime}
                         </div>
-                        <div style={logStatus} className="client__resumes">
+                        <div style={logStatus} className="clpanel__resumes">
                             <div
                                 style={resumeStatus}
-                                className="client__control"
+                                className="clpanel__control"
                                 onClick={this.resumeTimer}>Resume
                             </div>
                             {resumeTime}
@@ -604,13 +617,13 @@ class Clients extends Component {
 
                         <span
                             style={logStatus}
-                            className="client__control"
+                            className="clpanel__control"
                             onMouseDown={this.handleLog}
                             onMouseUp={this.handleStoreData}>Log</span>
 
                     </div>
                 
-                <Scrollbar className="client__tasklist" style={{ padding: '1em' }}>
+                  <Scrollbar className="clpanel__tasklist" style={{ padding: '1em' }}>
                         { this.props.jobs.map((job) => { let jobProps = { ...job, key:job.id }
                         return <Jobs {...jobProps}/> }) }
                    </Scrollbar>

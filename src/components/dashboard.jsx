@@ -4,6 +4,8 @@ import Clients from './clients';
 // import app from '../appConfig';
 import app from "../firebase";
 
+//plugins
+import { RiListSettingsFill } from "react-icons/ri";
 
 let styles = {
   jobInfo:{
@@ -29,6 +31,11 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
       this.state = {
+        settingsToggle:false,
+        settings:{
+          setGlobalRate:false,
+          globalRate:'',
+        },
         styling:{
           logStatus:styles.close,
           timeStatus:styles.close,
@@ -46,6 +53,48 @@ class Dashboard extends Component {
         clients:[],
       
       } 
+  }
+
+
+
+  handleGlobalRateInput = (e) => {
+    e.preventDefault();
+    let globalRate = e.target.value
+    this.setState({
+      settings:{
+        globalRate:globalRate,
+        setGlobalRate:true,
+      }
+    })
+  }
+
+  handleSetGlobalRate = (e) => {
+    e.preventDefault();
+    let {globalRate,setGlobalRate} = this.state.settings
+    let {currentUser} = this.props
+    let db = app.firestore();
+    let userUid = currentUser.uid
+
+    db.collection('users').doc(userUid).collection('settings').doc('rates').set({globalRate,setGlobalRate});
+    
+  }
+
+  handleResetGlobalRate = (e) => {
+    e.preventDefault();
+    
+    let {currentUser} = this.props
+    let db = app.firestore();
+    let userUid = currentUser.uid
+
+    this.setState({
+      settings:{
+        globalRate:''
+      }
+    })
+
+    let settings = {globalRate:'',setGlobalRate:false}
+    db.collection('users').doc(userUid).collection('settings').doc('rates').set({...settings});
+    
   }
 
   handleClientInput = (e) => {
@@ -69,7 +118,10 @@ class Dashboard extends Component {
     let data = this.state.clientInfo
     let name = this.state.clientInfo.name
     let clients = this.state.clients;
-
+    let db = app.firestore();
+    let {currentUser} = this.props
+    let userUid = currentUser.uid
+  
     this.setState({
         ...clients,
         clientInfo:{
@@ -77,13 +129,12 @@ class Dashboard extends Component {
         }
     })
 
-    let db = app.firestore();
+ 
     db.settings({
       timestampsInSnapshots: true
     });
     
-    const {currentUser} = this.props
-    const userUid = currentUser.uid
+  
     
     db.collection('users').doc(userUid).collection('clients').doc(name).set({...data});
     
@@ -101,40 +152,55 @@ class Dashboard extends Component {
     },300)
   }
 
+  handleToggle=(e)=>{
+    e.preventDefault()
+    let target = e.target.getAttribute('value');
+   
+    this.setState(state  => ({
+      [target]: !this.state[target]
+    }));
+    console.log(target)
+   }
+
 
   render() {  
   
-    let {clientInfo,clients} = this.state
+    let {clientInfo,clients,settingsToggle} = this.state
+    let {globalRate} = this.state.settings
     let {addStatus} = this.state.styling
-    let findClient = clients.find(client => client.name === clientInfo.name);
-    let currentUser = this.props
+    let clientsProps = this.props.data
+    let findClient = clientsProps.find(client => client.name === clientInfo.name);
 
     return (
         <>
       <div className="dashboard"> 
           <header className="header">
-            <div className="header_left">
-              <div className="logo__header">myTime</div>
-              <div className="client__label">
+            <div className="header__left">
+            {this.props.settings.map((setting,i) => 
+              <div key={i} className="header__settings">
+                  <div className="header__logo">myTime</div>
+                  <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiListSettingsFill style={{pointerEvents:'none'}}/></div>
+                  { settingsToggle ? <div className="header__settings-popup"><div className="header__dollar">$</div>
+                   <input value={setting.setGlobalRate ? setting.globalRate : globalRate } onChange={this.handleGlobalRateInput} placeholder={'Global Rate'} type="number"/>{ setting.setGlobalRate ?  <div className="header__rateset theme--button" onClick={this.handleResetGlobalRate}>RESET</div>  : <div className="header__rateset theme--button" onClick={this.handleSetGlobalRate}>SET</div> }</div> : null }
+              </div>
+                )}
+              <div className="header__clientlabel">
                 <input style={null} value={clientInfo.name} onChange={this.handleClientInput}  name='nc' className="client__input" placeholder="New Client..."/>
-                <div style={clientInfo.name ==='' || findClient ? addStatus : null } onClick={this.handleClientAdd} className="client__add">ADD</div>
+                <div style={clientInfo.name ==='' || findClient ? addStatus : null } onClick={this.handleClientAdd} className="client__add theme-button">ADD</div>
+
               </div>
             </div>
           </header>
-          <div className="dashboard__clients">
-          <form className="jobs" action="">
-              <div className="clients__container" htmlFor="nj">
+          <div className="clients">
                 {
                     this.props.data.map((client) => {
                       let clientProps = {
                         ...client,
                         key:client.id
                       } 
-                      return (<Clients {...clientProps} currentUser={currentUser}/>) 
+                      return (<Clients {...clientProps} settings={this.props.settings}/>) 
                     })
                   }
-              </div>
-              </form>
           </div>
         </div>  
         </>

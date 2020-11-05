@@ -23,7 +23,7 @@ export function setData(data) {
 }
 
 
-export default {getData}
+export default {getData,deleteClient}
 
 
 

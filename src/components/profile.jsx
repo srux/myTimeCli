@@ -18,6 +18,7 @@ export default function Profile() {
   const userUid = currentUser.uid
 
   const [data, setData] = useState([]);
+  const [settings, setSettings] = useState([]);
 
   useEffect(() => { 
           const updateData = db.collection('users').doc(userUid).collection('clients').onSnapshot(snap => {
@@ -27,7 +28,18 @@ export default function Profile() {
         //remember to unsubscribe from your realtime listener on unmount or you will create a memory leak
         return () => updateData()
   }, []);
+
+      useEffect(() => { 
+        const updateSettings= db.collection('users').doc(userUid).collection('settings').onSnapshot(snap => {
+        const settings = snap.docs.map(doc => doc.data())
+        setSettings(settings)
+      });
+      //remember to unsubscribe from your realtime listener on unmount or you will create a memory leak
+      return () => updateSettings()
+    }, []);
   
+
+
   async function handleLogout() {
     setError("")
 
@@ -38,6 +50,7 @@ export default function Profile() {
       setError("Failed to log out")
     }
   }
+  
 
   return (
     <div className="profile" style={{backgroundImage: `url(${profileBg})`}}>
@@ -53,7 +66,7 @@ export default function Profile() {
         </button>
           </div>
         </div>
-      <Dashboard currentUser={currentUser} data={data} />
+      <Dashboard currentUser={currentUser} data={data} settings={settings} />
       </div>
   )
 }

@@ -14,21 +14,77 @@
     align-items: flex-start;
     flex-direction: column;
     padding:0em 2em;
-    .logo__header {
-        font-family:Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
-        font-weight: 500;
-        font-size:2em;
+    .header__left {
+        width:36.8%;
+    }
+    .header__logo {
+        color:$color-link;
+        font-weight: 700;
+        font-size:3em;
         padding: .5em 0;
+        margin-right: .2em;
     }
-    .header_left {
-        width:24%;
+    .header__clientlabel {
+        display:flex;
+        height:3.3em;
     }
+    .header__settings {
+        display: flex;
+        height: 3.3em;
+        align-items: center;
+        margin: 0em 0em 2em 0;
+    }
+    .header__settings-toggle {
+        height: 100%;
+        display: flex;
+        margin-right: 1em;
+        margin-top: -1em;
+        cursor:pointer;
+    }
+    .header__settings-popup {
+        margin-top: -2.3em;
+        display: flex;
+        align-items: center;
+    }
+
+    .header__dollar {
+        color: $color-light;
+        position: absolute;
+        margin-left: .7em;
+    }
+
+    .header__rateset {
+        height: 2.3em;
+    }
+
+    .header__settings-toggle svg {
+        font-size: 2.1em;
+        padding: .15em;
+        border-radius: 1em;
+        color: $color-light;
+        background-color: $color-link;
+    }
+    .header__settings-popup input {
+        height: 2.3em;
+        width:10em;
+        border-radius: .3em;
+        padding:0em 1em 0em 2em;
+        color: $color-light;
+        background-color: $color-link;
+    }
+    
+    .header__settings-popup input::placeholder {
+        color: $color-light;
+    }
+
 }
 
-.dashboard__clients {
+
+
+.clients {
     padding:1em 2em;
     margin-top:1em;
-    .jobs {
+    .clients__jobs {
         display:flex;
     }
 }
@@ -77,45 +133,6 @@
     flex-direction: column;
 }
 
-
-.clients__container {
-    display: flex;
-    flex: 1 0 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.client-card {
-    display: flex;
-    flex-direction: column;
-    background-color: #fafafa;
-    border-radius: .3em;
-    width: 19%;
-    margin: 0.5em 1% 0.5em 0;
-    overflow:hidden;
-}
-
-.client-name {
-    padding: .7em;
-    cursor: pointer;
-}
-.client-name.panel {
-    padding: .3em 1em;
-    border-radius: .4em;
-    margin-right: .5em;
-    transition:ease all 1s;
-}
-
-.client__clientselect {
-    border-radius: .3em;
-    border: none;
-    background-color: #efefef;
-    margin-right: .2em;
-    padding: 0em 1em 0em 1em;
-    height: 2.5em;
-    cursor: pointer;
-}
-
 .task__input {
     border-radius: .3em;
     border:none;
@@ -126,33 +143,7 @@
     
 }
 
-.client__input:focus {
-    outline:none;
-}
 
-.client__jobInfo {
-    background-color: #fafafa;
-    border-radius: .3em;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    padding: .5em 1em;
-    box-shadow: 0px 0px 100px #0000002e;
-    transition:ease all 1s;
-}
-
-.client__jobInfo::-webkit-scrollbar {
-    display: none;
-}
-
-.client__clientdash {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding-right: 1em;
-    font-weight: 500;
-}
 
 
 span.dollar {
@@ -160,77 +151,10 @@ span.dollar {
     opacity: .7;
 }
 
-.client__name {
-    display: flex;
-    align-items: center;
-    margin: .5em 0;
-}
 
-.client__clientratelabel {
-    width: 10em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #efefef;
-    border-radius: .3em;
-    height: 2.5em;
-    margin: .5em 0em;
-}
 
-.client__clientrate {
-    border-radius: .3em;
-    border: none;
-    background-color: #efefef;
-    margin-right: .2em;
-    // padding: 0em 0em 0em 1em;
-    height: 2.5em;
-    width: 8em;
-    // margin: 0 1em;
-}
 
-.client__clientrate:focus {
-    outline: none;
-}
 
-.client__cardclose {
-    cursor: pointer;
-}
-
-.client__optionsdash {
-    display: flex;
-}
-
-.client__optionbutton {
-    cursor: pointer;
-    padding-right: 1em;
-}
-
-.client__optionpopup {
-    transition: ease all 1s;
-    display: flex;
-    border: solid thin #0000000d;
-    box-shadow: 0px 0px 50px #00000021;
-    transform: translate(0px, -5.5em);
-    border-radius: .3em;
-    position: absolute;
-    justify-content: flex-end;
-    padding: 0.7em;
-    padding-left:1.5em;
-    right: 0;
-    
-}
-
-.client__delete {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: 0;
-    margin-top: -10em;
-    border-radius: .3em;
-    padding: 1em;
-    background-color: #fafafa;
-    text-align: center;
-}
 
 #confirm-client {
     width: 10em;
@@ -238,88 +162,7 @@ span.dollar {
     align-self: center;
 }
 
-.client__task {
-    width: 100%;
-    display: flex;
-    height: auto;
-    transition: ease all .7s;
-    padding: .5em 0em;
-    align-items: flex-start;
-}
 
-.client__tasklist {
-    width: 100%;
-    padding: 0 1em;
-}
-
-.client__timer {
-    height:3.2em;
-    display: flex;
-    align-items: center;
-    margin-right: 1em;
-}
-
-.client__pauses {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.client__resumes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.client__time {
-    width: 2em;
-    margin-left: .3em;
-}
-
-.client__rate {
-    width: 7em;
-}
-
-.timer-notification {
-    position: absolute;
-    top: 7em;
-    right: 10.7%;
-    background-color: $color-dark;
-    padding: .5em 1em;
-    border-radius: .3em;
-    color: #fafafa;
-}
-
-.timer-notification__control {
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-}
-
-.timer-notification__control .client__control {
-    font-size: .7em;
-}
-
-
-
-.timer-notification__control span {
-    width: 1.5em;
-    margin-left: .7em;
-}
-
-.timer-notification .client__rate {
-    width: 7em;
-}
-
-.timer-notification__control .client__pauses {
-    margin-left: .7em;
-}
-
-
-.timer-notification__control .client__log {
-    margin-right: .7em;
-}
 
 
 .existingjobs {
@@ -407,35 +250,15 @@ span.dollar {
     
 }
 
-.client__timer span {
+.clpanel__timer span {
     padding: 0 0.5em 0 .5em;
 }
 
-.client__label {
-    display:flex;
-    height:3.3em;
-}
 
-.client__input {
-    border-radius: .3em 0 0 .3em;
-    border:none;
-    background-color: #efefef;
-    margin-right: .2em;
-    padding:0em 0em 0em 1em;
-    width:100%;
-}
-.client__add {
-    display:flex;
-    align-items: center;
-    padding:.5em 1em;
-    background-color: #efefef;
-    color:#555;
-    transition: ease all 1s;
-    cursor: pointer;
-    border-radius:0 .3em .3em 0;
-}
 
-.client__add:hover {
+
+
+.clpanel__add:hover {
     background-color:#333;
     color:#efefef;
 }

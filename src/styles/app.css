@@ -90,6 +90,10 @@ select {
   font: inherit;
 }
 
+input:focus {
+  outline: none;
+}
+
 ul {
   padding: 0;
   margin: 0;
@@ -146,23 +150,105 @@ li {
   padding: 0em 2em;
 }
 
-.header .logo__header {
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
-  font-weight: 500;
-  font-size: 2em;
+.header .header__left {
+  width: 36.8%;
+}
+
+.header .header__logo {
+  color: #fd4218;
+  font-weight: 700;
+  font-size: 3em;
   padding: .5em 0;
+  margin-right: .2em;
 }
 
-.header .header_left {
-  width: 24%;
+.header .header__clientlabel {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 3.3em;
 }
 
-.dashboard__clients {
+.header .header__settings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 3.3em;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0em 0em 2em 0;
+}
+
+.header .header__settings-toggle {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 1em;
+  margin-top: -1em;
+  cursor: pointer;
+}
+
+.header .header__settings-popup {
+  margin-top: -2.3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header .header__dollar {
+  color: #f3f3f3;
+  position: absolute;
+  margin-left: .7em;
+}
+
+.header .header__rateset {
+  height: 2.3em;
+}
+
+.header .header__settings-toggle svg {
+  font-size: 2.1em;
+  padding: .15em;
+  border-radius: 1em;
+  color: #f3f3f3;
+  background-color: #fd4218;
+}
+
+.header .header__settings-popup input {
+  height: 2.3em;
+  width: 10em;
+  border-radius: .3em;
+  padding: 0em 1em 0em 2em;
+  color: #f3f3f3;
+  background-color: #fd4218;
+}
+
+.header .header__settings-popup input::-webkit-input-placeholder {
+  color: #f3f3f3;
+}
+
+.header .header__settings-popup input:-ms-input-placeholder {
+  color: #f3f3f3;
+}
+
+.header .header__settings-popup input::-ms-input-placeholder {
+  color: #f3f3f3;
+}
+
+.header .header__settings-popup input::placeholder {
+  color: #f3f3f3;
+}
+
+.clients {
   padding: 1em 2em;
   margin-top: 1em;
 }
 
-.dashboard__clients .jobs {
+.clients .clients__jobs {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -219,59 +305,6 @@ li {
           flex-direction: column;
 }
 
-.clients__container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 100%;
-          flex: 1 0 100%;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-.client-card {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  background-color: #fafafa;
-  border-radius: .3em;
-  width: 19%;
-  margin: 0.5em 1% 0.5em 0;
-  overflow: hidden;
-}
-
-.client-name {
-  padding: .7em;
-  cursor: pointer;
-}
-
-.client-name.panel {
-  padding: .3em 1em;
-  border-radius: .4em;
-  margin-right: .5em;
-  -webkit-transition: ease all 1s;
-  transition: ease all 1s;
-}
-
-.client__clientselect {
-  border-radius: .3em;
-  border: none;
-  background-color: #efefef;
-  margin-right: .2em;
-  padding: 0em 1em 0em 1em;
-  height: 2.5em;
-  cursor: pointer;
-}
-
 .task__input {
   border-radius: .3em;
   border: none;
@@ -281,145 +314,9 @@ li {
   margin: .3em 1em 0 0;
 }
 
-.client__input:focus {
-  outline: none;
-}
-
-.client__jobInfo {
-  background-color: #fafafa;
-  border-radius: .3em;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  padding: .5em 1em;
-  -webkit-box-shadow: 0px 0px 100px #0000002e;
-          box-shadow: 0px 0px 100px #0000002e;
-  -webkit-transition: ease all 1s;
-  transition: ease all 1s;
-}
-
-.client__jobInfo::-webkit-scrollbar {
-  display: none;
-}
-
-.client__clientdash {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 100%;
-  padding-right: 1em;
-  font-weight: 500;
-}
-
 span.dollar {
   padding: .1em .1em 0em 0em;
   opacity: .7;
-}
-
-.client__name {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: .5em 0;
-}
-
-.client__clientratelabel {
-  width: 10em;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  background-color: #efefef;
-  border-radius: .3em;
-  height: 2.5em;
-  margin: .5em 0em;
-}
-
-.client__clientrate {
-  border-radius: .3em;
-  border: none;
-  background-color: #efefef;
-  margin-right: .2em;
-  height: 2.5em;
-  width: 8em;
-}
-
-.client__clientrate:focus {
-  outline: none;
-}
-
-.client__cardclose {
-  cursor: pointer;
-}
-
-.client__optionsdash {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.client__optionbutton {
-  cursor: pointer;
-  padding-right: 1em;
-}
-
-.client__optionpopup {
-  -webkit-transition: ease all 1s;
-  transition: ease all 1s;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  border: solid thin #0000000d;
-  -webkit-box-shadow: 0px 0px 50px #00000021;
-          box-shadow: 0px 0px 50px #00000021;
-  -webkit-transform: translate(0px, -5.5em);
-          transform: translate(0px, -5.5em);
-  border-radius: .3em;
-  position: absolute;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  padding: 0.7em;
-  padding-left: 1.5em;
-  right: 0;
-}
-
-.client__delete {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  position: absolute;
-  right: 0;
-  margin-top: -10em;
-  border-radius: .3em;
-  padding: 1em;
-  background-color: #fafafa;
-  text-align: center;
 }
 
 #confirm-client {
@@ -428,118 +325,6 @@ span.dollar {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
-}
-
-.client__task {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: auto;
-  -webkit-transition: ease all .7s;
-  transition: ease all .7s;
-  padding: .5em 0em;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-
-.client__tasklist {
-  width: 100%;
-  padding: 0 1em;
-}
-
-.client__timer {
-  height: 3.2em;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-right: 1em;
-}
-
-.client__pauses {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.client__resumes {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.client__time {
-  width: 2em;
-  margin-left: .3em;
-}
-
-.client__rate {
-  width: 7em;
-}
-
-.timer-notification {
-  position: absolute;
-  top: 7em;
-  right: 10.7%;
-  background-color: #333;
-  padding: .5em 1em;
-  border-radius: .3em;
-  color: #fafafa;
-}
-
-.timer-notification__control {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-.timer-notification__control .client__control {
-  font-size: .7em;
-}
-
-.timer-notification__control span {
-  width: 1.5em;
-  margin-left: .7em;
-}
-
-.timer-notification .client__rate {
-  width: 7em;
-}
-
-.timer-notification__control .client__pauses {
-  margin-left: .7em;
-}
-
-.timer-notification__control .client__log {
-  margin-right: .7em;
 }
 
 .existingjobs {
@@ -668,45 +453,428 @@ span.dollar {
   background-color: #fd4218;
 }
 
-.client__timer span {
+.clpanel__timer span {
   padding: 0 0.5em 0 .5em;
 }
 
-.client__label {
+.clpanel__add:hover {
+  background-color: #333;
+  color: #efefef;
+}
+
+.clients {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 3.3em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 100%;
+          flex: 1 0 100%;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
-.client__input {
-  border-radius: .3em 0 0 .3em;
+.client {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #fafafa;
+  border-radius: .3em;
+  width: 19%;
+  height: 3em;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0.5em 1% 0.5em 0;
+  overflow: hidden;
+}
+
+.client .client__name {
+  padding: .5em 1em;
+  cursor: pointer;
+}
+
+.client .client__timer-notification {
+  position: absolute;
+  top: 7em;
+  right: 10.7%;
+  background-color: #333;
+  padding: .5em 1em;
+  border-radius: .3em;
+  color: #fafafa;
+}
+
+.client .client__timer-notification .clpanel__rate {
+  width: 7em;
+}
+
+.client .client__timer-control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.client .client__timer-button {
   border: none;
-  background-color: #efefef;
-  margin-right: .2em;
-  padding: 0em 0em 0em 1em;
-  width: 100%;
+  cursor: pointer;
+  border-radius: 0.3em;
+  -webkit-transition: ease all .3s;
+  transition: ease all .3s;
+  padding: 0.4em .6em;
+  background-color: #fafafa;
+  font-size: .8em;
+  color: #333;
+  margin: .3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.client__add {
+.client .client__timer-button:hover {
+  background-color: #fd4218;
+  color: #f3f3f3;
+}
+
+.client .client__timer-control .client-control {
+  font-size: .7em;
+}
+
+.client .client__timer-control .client-control span {
+  width: 1.5em;
+  margin-left: .7em;
+}
+
+.client .client__timer-control span {
+  width: 1.5em;
+  margin-left: .7em;
+}
+
+.client .client__timer-control .client-pauses {
+  margin-left: .7em;
+}
+
+.client .client__timer-control .client-log {
+  margin-right: .7em;
+}
+
+.client .client__controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 3em;
+}
+
+.clpanel {
+  background-color: #fafafa;
+  border-radius: .3em;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: .5em 1em;
+  -webkit-box-shadow: 0px 0px 100px #0000002e;
+          box-shadow: 0px 0px 100px #0000002e;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+}
+
+.clpanel .clpanel__clientdash {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: .5em 1em;
-  background-color: #efefef;
-  color: #555;
-  -webkit-transition: ease all 1s;
-  transition: ease all 1s;
-  cursor: pointer;
-  border-radius: 0 .3em .3em 0;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  padding-right: 1em;
+  font-weight: 500;
 }
 
-.client__add:hover {
-  background-color: #333;
-  color: #efefef;
+.clpanel .clpanel__clientname {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: .5em 0;
+}
+
+.clpanel .clpanel__clientname .clientname-panel {
+  padding: .3em 1em;
+  border-radius: .4em;
+  margin-right: .5em;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+}
+
+.clpanel .clpanel__colorspanel {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 99%;
+          flex: 1 0 99%;
+  right: 0;
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+  margin-top: -6.8em;
+  padding: .5em 1em;
+  top: 0;
+  border-radius: .5em;
+  min-height: 3em;
+}
+
+.clpanel .clpanel__colorpick {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.clpanel .clpanel__colorpick ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.clpanel .clpanel__colorpick li {
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+  border-radius: 0.5em;
+  margin-right: .5em;
+}
+
+.clpanel .clpanel__task {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: auto;
+  -webkit-transition: ease all .7s;
+  transition: ease all .7s;
+  padding: .5em 0em;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.clpanel .clpanel__tasklist {
+  width: 100%;
+  padding: 0 1em;
+}
+
+.clpanel .clpanel__clientratelabel {
+  width: 10em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #efefef;
+  border-radius: .3em;
+  height: 2.5em;
+  margin: .5em 0em;
+}
+
+.clpanel .clpanel__clientrate {
+  border-radius: .3em;
+  border: none;
+  background-color: #efefef;
+  margin-right: .2em;
+  height: 2.5em;
+  width: 8em;
+}
+
+.clpanel .clpanel__clientrate:focus {
+  outline: none;
+}
+
+.clpanel .clpanel__cardclose {
+  cursor: pointer;
+}
+
+.clpanel .clpanel__optionsdash {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.clpanel .clpanel__optionbutton {
+  cursor: pointer;
+  padding-right: 1em;
+}
+
+.clpanel .clpanel__optionpopup {
+  -webkit-transition: ease all 1s;
+  transition: ease all 1s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: solid thin #0000000d;
+  -webkit-box-shadow: 0px 0px 50px #00000021;
+          box-shadow: 0px 0px 50px #00000021;
+  -webkit-transform: translate(0px, -5.5em);
+          transform: translate(0px, -5.5em);
+  border-radius: .3em;
+  position: absolute;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 0.7em;
+  padding-left: 1.5em;
+  right: 0;
+}
+
+.clpanel .clpanel__delete {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  right: 0;
+  margin-top: -10em;
+  border-radius: .3em;
+  padding: 1em;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.clpanel .clpanel__overlay {
+  position: absolute;
+  right: 0;
+  top: 3.4em;
+  width: 81vw;
+  height: 60vh;
+  background-color: #0000000a;
+  border-radius: .3em;
+}
+
+.clpanel .clpanel__control {
+  border: none;
+  cursor: pointer;
+  border-radius: 0.3em;
+  -webkit-transition: ease all .3s;
+  transition: ease all .3s;
+  padding: .6em 1em;
+  background-color: #efefef;
+  color: #333;
+  margin: .3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.clpanel .clpanel__control:hover {
+  background-color: #fd4218;
+  color: #f3f3f3;
+}
+
+.clpanel .clpanel__timer {
+  height: 3.2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 1em;
+}
+
+.clpanel .clpanel__pauses {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.clpanel .clpanel__resumes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.clpanel .clpanel__time {
+  width: 2em;
+  margin-left: .3em;
+}
+
+.clpanel .clpanel__rate {
+  width: 7em;
+}
+
+.clpanel .clpanel__clientselect {
+  border-radius: .3em;
+  border: none;
+  background-color: #efefef;
+  margin-right: .2em;
+  padding: 0em 1em 0em 1em;
+  height: 2.5em;
+  cursor: pointer;
+}
+
+.clpanel .clpanel::-webkit-scrollbar {
+  display: none;
 }
 
 .auth {
@@ -898,6 +1066,47 @@ button {
 
 input {
   font-family: Poppins,Roboto;
+  border-radius: .3em 0 0 .3em;
+  border: none;
+  background-color: #efefef;
+  margin-right: .2em;
+  padding: 0em 0em 0em 1em;
+}
+
+.theme--button {
+  border: none;
+  cursor: pointer;
+  border-radius: 0.3em;
+  -webkit-transition: ease all .3s;
+  transition: ease all .3s;
+  padding: .6em 1em;
+  background-color: #efefef;
+  color: #333;
+  margin: .3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.theme--button:hover {
+  background-color: #fd4218;
+  color: #f3f3f3;
+}
+
+.theme-button {
+  -webkit-transition: ease all .7s;
+  transition: ease all .7s;
+}
+
+.theme-button:hover {
+  background-color: #fd4218;
+  color: #f3f3f3;
 }
 
 .alert {
@@ -927,78 +1136,6 @@ input {
   padding: .3em .6em;
 }
 
-.client__controls {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 3em;
-}
-
-.client__control {
-  border: none;
-  cursor: pointer;
-  border-radius: 0.3em;
-  -webkit-transition: ease all .3s;
-  transition: ease all .3s;
-  padding: .6em 1em;
-  background-color: #efefef;
-  color: #333;
-  margin: .3em;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.client__control:hover {
-  background-color: #fd4218;
-  color: #f3f3f3;
-}
-
-.color__options {
-  position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 99%;
-          flex: 1 0 99%;
-  right: 0;
-  -webkit-transition: ease all 1s;
-  transition: ease all 1s;
-  margin-top: -6.8em;
-  padding: .5em 1em;
-  top: 0;
-  border-radius: .5em;
-  min-height: 3em;
-}
-
-.options__colorpick {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.options__colorpick ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-}
-
-.options__colorpick li {
-  width: 2em;
-  height: 2em;
-  cursor: pointer;
-  border-radius: 0.5em;
-  margin-right: .5em;
-}
-
 .newJob__button:hover {
   background-color: #333;
   color: #fff;
@@ -1016,6 +1153,39 @@ input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.client__input {
+  border-radius: .3em 0 0 .3em;
+  border: none;
+  background-color: #efefef;
+  margin-right: .2em;
+  padding: 0em 0em 0em 1em;
+  width: 100%;
+}
+
+.client__add {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: .5em 1em;
+  background-color: #efefef;
+  color: #555;
+  -webkit-transition: ease all .5s;
+  transition: ease all .5s;
+  cursor: pointer;
+  border-radius: 0 .3em .3em 0;
+}
+
+.client__input:focus {
+  outline: none;
+}
+
+.clpanel__input:focus {
+  outline: none;
 }
 
 .submit {
