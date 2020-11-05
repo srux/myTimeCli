@@ -18,6 +18,7 @@
 .env.test.local
 .env.production.local
 .firebaserc
+/src/firebase.jsx
 database.rules.json
 firebase-debug.log
 firebase.json
