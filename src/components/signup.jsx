@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import {useAuth} from '../api/auth'
+import {useData} from '../api/provider'
 
 import { Link, useHistory } from "react-router-dom"
 
@@ -8,7 +8,7 @@ export default function Signup() {
         const emailRef = useRef()
         const passwordRef = useRef()
         const passwordConfirmRef = useRef()
-        const {signup} = useAuth()
+        const {signup} = useData()
         const [error, setError] = useState('')
         const [loading,setLoading] = useState(false)
         const history = useHistory()

@@ -51,8 +51,24 @@ input {
     background-color: #fd4218;
     color: #f3f3f3;
 }
+
+.theme-bsml {
+    height:1.5em;
+    width:auto;
+    cursor: pointer;
+    padding:.3em;
+    background-color:$color-link-alt;
+    color:$color-light;
+    margin:0 .5em;
+}
+
+.theme-bsml:hover {
+    background-color: $color-dark;
+    color: #f3f3f3;
+}
 .theme-button {
     transition:ease all .7s;
+    cursor: pointer;
 }
 
 .theme-button:hover {
@@ -63,6 +79,15 @@ input {
 //alerts
 .alert {
     color:$color-link-alt;
+}
+
+.alert-confirmation {
+    background-color:$color-dark;
+    color:$color-light;
+    margin:0 .3em;
+    border-radius: .3em;
+    padding:.7em;
+    cursor: pointer;
 }
 
 .alert-button {

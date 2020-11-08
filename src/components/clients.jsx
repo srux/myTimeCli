@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 
-import Jobs from './jobs';
+import Job from './job';
 
 // import app from '../appConfig';
 import app from "firebase";
 
 //api
-import {getData,queryData,setData,deleteClient} from "../api/data"
-import {useAuth} from '../api/auth'
+import {deleteClient} from "../api/data"
+
 
 //plugins
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
 import { Beforeunload  } from 'react-beforeunload';
 import Scrollbar from "react-scrollbars-custom";
+
 
 let styles = {
     close:{
@@ -107,7 +108,49 @@ class Clients extends Component {
         }
 
     }
+  
 
+  componentDidMount(){
+      const db = app.firestore();
+      // const {currentUser} = app.auth()
+      const userUid = app.auth().currentUser.uid
+      const client = this.props.name;
+      const ratesRef = db.collection('users').doc(userUid).collection('settings').doc('rates')
+      
+      let data = this.state.data
+      ratesRef.get().then((doc) => {
+        if (doc.exists) {
+          console.log('doc data', doc.data())
+          let rate = doc.data().globalRate
+          console.log(rate)
+         
+          this.setState({
+            data:{
+              ...data,
+              rate
+            }
+          })
+        }
+        else {
+          console.log('no such document')
+        }
+      })
+
+      const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
+      clientRef.get().then((doc) => {
+        if (doc.exists) {
+          let data = doc.data().jobs
+          this.setState({
+           existingJobs:{
+            ...data
+           } 
+          })
+        }
+        else {
+          console.log('no such document')
+        }
+      })
+    }
 
 
     startTimer = () => {
@@ -124,25 +167,27 @@ class Clients extends Component {
         });
         }, 10);
 
-        this.timeStor = setInterval(() => {
-          let client = this.state.data.client
-          let job = this.state.data.job
-          let task = this.state.data.task
-          let timer = this.state.timerTime
-          localStorage.setItem('client',client)
-          localStorage.setItem('Job',job)
-          localStorage.setItem('Task',task)
-          localStorage.setItem('Job Time',timer)
-        },10000)
+        // this.timeStor = setInterval(() => {
+        //   let client = this.state.data.client
+        //   let job = this.state.data.job
+        //   let task = this.state.data.task
+        //   let timer = this.state.timerTime
+        //   localStorage.setItem('client',client)
+        //   localStorage.setItem('Job',job)
+        //   localStorage.setItem('Task',task)
+        //   localStorage.setItem('Job Time',timer)
+        // },10000)
 
         let newStart = new Date().toLocaleTimeString();
         let id = Date.now();
+        let jobId = Date.now();
         let client = this.props.name;
           this.setState ({
             data: {
               ...this.state.data,
               startTime:newStart,
               id,
+              jobId,
               client
             },
             styling: {
@@ -220,10 +265,10 @@ class Clients extends Component {
         clearInterval(this.timer);
         clearInterval(this.timeStor);
 
-        let data = this.state.data
-        let addJob = this.state.jobs.concat(data);
-        let job = data.job
-        
+        var data = this.state.data
+        var addJob = this.state.jobs.concat(data);
+        var job = data.job
+        var jobId = data.jobId
         // let task = data.task
         localStorage.clear();
 
@@ -251,15 +296,77 @@ class Clients extends Component {
           });
          
           const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client);
+          if ( this.props.currentJob === null) {
+            clientRef.update({ 
+              jobs:app.firestore.FieldValue.arrayUnion({
+                job,
+                jobId,
+                tasks:
+                  [data]
+              })
+  
+          })
+          .then(function() {
+            console.log("Job", job, "Added");
+          })
+          .catch(function(error) {
+              alert("Error adding document: ", error);
+          }); 
+          }
+          else {
+            clientRef.get().then((doc) => {
+              if (doc.exists) {
+                console.log('doc data', doc.data())
+                let jobsData = doc.data().jobs
+                console.log(jobsData)
+                let currentJob = this.props.currentJob
+                let selectedJob = jobsData.find(j => j.jobId === currentJob)
+                let tasks = selectedJob.tasks
+                console.log(selectedJob)
+               
+                this.setState({
+                  ...jobsData,
+                  jobsData:[
+                     {
+                      ...selectedJob,
+                      tasks:[
+                        ...tasks,
+                        {
+                        ...data
+                        }]
+                      }
+                  ]
+                })
+              
+                let jobs = this.state.jobsData
+                
+                setTimeout(()=>{
 
-          clientRef.update({ 
-            jobs:app.firestore.FieldValue.arrayUnion({
-              job,
-              tasks:
-                [data]
+                  clientRef.update({
+                    jobs
+                  })
+             
+                  //  clientRef.update({
+                  //   jobs:app.firestore.FieldValue.arrayUnion({
+                  //     job,
+                  //     jobId,
+                  //     tasks:
+                  //       [data]
+                  //   })
+                  //  })
+                  
+                },300)
+        
+        
+              }
+              else {
+                console.log('no such document')
+              }
+              
             })
-
-        }); }, 300);
+            
+          }
+        }, 300);
         
         setTimeout(()=> {
           this.setState ({
@@ -282,6 +389,8 @@ class Clients extends Component {
         })
         }, 600)
       };
+
+ 
     
       addJob = (data) => {
           let task = { id:Date.now(),
@@ -302,6 +411,18 @@ class Clients extends Component {
         })
       }
 
+      setCurrentJob =(e)=>{
+        e.preventDefault();
+        let db = app.firestore();
+        let {currentUser} = app.auth()
+        let userUid = currentUser.uid
+        let client = this.props.name;
+        const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
+        clientRef.update({
+          currentJob:null
+        })
+      }
+
           
       handleNewTaskInput = (e) => {
         this.setState({
@@ -312,6 +433,8 @@ class Clients extends Component {
         })
     
       }
+
+
     
       handleLog = (e) => {
         e.preventDefault();
@@ -335,8 +458,6 @@ class Clients extends Component {
     
 
       timeKeeper = (e) => {
-        console.log(this.state.data.timer)
-
         this.setState ({
           data: {
             ...this.state.data,
@@ -357,6 +478,7 @@ class Clients extends Component {
         })
       }
 
+      
       handleColor = (e,clientOptions) => {
         e.preventDefault();;
         this.setState({
@@ -402,8 +524,6 @@ class Clients extends Component {
 
     } 
 
-
-
    handleToggle=(e)=>{
     e.preventDefault()
     let target = e.target.getAttribute('value');
@@ -442,7 +562,7 @@ class Clients extends Component {
       }
 
     render() {
-        let {name,settings} = this.props
+        let {name,settings,jobs} = this.props
         let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle} = this.state
         let {pauseTime,job,task,client,startTime,resumeTime,rate} = this.state.data
         let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
@@ -522,12 +642,13 @@ class Clients extends Component {
 
 
                                 <span style={inputStatus} className="dollar">$</span>
-                                {this.props.settings.map((setting,i) =>   <input key={i}
+                                {this.props.settings.map((setting,i) =>   
+                                <input key={i}
                                     style={inputStatus}
                                     id="clientrate"
                                     className="clpanel__clientrate"
                                     onChange={this.handleClientRate}
-                                    // defaultValue={this.props.settings.globalRate}
+                                    // defaultValue={setting.globalRate}
                                     value={ setting.setGlobalRate ? setting.globalRate : rate}
                                     placeholder="Hourly Rate..."
                                     type="number"/> )}
@@ -581,6 +702,7 @@ class Clients extends Component {
                             style={inputStatus}
                             value={job}
                             onChange={this.handleNewJobInput}
+                            onFocus={this.setCurrentJob}
                             name='nj'
                             className="task__input"
                             placeholder="Job Name..."/>
@@ -624,16 +746,14 @@ class Clients extends Component {
                     </div>
                 
                   <Scrollbar className="clpanel__tasklist" style={{ padding: '1em' }}>
-                        { this.props.jobs.map((job) => { let jobProps = { ...job, key:job.id }
-                        return <Jobs {...jobProps}/> }) }
+                        { this.props.jobs.map((job) => { let jobProps = { ...job, key:job.jobId }
+                        return <Job {...jobProps} jobs={jobs} name={name} currentJob={this.props.currentJob} styling={this.state.styling} startTimer={this.startTimer} handleNewTaskInput={this.handleNewTaskInput}  /> }) }
                    </Scrollbar>
                 </div>
                 <div onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} className="overlay"></div> 
                 </>
                 : 
-                <div className={"client__jobInfo"} style={styles.hide} ></div>}
-              
-                 
+                <div className={"client__jobInfo"} style={styles.hide}  ></div>}
           </div>
         )
     }

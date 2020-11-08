@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react"
 import { Link, useHistory,navigate } from "react-router-dom"
-import {useAuth} from '../api/auth'
+import {useData} from '../api/provider'
 import app from "firebase";
 
 export default function Login() {
   const emailRef = useRef()
   const passwordRef = useRef()
-  const { login } = useAuth()
+  const { login } = useData()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()

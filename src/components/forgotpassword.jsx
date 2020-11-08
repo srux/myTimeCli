@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react"
-import { useAuth } from "../api/auth"
+import { useData } from "../api/provider"
 import { Link } from "react-router-dom"
 
 export default function ForgotPassword() {
   const emailRef = useRef()
-  const { resetPassword } = useAuth()
+  const { resetPassword } = useData()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)

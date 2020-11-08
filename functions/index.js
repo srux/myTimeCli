@@ -18,9 +18,8 @@ exports.clients = functions.https.onRequest(async (req, res) => {
 })
 
 exports.newUserSignup = functions.auth.user().onCreate(user => {
-    return db.collection('users').doc(user.uid).set({
-       clients:[]
-    })
+    let rates = {settings:{globalRate:0,setGlobalRate:false}}
+    return db.collection('users').doc(user.uid).collection('settings').doc('rates').set({...rates});  
 })
 
 exports.userDelete = functions.auth.user().onDelete(user => {

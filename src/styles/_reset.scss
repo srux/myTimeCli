@@ -97,3 +97,9 @@ li {
     scroll-behavior: auto !important;
   }
 }
+
+/* misc */
+
+svg path {
+  pointer-events: none;
+}

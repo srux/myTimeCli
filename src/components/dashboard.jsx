@@ -34,7 +34,7 @@ class Dashboard extends Component {
         settingsToggle:false,
         settings:{
           setGlobalRate:false,
-          globalRate:'',
+          globalRate:null,
         },
         styling:{
           logStatus:styles.close,
@@ -55,14 +55,12 @@ class Dashboard extends Component {
       } 
   }
 
-
-
   handleGlobalRateInput = (e) => {
     e.preventDefault();
     let globalRate = e.target.value
     this.setState({
       settings:{
-        globalRate:globalRate,
+        globalRate:parseInt(globalRate),
         setGlobalRate:true,
       }
     })
@@ -75,7 +73,7 @@ class Dashboard extends Component {
     let db = app.firestore();
     let userUid = currentUser.uid
 
-    db.collection('users').doc(userUid).collection('settings').doc('rates').set({globalRate,setGlobalRate});
+    db.collection('users').doc(userUid).collection('settings').doc('rates').set({globalRate,setGlobalRate})
     
   }
 
@@ -92,7 +90,7 @@ class Dashboard extends Component {
       }
     })
 
-    let settings = {globalRate:'',setGlobalRate:false}
+    let settings = {globalRate:0,setGlobalRate:false}
     db.collection('users').doc(userUid).collection('settings').doc('rates').set({...settings});
     
   }
@@ -116,7 +114,7 @@ class Dashboard extends Component {
     e.preventDefault();
 
     let data = this.state.clientInfo
-    let name = this.state.clientInfo.name
+    let client = this.state.clientInfo.name
     let clients = this.state.clients;
     let db = app.firestore();
     let {currentUser} = this.props
@@ -136,7 +134,14 @@ class Dashboard extends Component {
     
   
     
-    db.collection('users').doc(userUid).collection('clients').doc(name).set({...data});
+    db.collection('users').doc(userUid).collection('clients').doc(client).set({...data})
+    .then(function() {
+      
+      console.log("Client", client, "Added");
+    })
+    .catch(function(error) {
+        alert("Error adding document: ", error);
+    });
     
     setTimeout(() => {
       this.setState({
@@ -165,7 +170,7 @@ class Dashboard extends Component {
 
   render() {  
   
-    let {clientInfo,clients,settingsToggle} = this.state
+    let {clientInfo,settingsToggle} = this.state
     let {globalRate} = this.state.settings
     let {addStatus} = this.state.styling
     let clientsProps = this.props.data
@@ -181,7 +186,7 @@ class Dashboard extends Component {
                   <div className="header__logo">myTime</div>
                   <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiListSettingsFill style={{pointerEvents:'none'}}/></div>
                   { settingsToggle ? <div className="header__settings-popup"><div className="header__dollar">$</div>
-                   <input value={setting.setGlobalRate ? setting.globalRate : globalRate } onChange={this.handleGlobalRateInput} placeholder={'Global Rate'} type="number"/>{ setting.setGlobalRate ?  <div className="header__rateset theme--button" onClick={this.handleResetGlobalRate}>RESET</div>  : <div className="header__rateset theme--button" onClick={this.handleSetGlobalRate}>SET</div> }</div> : null }
+                   <input value={setting.setGlobalRate ? setting.globalRate : globalRate } onChange={this.handleGlobalRateInput} placeholder={'My Rate'} type="number"/>{ setting.setGlobalRate ?  <div className="header__rateset theme--button" onClick={this.handleResetGlobalRate}>CLEAR</div>  : <div className="header__rateset theme--button" onClick={this.handleSetGlobalRate}>SET</div> }</div> : null }
               </div>
                 )}
               <div className="header__clientlabel">

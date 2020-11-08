@@ -1,6 +1,6 @@
 
 .dashboard {
-    margin:2em 8%;
+    margin:2em 8% 4em 8%;
     display:flex;
     flex-direction: column;
     height:100%;
@@ -13,7 +13,7 @@
     justify-self: auto;
     align-items: flex-start;
     flex-direction: column;
-    padding:0em 2em;
+    padding:2em;
     .header__left {
         width:36.8%;
     }
@@ -189,7 +189,7 @@ span.dollar {
 .existingjobs__jobitem {
     display: flex;
     flex-direction: row;
-    background-color: #efefef;
+    background-color: $color-grey;
     padding: .5em;
     border-radius: .3em;
     transition: ease all 1s;
@@ -201,10 +201,71 @@ span.dollar {
 
 
 .existingjobs__jobtab {
-    padding: 0 1em;
+    padding: .3em 1em;
     background-color: $color-link;
     border-radius: .3em .3em 0 0;
     color:$color-light;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.existingjobs__details {
+    display:flex;
+    align-items: center;
+    flex:1;
+    justify-content: space-between;
+}
+
+.existingjobs__details span {
+    margin-right:1em;
+}
+
+.existingjobs__details div {
+
+}
+
+.existingjobs__newtask {
+    margin: 0;
+    border-radius: .3em;
+    background-color:$color-dark;
+    color:$color-light;
+}
+
+.existingjobs__newtask::placeholder {
+    color:$color-grey;
+    opacity:.7;
+}
+
+// .existingjobs__starttask {
+//     border-radius: 0 .3em .3em 0 !important;
+// }
+
+.existingjobs__jobdate {
+    display:flex;
+    justify-self:flex-end;
+}
+
+.job__timer-control {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+
+.job__newtask {
+    display: flex;
+    height: 1.6em;
+    margin: 0 2em;
+    align-items: center;
+    flex: 1;
+}
+
+.job__timer-notification {
+    display: flex;
+    flex: 1;
 }
 
 .jobitem__pauses {
@@ -229,6 +290,7 @@ span.dollar {
     flex-direction: row;
 }
 
+
 .jobitem__remove {
     display: flex;
     align-self: center;
@@ -248,6 +310,12 @@ span.dollar {
     color:$color-light;
     background-color:$color-link;
     
+}
+
+.jobitem__remove-confirm {
+    display: flex;
+    position: absolute;
+    right: 0;
 }
 
 .clpanel__timer span {

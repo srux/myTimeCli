@@ -1,19 +1,18 @@
 import React, { useContext, useState, useEffect } from "react"
-import { GrUserAdmin } from "react-icons/gr";
 
 // firebase api
 import {auth} from "../firebase";
 
-const AuthContext = React.createContext()
+const DataContext = React.createContext()
 
-export function useAuth() {
-    return useContext (AuthContext)
+export function useData() {
+    return useContext (DataContext)
 }
 
-export function AuthProvider({ children }) {
+export function DataProvider({ children }) {
 
     const [currentUser, setCurrentUser] = useState()
-    const [loading, setLoading] = useState(true) 
+    const [loading, setLoading] = useState(true)
 
       function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password)
@@ -61,9 +60,9 @@ export function AuthProvider({ children }) {
     
     
     return (
-        <AuthContext.Provider value={value}>
+        <DataContext.Provider value={value}>
             {!loading && children}
-        </AuthContext.Provider>
+        </DataContext.Provider>
     );
 }
 

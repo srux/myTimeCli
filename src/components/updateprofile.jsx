@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react"
-import { useAuth } from "../api/auth"
+import { useData } from "../api/provider"
 import { Link, useHistory } from "react-router-dom"
 
 export default function UpdateProfile() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { currentUser, updatePassword, updateEmail } = useAuth()
+  const { currentUser, updatePassword, updateEmail } = useData()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()

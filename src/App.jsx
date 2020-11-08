@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './styles/app.css';
 
 // plugins
-import {BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // components
 import Profile from './components/profile';
@@ -10,9 +10,8 @@ import Signup from './components/signup';
 import Login from './components/login';
 import UpdateProfile from './components/updateprofile';
 import ForgotPassword from './components/forgotpassword';
-import {AuthProvider} from './api/auth';
+import {DataProvider} from './api/provider';
 import PrivateRoute from './components/privateRoute';
-import { auth } from './firebase';
 
 
 class App extends Component {
@@ -25,7 +24,7 @@ class App extends Component {
 
   render() {
     return (
-      <AuthProvider>
+      <DataProvider>
         <Router>
           <Switch>
             <div>
@@ -37,7 +36,7 @@ class App extends Component {
             </div>
             </Switch>
           </Router>
-      </AuthProvider>
+      </DataProvider>
     )
   }
 }
