@@ -19,6 +19,7 @@
     .client__name {
         padding: .5em 1em;
         cursor: pointer;
+        text-shadow: 1px 1px 3px #00000036;
     }
 
     .client__timer-notification {
@@ -131,29 +132,32 @@
         width: 100%;
         padding-right: 1em;
         font-weight: 500;
+        min-height: 5em;
     }
     .clpanel__clientname {
         display: flex;
         align-items: center;
         margin: .5em 0;
         .clientname-panel {
-            padding: .3em 1em;
-            border-radius: .4em;
+            padding: .3em 1.5em;
+            border-radius: 0 .4em .4em 0;
             margin-right: .5em;
-            transition:ease all 1s;
+            margin-left: -.83em;
+            transition: ease all 1s;
+            text-shadow: 1px 1px 3px #00000036;
         }
     }
     .clpanel__colorspanel {
         position: absolute;
         display: flex;
         flex: 1 0 99%;
-        left: 7.3em;
-        height: 2.2em;
-        top: -2.2em;
+        left: 0;
+        height: 2.8em;
+        top: -2.5em;
         transition: ease all 1s;
-        border-radius: 1.3em 1.3em 0em 0;
+        border-radius: .5em .5em 0em 0;
         background-color: #fafafa;
-        padding: .25em;
+        padding: .25em .7em;
         min-height: 2em;
     }
     
@@ -169,7 +173,7 @@
         width: 1.7em;
         height: 1.7em;
         cursor: pointer;
-        border-radius: 50%;
+        border-radius: 50%.3em;
         margin: .25em;
     }
 

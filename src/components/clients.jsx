@@ -526,8 +526,33 @@ class Clients extends Component {
       }
 
       
-      handleClientToggle = (e) => {
+    handleClientToggle = (e) => {
         e.preventDefault()
+        const db = app.firestore();
+      // const {currentUser} = app.auth()
+      const userUid = app.auth().currentUser.uid
+      const client = this.props.name;
+      const ratesRef = db.collection('users').doc(userUid).collection('settings').doc('rates')
+      
+      let data = this.state.data
+      ratesRef.get().then((doc) => {
+        if (doc.exists) {
+          console.log('doc data', doc.data())
+          let rate = doc.data().globalRate
+          console.log(rate)
+         
+          this.setState({
+            data:{
+              ...data,
+              rate
+            }
+          })
+        }
+        else {
+          console.log('no such document')
+        }
+      })
+
        this.setState({
           clientToggle:e.target.id
       })

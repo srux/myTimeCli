@@ -162,7 +162,7 @@ class Job extends Component {
            let {currentJob,job,jobId} = this.props
            let {togglearchive,toggleremove,deleteJobInput,selectedJobName} = this.state
            let jobselect = jobId === currentJob
-           let confirmDelete = deleteJobInput === selectedJobName 
+          //  let confirmDelete = deleteJobInput === selectedJobName 
            let date = new Date(jobId).toString().slice().replace(/\GMT(.*)/g,"");
         return (
             <div className="existingjobs__jobContainer">

@@ -5,7 +5,7 @@ import Clients from './clients';
 import app from "../firebase";
 
 //plugins
-import { RiListSettingsFill } from "react-icons/ri";
+import { RiListSettingsFill,RiTimeFill } from "react-icons/ri";
 
 let styles = {
   jobInfo:{
@@ -54,6 +54,7 @@ class Dashboard extends Component {
       
       } 
   }
+
 
   handleGlobalRateInput = (e) => {
     e.preventDefault();
@@ -183,20 +184,32 @@ class Dashboard extends Component {
       <div className="dashboard"> 
           <header className="header">
             <div className="header__left">
-            {this.props.settings.map((setting,i) => 
-              <div key={i} className="header__settings">
+          
+              <div className="header__settings">
                   <div className="header__logo">myTime</div>
-                  <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiListSettingsFill style={{pointerEvents:'none'}}/></div>
-                  { settingsToggle ? <div className="header__settings-popup"><div className="header__dollar">$</div>
-                   <input value={setting.setGlobalRate ? setting.globalRate : globalRate } onChange={this.handleGlobalRateInput} placeholder={'My Rate'} type="number"/>{ setting.setGlobalRate ?  <div className="header__rateset theme--button" onClick={this.handleResetGlobalRate}>CLEAR</div>  : <div className="header__rateset theme--button" onClick={this.handleSetGlobalRate}>SET</div> }</div> : null }
+                  <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiTimeFill style={{pointerEvents:'none'}}/></div>
+
+                  { settingsToggle ? <div className="header__settings-popup"></div> : null }
+
+                 
               </div>
-                )}
+             
               <div className="header__clientlabel">
                 <input style={null} value={clientInfo.name} onChange={this.handleClientInput}  name='nc' className="client__input" placeholder="New Client..."/>
                 <div style={clientInfo.name ==='' || findClient ? addStatus : null } onClick={this.handleClientAdd} className="client__add theme-button">ADD</div>
 
               </div>
             </div>
+            {this.props.settings.map((setting,i) => 
+            <div key={i} className="header__rate">
+                    <div className="header__dollar">$</div>
+                    <input
+                        value={setting.setGlobalRate ? setting.globalRate : globalRate }
+                        onChange={this.handleGlobalRateInput}
+                        placeholder={'Hourly Rate'}
+                        type="number"/>                   
+                      { setting.setGlobalRate ?  <div className="header__rateset theme--button" onClick={this.handleResetGlobalRate}>CLEAR</div>  : <div className="header__rateset theme--button" onClick={this.handleSetGlobalRate}>SET</div> }
+              </div>   )}
           </header>
           <div className="clients">
                 {

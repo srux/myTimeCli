@@ -1,45 +1,66 @@
 
 .dashboard {
-    margin:2em 8% 4em 8%;
-    display:flex;
+    margin: 2em 8% 4em;
+    display: flex;
     flex-direction: column;
-    height:100%;
-    background-color:#fff;
-    border-radius:.7em;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 0.7em;
 }
 
 .header {
     display: flex;
     justify-self: auto;
     align-items: flex-start;
-    flex-direction: column;
-    padding:2em;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2em;
     .header__left {
-        width:36.8%;
+        min-width: 16em;
+        width: 20em;
     }
     .header__logo {
-        color:$color-link;
+        color: $color-link;
         font-weight: 700;
-        font-size:3em;
-        padding: .5em 0;
-        margin-right: .2em;
+        font-size: 3em;
+        padding: 0.5em 0;
+        margin-right: 0.2em;
+    }
+    .header__rate {
+        display: flex;
+        height: 2.3em;
+        align-items: center;
+        justify-self: flex-end;
+        margin-top: 1em;
+    }
+    .header__rate input {
+        height: 2.68em;
+        padding-left: 2em;
+        margin-right:0;
+        border-radius: .3em;
+        background-color: $color-link;
+        color:$color-light;
+    }
+    .header__rate input::placeholder {
+        color:$color-grey;
     }
     .header__clientlabel {
-        display:flex;
-        height:3.3em;
+        display: flex;
+        height: 3.3em;
     }
     .header__settings {
         display: flex;
         height: 3.3em;
         align-items: center;
-        margin: 0em 0em 2em 0;
+        margin: 0 0 2em;
     }
     .header__settings-toggle {
         height: 100%;
         display: flex;
         margin-right: 1em;
-        margin-top: -1em;
-        cursor:pointer;
+        margin-top: -2em;
+        margin-left: -.7em;
+        cursor: pointer;
     }
     .header__settings-popup {
         margin-top: -2.3em;
@@ -50,42 +71,38 @@
     .header__dollar {
         color: $color-light;
         position: absolute;
-        margin-left: .7em;
+        margin-left: 0.7em;
     }
 
     .header__rateset {
-        height: 2.3em;
+        // height: 2.3em;
     }
 
     .header__settings-toggle svg {
-        font-size: 2.1em;
-        padding: .15em;
-        border-radius: 1em;
-        color: $color-light;
-        background-color: $color-link;
+        font-size: 2.6em;
+        color: #fd4218;
+
     }
     .header__settings-popup input {
         height: 2.3em;
-        width:10em;
-        border-radius: .3em;
-        padding:0em 1em 0em 2em;
+        width: 10em;
+        border-radius: 0.3em;
+        padding: 0 1em 0 2em;
         color: $color-light;
         background-color: $color-link;
     }
-    
+
     .header__settings-popup input::placeholder {
         color: $color-light;
     }
 
 }
 
-
-
 .clients {
-    padding:1em 2em;
-    margin-top:1em;
+    padding: 1em 2em;
+    margin-top: 1em;
     .clients__jobs {
-        display:flex;
+        display: flex;
     }
 }
 
@@ -95,27 +112,26 @@
 
 .dashboard__signin {
     cursor: pointer;
-    border:none;
-    outline:none;
-    padding:.5em 1em;
-    border-radius: .3em;
-    transition: ease all .5s;
+    border: none;
+    outline: none;
+    padding: 0.5em 1em;
+    border-radius: 0.3em;
+    transition: ease all 0.5s;
 }
 
 .dashboard__signin:hover {
-    background-color:#333;
-    color:#fafafa;
+    background-color: #333;
+    color: #fafafa;
 }
 
 .dashboard__signout {
     cursor: pointer;
-    border:none;
-    outline:none;
-    padding:.5em 1em;
-    border-radius: .3em;
-    transition: ease all .5s;
+    border: none;
+    outline: none;
+    padding: 0.5em 1em;
+    border-radius: 0.3em;
+    transition: ease all 0.5s;
 }
-
 
 .overlay {
     position: absolute;
@@ -123,9 +139,10 @@
     top: 0;
     height: 100vh;
     left: 0;
-    opacity: .5;
+    opacity: 0.5;
     background-color: #cdcdcd;
-    z-index:1;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .container {
@@ -134,51 +151,40 @@
 }
 
 .task__input {
-    border-radius: .3em;
-    border:none;
+    border-radius: 0.3em;
+    border: none;
     background-color: #efefef;
-    margin-right: .2em;
-    padding: .6em 1em;
-    margin: .3em 1em 0 0;  
-    
+    margin-right: 0.2em;
+    padding: 0.6em 1em;
+    margin: 0.3em 1em 0 0;
+
 }
-
-
-
 
 span.dollar {
-    padding: .1em .1em 0em 0em;
-    opacity: .7;
+    padding: 0.1em 0.1em 0 0;
+    opacity: 0.7;
 }
-
-
-
-
-
 
 #confirm-client {
     width: 10em;
-    margin: .3em;
+    margin: 0.3em;
     align-self: center;
 }
 
-
-
-
 .existingjobs {
-    display:flex;
-    flex:1 0 30%;
+    display: flex;
+    flex: 1 0 30%;
     flex-direction: column;
 }
 
 .existingjobs h3 {
-    padding: .6em 0em;
+    padding: 0.6em 0;
 }
 
 .existingjobs__client {
-    width:100%;
-    transition:ease all 1s;
-    margin-left:.5em;
+    width: 100%;
+    transition: ease all 1s;
+    margin-left: 0.5em;
     cursor: pointer;
 }
 
@@ -190,21 +196,20 @@ span.dollar {
     display: flex;
     flex-direction: row;
     background-color: $color-grey;
-    padding: .5em;
-    border-radius: .3em;
+    padding: 0.5em;
+    border-radius: 0.3em;
     transition: ease all 1s;
 }
 
 .existingjobs__jobitem div {
-    padding:0 .6em;
+    padding: 0 0.6em;
 }
 
-
 .existingjobs__jobtab {
-    padding: .3em 1em;
+    padding: 0.3em 1em;
     background-color: $color-darkgrey;
-    border-radius: .3em .3em 0 0;
-    color:$color-light;
+    border-radius: 0.3em 0.3em 0 0;
+    color: $color-light;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -212,30 +217,29 @@ span.dollar {
 }
 
 .existingjobs__details {
-    display:flex;
+    display: flex;
     align-items: center;
-    flex:1;
+    flex: 1;
     justify-content: space-between;
 }
 
 .existingjobs__details span {
-    margin-right:1em;
+    margin-right: 1em;
 }
 
 .existingjobs__details div {
-
-}
+    }
 
 .existingjobs__newtask {
     margin: 0;
-    border-radius: .3em;
-    background-color:$color-dark;
-    color:$color-light;
+    border-radius: 0.3em;
+    background-color: $color-dark;
+    color: $color-light;
 }
 
 .existingjobs__newtask::placeholder {
-    color:$color-grey;
-    opacity:.7;
+    color: $color-grey;
+    opacity: 0.7;
 }
 
 // .existingjobs__starttask {
@@ -243,18 +247,18 @@ span.dollar {
 // }
 
 .existingjobs__remove-confirm {
-    display:flex;
+    display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
 .existingjobs__remove-confirm div {
-    padding: 0 .6em;
+    padding: 0 0.6em;
 }
 
 .existingjobs__jobdate {
-    display:flex;
-    justify-self:flex-end;
+    display: flex;
+    justify-self: flex-end;
 }
 
 .ScrollbarsCustom-Content {
@@ -269,7 +273,6 @@ span.dollar {
     justify-content: space-between;
     align-content: space-between;
 }
-
 
 .job__newtask {
     display: flex;
@@ -293,7 +296,7 @@ span.dollar {
 }
 
 .jobitem__pauses {
-    padding: 0 .3em !important;
+    padding: 0 0.3em !important;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -314,7 +317,6 @@ span.dollar {
     flex-direction: row;
 }
 
-
 .jobitem__remove {
     display: flex;
     align-self: center;
@@ -322,24 +324,23 @@ span.dollar {
     position: absolute;
     justify-content: flex-end;
     right: 1em;
-    color:$color-dark;
-    position:absolute;
-    transition:ease all .7s;
+    color: $color-dark;
+    position: absolute;
+    transition: ease all 0.7s;
     cursor: pointer;
-    border-radius: .2em;
-    background-color:$color-light;
-   
+    border-radius: 0.2em;
+    background-color: $color-light;
+
 }
 
-.jobitem__remove  svg {
+.jobitem__remove svg {
     transform: scaleX(-1);
 }
 
-
 .jobitem__remove:hover {
-    color:$color-link;
+    color: $color-link;
     // background-color:$color-link;
-    
+
 }
 
 .jobitem__remove-confirm {
@@ -348,20 +349,16 @@ span.dollar {
     right: 0;
     background-color: #333;
     color: #fafafa;
-    padding: .2em 0.5em;
+    padding: 0.2em 0.5em;
     margin-top: -.3em;
-    border-radius: .3em .2em .2em .3em;
+    border-radius: 0.3em 0.2em 0.2em 0.3em;
 }
 
 .clpanel__timer span {
-    padding: 0 0.5em 0 .5em;
+    padding: 0 0.5em;
 }
 
-
-
-
-
 .clpanel__add:hover {
-    background-color:#333;
-    color:#efefef;
+    background-color: #333;
+    color: #efefef;
 }
