@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import app from "firebase";
 
 // plugins
-import { IoMdRemove} from "react-icons/io";
+import { RiDeleteBackFill} from "react-icons/ri";
 
 class Task extends Component {
     constructor(props) {
@@ -57,24 +57,16 @@ class Task extends Component {
               console.log('doc data', doc.data())
               let jobsData = doc.data().jobs
               let currentTask = this.state.id
-            
-              const filteredTasks = jobsData.map((job) => {
+        
+              //filter tasks from jobs list
+              const jobs = jobsData.map((job) => {
                 return {...job, tasks: job.tasks.filter((task) => task.id != currentTask)}
               })
-   
-              this.setState({
-                jobs:filteredTasks
+              // update database
+              clientRef.update({
+                jobs
               })
-      
-              let jobs = this.state.jobs
-              
-              setTimeout(()=>{
-           
-                 clientRef.update({
-                    jobs
-                 })
-                
-              },300)
+
             }
             else {
               console.log('no such document')
@@ -107,8 +99,8 @@ class Task extends Component {
         return (
 
                 <div className="existingjobs__jobitem">
-                    <div>{task}</div>
-                    <div>Start Time: {startTime}</div>
+                    <div className="jobitem__name">{task}</div>
+                    <div className="jobitem__time">Start Time: {startTime}</div>
                     <div className="jobitem__breaks">
              
                         Breaks:
@@ -121,12 +113,12 @@ class Task extends Component {
                         </div>
                     </div>
 
-                    <div>Log Time: {logTime}</div>
-                    <div>Total Time:
+                    <div className="jobitem__time">Log Time: {logTime}</div>
+                    <div className="jobitem__time">Total Time:
                     { (hours === '00') ? null : ' '+hours+' Hrs'  }{ (minutes === '00') ? null : ' '+minutes+' Mins'  } {seconds} Secs</div>
                     <div>$: {Math.round(money * 100) / 100}</div>
                     <div className="jobitem__removeblock">
-                    { toggleremove ? <span className="jobitem__remove-confirm">Are you sure you want to delete task? <div className="theme-button alert-confirmation" value={'toggleremove'} onClick={this.handleToggle}> NO </div><div className="theme-button alert-confirmation"  onClick={this.handleRemoveTask}>YES</div></span> : <span  className="jobitem__remove"><IoMdRemove onClick={this.handleToggle} value={'toggleremove'}/>   </span>}
+                    { toggleremove ? <span className="jobitem__remove-confirm">Are you sure you want to delete this task? <div className="theme-button alert-confirmation" value={'toggleremove'} onClick={this.handleToggle}> NO </div><div className="theme-button alert-confirmation"  onClick={this.handleRemoveTask}>YES</div></span> : <span  className="jobitem__remove"><RiDeleteBackFill onClick={this.handleToggle} value={'toggleremove'}/>   </span>}
                     </div>
 
                 </div>

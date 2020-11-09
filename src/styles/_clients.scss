@@ -107,6 +107,23 @@
     padding: .5em 1em;
     box-shadow: 0px 0px 100px #0000002e;
     transition:ease all 1s;
+
+    .clpanel__settings-toggle {
+        border-radius: 2em;
+        background-color: black;
+        width: 1.7em;
+        height: 1.7em;
+        color: white;
+        margin-top: -2.8em;
+        margin-left: -0.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.2em;
+        cursor: pointer;
+        margin-right:1em;
+        transition:ease all .2s;
+    }
     .clpanel__clientdash {
         display: flex;
         align-items: center;
@@ -130,13 +147,14 @@
         position: absolute;
         display: flex;
         flex: 1 0 99%;
-        right: 0;
+        left: 7.3em;
+        height: 2.2em;
+        top: -2.2em;
         transition: ease all 1s;
-        margin-top: -6.8em;
-        padding: .5em 1em;
-        top: 0;
-        border-radius: .5em;
-        min-height: 3em;
+        border-radius: 1.3em 1.3em 0em 0;
+        background-color: #fafafa;
+        padding: .25em;
+        min-height: 2em;
     }
     
     .clpanel__colorpick{
@@ -148,11 +166,11 @@
     }
     
     .clpanel__colorpick li {
-        width: 2em;
-        height: 2em;
+        width: 1.7em;
+        height: 1.7em;
         cursor: pointer;
-        border-radius: 0.5em;
-        margin-right: .5em;
+        border-radius: 50%;
+        margin: .25em;
     }
 
     .clpanel__task {

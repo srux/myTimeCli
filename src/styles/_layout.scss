@@ -202,7 +202,7 @@ span.dollar {
 
 .existingjobs__jobtab {
     padding: .3em 1em;
-    background-color: $color-link;
+    background-color: $color-darkgrey;
     border-radius: .3em .3em 0 0;
     color:$color-light;
     display: flex;
@@ -242,9 +242,25 @@ span.dollar {
 //     border-radius: 0 .3em .3em 0 !important;
 // }
 
+.existingjobs__remove-confirm {
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.existingjobs__remove-confirm div {
+    padding: 0 .6em;
+}
+
 .existingjobs__jobdate {
     display:flex;
     justify-self:flex-end;
+}
+
+.ScrollbarsCustom-Content {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
 }
 
 .job__timer-control {
@@ -266,6 +282,14 @@ span.dollar {
 .job__timer-notification {
     display: flex;
     flex: 1;
+}
+
+.jobitem__name {
+    width: 10em;
+}
+
+.jobitem__time {
+    width: 13em;
 }
 
 .jobitem__pauses {
@@ -294,21 +318,27 @@ span.dollar {
 .jobitem__remove {
     display: flex;
     align-self: center;
-    font-size: 1.2em;
+    font-size: 1.4em;
     position: absolute;
     justify-content: flex-end;
     right: 1em;
-    color:$color-light;
+    color:$color-dark;
     position:absolute;
     transition:ease all .7s;
     cursor: pointer;
     border-radius: .2em;
-    background-color:$color-dark;
+    background-color:$color-light;
+   
 }
 
+.jobitem__remove  svg {
+    transform: scaleX(-1);
+}
+
+
 .jobitem__remove:hover {
-    color:$color-light;
-    background-color:$color-link;
+    color:$color-link;
+    // background-color:$color-link;
     
 }
 
@@ -316,6 +346,11 @@ span.dollar {
     display: flex;
     position: absolute;
     right: 0;
+    background-color: #333;
+    color: #fafafa;
+    padding: .2em 0.5em;
+    margin-top: -.3em;
+    border-radius: .3em .2em .2em .3em;
 }
 
 .clpanel__timer span {

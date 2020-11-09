@@ -10,6 +10,8 @@ import {deleteClient} from "../api/data"
 
 
 //plugins
+
+import { RiAddFill,RiPlayLine,RiInboxArchiveLine,RiListSettingsFill } from "react-icons/ri";
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
 import { Beforeunload  } from 'react-beforeunload';
 import Scrollbar from "react-scrollbars-custom";
@@ -265,14 +267,18 @@ class Clients extends Component {
         clearInterval(this.timer);
         clearInterval(this.timeStor);
 
-        var data = this.state.data
-        var addJob = this.state.jobs.concat(data);
-        var job = data.job
-        var jobId = data.jobId
-        // let task = data.task
+        // define data
+        let data = this.state.data
+
+        // add job to jobs list
+        let addJob = this.state.jobs.concat(data);
+        let job = data.job
+        let jobId = data.jobId
         localStorage.clear();
 
+        // create payload & switch toggles
         this.setState ({
+          currentJob:jobId,
           data: {
             ...data,
           },
@@ -286,6 +292,8 @@ class Clients extends Component {
           },
         });
 
+ 
+
         setTimeout(() => { 
           const db = app.firestore();
           const {currentUser} = app.auth()
@@ -295,6 +303,7 @@ class Clients extends Component {
             timestampsInSnapshots: true
           });
          
+          //update jobs
           const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client);
           if ( this.props.currentJob === null) {
             clientRef.update({ 
@@ -304,9 +313,12 @@ class Clients extends Component {
                 tasks:
                   [data]
               })
-  
           })
           .then(function() {
+            clientRef.update({
+              currentJob:jobId,
+              currentJobName:job
+            })
             console.log("Job", job, "Added");
           })
           .catch(function(error) {
@@ -317,16 +329,20 @@ class Clients extends Component {
             clientRef.get().then((doc) => {
               if (doc.exists) {
                 console.log('doc data', doc.data())
+                
+                //data
                 let jobsData = doc.data().jobs
-                console.log(jobsData)
+                let docData = doc.data()
+              
                 let currentJob = this.props.currentJob
+                //define selected job
                 let selectedJob = jobsData.find(j => j.jobId === currentJob)
+                // define tasks of selected job
                 let tasks = selectedJob.tasks
-                console.log(selectedJob)
-               
-                this.setState({
-                  ...jobsData,
-                  jobsData:[
+              
+                //create task
+                this.setState({ 
+                  newJobs:[
                      {
                       ...selectedJob,
                       tasks:[
@@ -337,28 +353,21 @@ class Clients extends Component {
                       }
                   ]
                 })
-              
-                let jobs = this.state.jobsData
-                
-                setTimeout(()=>{
 
+                //merge jobs with new task
+
+                let newJobs = this.state.newJobs
+                let filteredJobs = docData.jobs.filter(job => job.jobId != currentJob);
+                let jobs = [...filteredJobs,...newJobs]
+
+                //send payload
+                setTimeout(()=>{
                   clientRef.update({
                     jobs
                   })
-             
-                  //  clientRef.update({
-                  //   jobs:app.firestore.FieldValue.arrayUnion({
-                  //     job,
-                  //     jobId,
-                  //     tasks:
-                  //       [data]
-                  //   })
-                  //  })
-                  
                 },300)
-        
-        
               }
+
               else {
                 console.log('no such document')
               }
@@ -368,6 +377,7 @@ class Clients extends Component {
           }
         }, 300);
         
+        // state cleanup
         setTimeout(()=> {
           this.setState ({
             timerStart: 0,
@@ -562,9 +572,9 @@ class Clients extends Component {
       }
 
     render() {
-        let {name,settings,jobs} = this.props
+        let {name,jobs} = this.props
         let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle} = this.state
-        let {pauseTime,job,task,client,startTime,resumeTime,rate} = this.state.data
+        let {pauseTime,job,task,startTime,resumeTime,rate} = this.state.data
         let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
         let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
         let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
@@ -629,12 +639,30 @@ class Clients extends Component {
                 
                 {clientToggle === name ? 
                 <> 
+                
                 <div className="clpanel" style={styles.max}>
-
+                { colorToggle && !deleteToggle ?
+                    <div className="clpanel__colorspanel">
+                        <div className="clpanel__colorpick">
+                            <ul>
+                                <li className='red' onClick={this.handleColor}></li>
+                                <li className='turq' onClick={this.handleColor}></li>
+                                <li className='black' onClick={this.handleColor}></li>
+                                <li className='purple' onClick={this.handleColor}></li>
+                                <li className='blue' onClick={this.handleColor}></li>
+                                <li className='yellow' onClick={this.handleColor}></li>
+                                <li className='green' onClick={this.handleColor}></li>
+                                <li className='clear' onClick={this.handleColor}></li>
+                            </ul>
+                        </div>
+                    </div>
+                    : null }
+               
                     <div className="clpanel__clientdash">
 
                         <div className="clpanel__clientname">
                             <h3 className={"clientname-panel "+clientOptions.clientColor}>{name}</h3>
+                            <div className={"clpanel__settings-toggle "+clientOptions.clientColor} onClick={this.handleToggle} value={'colorToggle'} ><RiListSettingsFill style={{pointerEvents:'none'}}/></div>
                             <label
                                 style={inputStatus}
                                 className="clpanel__clientratelabel"
@@ -681,22 +709,7 @@ class Clients extends Component {
                               <div onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} className="clpanel__cardclose">Close</div>
                         </div>
                     </div>
-                    { colorToggle && !deleteToggle ?
-                    <div className="clpanel__colorspanel">
-                        <div className="clpanel__colorpick">
-                            <ul>
-                                <li className='red' onClick={this.handleColor}></li>
-                                <li className='turq' onClick={this.handleColor}></li>
-                                <li className='black' onClick={this.handleColor}></li>
-                                <li className='purple' onClick={this.handleColor}></li>
-                                <li className='blue' onClick={this.handleColor}></li>
-                                <li className='yellow' onClick={this.handleColor}></li>
-                                <li className='green' onClick={this.handleColor}></li>
-                                <li className='clear' onClick={this.handleColor}></li>
-                            </ul>
-                        </div>
-                    </div>
-                    : null }
+                  
                     <div className="clpanel__task">
                       <input
                             style={inputStatus}

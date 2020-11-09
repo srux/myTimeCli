@@ -105,6 +105,7 @@ class Dashboard extends Component {
         ...clientInfo,
         name:e.target.value,
         jobs:[],
+        archivedJobs:[],
         id
       }
     })
@@ -151,7 +152,8 @@ class Dashboard extends Component {
           options:{
             clientColor:'#fff'
           },
-          jobs:[]
+          jobs:[],
+          archivedJobs:[]   
         },
       })
     },300)

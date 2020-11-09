@@ -382,7 +382,7 @@ span.dollar {
 
 .existingjobs__jobtab {
   padding: .3em 1em;
-  background-color: #fd4218;
+  background-color: #555;
   border-radius: .3em .3em 0 0;
   color: #f3f3f3;
   display: -webkit-box;
@@ -442,11 +442,40 @@ span.dollar {
   opacity: .7;
 }
 
+.existingjobs__remove-confirm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.existingjobs__remove-confirm div {
+  padding: 0 .6em;
+}
+
 .existingjobs__jobdate {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   justify-self: flex-end;
+}
+
+.ScrollbarsCustom-Content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .job__timer-control {
@@ -484,6 +513,14 @@ span.dollar {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+}
+
+.jobitem__name {
+  width: 10em;
+}
+
+.jobitem__time {
+  width: 13em;
 }
 
 .jobitem__pauses {
@@ -537,24 +574,28 @@ span.dollar {
   display: flex;
   -ms-flex-item-align: center;
       align-self: center;
-  font-size: 1.2em;
+  font-size: 1.4em;
   position: absolute;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
   right: 1em;
-  color: #f3f3f3;
+  color: #333;
   position: absolute;
   -webkit-transition: ease all .7s;
   transition: ease all .7s;
   cursor: pointer;
   border-radius: .2em;
-  background-color: #333;
+  background-color: #f3f3f3;
+}
+
+.jobitem__remove svg {
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
 }
 
 .jobitem__remove:hover {
-  color: #f3f3f3;
-  background-color: #fd4218;
+  color: #fd4218;
 }
 
 .jobitem__remove-confirm {
@@ -563,6 +604,11 @@ span.dollar {
   display: flex;
   position: absolute;
   right: 0;
+  background-color: #333;
+  color: #fafafa;
+  padding: .2em 0.5em;
+  margin-top: -.3em;
+  border-radius: .3em .2em .2em .3em;
 }
 
 .clpanel__timer span {
@@ -719,6 +765,30 @@ span.dollar {
   transition: ease all 1s;
 }
 
+.clpanel .clpanel__settings-toggle {
+  border-radius: 2em;
+  background-color: black;
+  width: 1.7em;
+  height: 1.7em;
+  color: white;
+  margin-top: -2.8em;
+  margin-left: -0.2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0.2em;
+  cursor: pointer;
+  margin-right: 1em;
+  -webkit-transition: ease all .2s;
+  transition: ease all .2s;
+}
+
 .clpanel .clpanel__clientdash {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -760,14 +830,15 @@ span.dollar {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 99%;
           flex: 1 0 99%;
-  right: 0;
+  left: 7.3em;
+  height: 2.2em;
+  top: -2.2em;
   -webkit-transition: ease all 1s;
   transition: ease all 1s;
-  margin-top: -6.8em;
-  padding: .5em 1em;
-  top: 0;
-  border-radius: .5em;
-  min-height: 3em;
+  border-radius: 1.3em 1.3em 0em 0;
+  background-color: #fafafa;
+  padding: .25em;
+  min-height: 2em;
 }
 
 .clpanel .clpanel__colorpick {
@@ -784,11 +855,11 @@ span.dollar {
 }
 
 .clpanel .clpanel__colorpick li {
-  width: 2em;
-  height: 2em;
+  width: 1.7em;
+  height: 1.7em;
   cursor: pointer;
-  border-radius: 0.5em;
-  margin-right: .5em;
+  border-radius: 50%;
+  margin: .25em;
 }
 
 .clpanel .clpanel__task {
@@ -1332,43 +1403,43 @@ input {
 }
 
 .clear {
-  background-color: #fff;
-  color: #333;
-  border: thin solid #cdcdcd;
+  background-color: #fff !important;
+  color: #333 !important;
+  border: thin solid #cdcdcd !important;
 }
 
 .red {
-  background-color: #F2360C;
-  color: #fafafa;
+  background-color: #F2360C !important;
+  color: #fafafa !important;
 }
 
 .turq {
-  background-color: #1BA68C;
-  color: #fafafa;
+  background-color: #1BA68C !important;
+  color: #fafafa !important;
 }
 
 .black {
-  background-color: #000000;
-  color: #fafafa;
+  background-color: #000000 !important;
+  color: #fafafa !important;
 }
 
 .purple {
-  background-color: #7A30D9;
-  color: #fafafa;
+  background-color: #7A30D9 !important;
+  color: #fafafa !important;
 }
 
 .blue {
-  background-color: #0029FA;
-  color: #fafafa;
+  background-color: #0029FA !important;
+  color: #fafafa !important;
 }
 
 .yellow {
-  background-color: #F2B807;
-  color: #fafafa;
+  background-color: #F2B807 !important;
+  color: #fafafa !important;
 }
 
 .green {
-  background-color: #1BBF15;
-  color: #fafafa;
+  background-color: #1BBF15 !important;
+  color: #fafafa !important;
 }
 /*# sourceMappingURL=app.css.map */
