@@ -1483,4 +1483,27 @@ input {
   background-color: #1BBF15 !important;
   color: #fafafa !important;
 }
+
+.mobv {
+  display: none;
+  display: block;
+  text-align: center;
+  margin: 2em;
+  color: #fd4218;
+}
+
+.dashboard {
+  display: none;
+}
+
+@media only screen and (min-width: 64em) {
+  .dashboard {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .mobv {
+    display: none;
+  }
+}
 /*# sourceMappingURL=app.css.map */
