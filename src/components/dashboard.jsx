@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Clients from './clients';
 
-// import app from '../appConfig';
-import app from "../firebase";
+//api
+import {setRate,addClient} from '../api/data'
 
 //plugins
-import { RiListSettingsFill,RiTimeFill } from "react-icons/ri";
+import { RiTimer2Fill } from "react-icons/ri";
 
 let styles = {
   jobInfo:{
@@ -34,7 +34,7 @@ class Dashboard extends Component {
         settingsToggle:false,
         settings:{
           setGlobalRate:false,
-          globalRate:null,
+          globalRate:'',
         },
         styling:{
           logStatus:styles.close,
@@ -70,30 +70,34 @@ class Dashboard extends Component {
   handleSetGlobalRate = (e) => {
     e.preventDefault();
     let {globalRate,setGlobalRate} = this.state.settings
-    let {currentUser} = this.props
-    let db = app.firestore();
-    let userUid = currentUser.uid
+    setRate(globalRate,setGlobalRate).then(() => {
+      console.log('Rate $'+globalRate+' Set' )
 
-    db.collection('users').doc(userUid).collection('settings').doc('rates').set({globalRate,setGlobalRate})
-    
+    }).catch((error)=>{
+       alert("Error setting rate: ", error);
+    })
   }
 
   handleResetGlobalRate = (e) => {
     e.preventDefault();
     
-    let {currentUser} = this.props
-    let db = app.firestore();
-    let userUid = currentUser.uid
-
     this.setState({
       settings:{
-        globalRate:''
+        globalRate:'',
+        setGlobalRate:false
       }
     })
-
-    let settings = {globalRate:0,setGlobalRate:false}
-    db.collection('users').doc(userUid).collection('settings').doc('rates').set({...settings});
     
+    setTimeout(() =>{
+      let {globalRate,setGlobalRate} = this.state.settings
+      setRate(globalRate,setGlobalRate).then(() => {
+        console.log('Global rate reset' )
+  
+      }).catch((error)=>{
+         alert("Error resetting rate: ", error);
+      })
+    },300)
+
   }
 
   handleClientInput = (e) => {
@@ -118,9 +122,6 @@ class Dashboard extends Component {
     let data = this.state.clientInfo
     let client = this.state.clientInfo.name
     let clients = this.state.clients;
-    let db = app.firestore();
-    let {currentUser} = this.props
-    let userUid = currentUser.uid
   
     this.setState({
         ...clients,
@@ -129,19 +130,10 @@ class Dashboard extends Component {
         }
     })
 
- 
-    db.settings({
-      timestampsInSnapshots: true
-    });
-    
-  
-    
-    db.collection('users').doc(userUid).collection('clients').doc(client).set({...data})
-    .then(function() {
-      
-      console.log("Client", client, "Added");
+    addClient(data,client).then(() => {
+      console.log("Client", client, "Created");
     })
-    .catch(function(error) {
+    .catch((error) => {
         alert("Error adding document: ", error);
     });
     
@@ -167,7 +159,6 @@ class Dashboard extends Component {
     this.setState(state  => ({
       [target]: !this.state[target]
     }));
-    console.log(target)
    }
 
 
@@ -187,7 +178,7 @@ class Dashboard extends Component {
           
               <div className="header__settings">
                   <div className="header__logo">myTime</div>
-                  <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiTimeFill style={{pointerEvents:'none'}}/></div>
+                  <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiTimer2Fill style={{pointerEvents:'none'}}/></div>
 
                   { settingsToggle ? <div className="header__settings-popup"></div> : null }
 

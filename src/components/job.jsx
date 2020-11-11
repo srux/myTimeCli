@@ -4,6 +4,9 @@ import app from "firebase";
 
 import Task from './task';
 
+//api
+import {queryClientData,getClientData} from '../api/data'
+
 // plugins
 
 import { RiAddFill,RiPlayLine,RiInboxArchiveLine } from "react-icons/ri";
@@ -43,12 +46,7 @@ class Job extends Component {
     handleCurrentJob=(e)=>{
       e.preventDefault()
       
-      let db = app.firestore();
-      let {currentUser} = app.auth()
-      let userUid = currentUser.uid
       let client = this.props.name;
-      const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
-
       let target = e.target.getAttribute('value');
       let {jobId,job} = this.props;
       this.setState(state  => ({
@@ -56,29 +54,28 @@ class Job extends Component {
         selectedJobName:job,
         [target]: !this.state[target]
       }));
-        clientRef.update({
+      queryClientData(client).update({
           currentJob:jobId,
           currentJobName:job
         })
      }
 
      handleRemoveJob=()=> {
-      const db = app.firestore();
-      const userUid = app.auth().currentUser.uid
-      const client = this.props.name;
-      const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
-
-      clientRef.get().then((doc) => {
+      let db = app.firestore();
+      let client = this.props.name;
+      getClientData().then((doc) => {
           if (doc.exists) {
-            console.log('doc data', doc.data())
+            db.settings({
+              timestampsInSnapshots: true
+            });
             
             let jobsData = this.props.jobs
             let selectedJob = this.state.selectedJob
           
             // filter selected job from array
-            let jobs = jobsData.filter(job => job.jobId != selectedJob);
+            let jobs = jobsData.filter(job => job.jobId !== selectedJob);
             console.log(jobs)
-            clientRef.update({
+            queryClientData(client).update({
               jobs
             })
               
@@ -90,33 +87,30 @@ class Job extends Component {
   }
 
   handleArchive=()=> {
-    const db = app.firestore();
-    const userUid = app.auth().currentUser.uid
-    const client = this.props.name;
-    const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
-
-    clientRef.get().then((doc) => {
+    let db = app.firestore();
+    let client = this.props.name;
+  
+    getClientData().then((doc) => {
         if (doc.exists) {
-          console.log('doc data', doc.data())
+          db.settings({
+            timestampsInSnapshots: true
+          });
           
           let jobsData = this.props.jobs
           let selectedJob = this.state.selectedJob
-        
           let existingArchive = doc.data().archivedJobs
-          console.log('existingArchive',existingArchive)
           
           // filter selected job from array
           let jobsArchived = jobsData.filter(job => job.jobId === selectedJob);
           let archivedJobs = [...existingArchive,...jobsArchived]
 
-          clientRef.update({
+          queryClientData(client).update({
             archivedJobs
           })
 
           setTimeout(()=>{
-            let jobs = jobsData.filter(job => job.jobId != selectedJob);
-            console.log(jobs)
-            clientRef.update({
+            let jobs = jobsData.filter(job => job.jobId !== selectedJob);
+            queryClientData(client).update({
               jobs
             })
           },300)
@@ -160,7 +154,9 @@ class Job extends Component {
     render() {
         
            let {currentJob,job,jobId} = this.props
-           let {togglearchive,toggleremove,deleteJobInput,selectedJobName} = this.state
+           let {togglearchive,
+            // toggleremove,deleteJobInput,selectedJobName
+           } = this.state
            let jobselect = jobId === currentJob
           //  let confirmDelete = deleteJobInput === selectedJobName 
            let date = new Date(jobId).toString().slice().replace(/\GMT(.*)/g,"");

@@ -27,13 +27,11 @@ class App extends Component {
       <DataProvider>
         <Router>
           <Switch>
-            <div>
               <PrivateRoute exact path='/' component={Profile}/>
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <Route exact path='/login' component={Login}/>
               <Route exact path='/Signup' component={Signup}/>
               <Route path="/forgot-password" component={ForgotPassword} />
-            </div>
             </Switch>
           </Router>
       </DataProvider>

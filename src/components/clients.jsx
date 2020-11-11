@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 
 import Job from './job';
 
-// import app from '../appConfig';
-import app from "firebase";
-
 //api
-import {deleteClient} from "../api/data"
+import {getRate,getClientData,deleteClient,queryClientData} from '../api/data'
+import app from "firebase";
 
 
 //plugins
 
-import { RiAddFill,RiPlayLine,RiInboxArchiveLine,RiListSettingsFill } from "react-icons/ri";
+import { RiListSettingsFill } from "react-icons/ri";
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
 import { Beforeunload  } from 'react-beforeunload';
 import Scrollbar from "react-scrollbars-custom";
@@ -112,47 +110,48 @@ class Clients extends Component {
     }
   
 
-  componentDidMount(){
-      const db = app.firestore();
-      // const {currentUser} = app.auth()
-      const userUid = app.auth().currentUser.uid
-      const client = this.props.name;
-      const ratesRef = db.collection('users').doc(userUid).collection('settings').doc('rates')
-      
-      let data = this.state.data
-      ratesRef.get().then((doc) => {
-        if (doc.exists) {
-          console.log('doc data', doc.data())
-          let rate = doc.data().globalRate
-          console.log(rate)
-         
-          this.setState({
-            data:{
-              ...data,
-              rate
-            }
-          })
-        }
-        else {
-          console.log('no such document')
-        }
-      })
+componentDidMount() {
+    let client = this.props.name;
 
-      const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
-      clientRef.get().then((doc) => {
-        if (doc.exists) {
-          let data = doc.data().jobs
-          this.setState({
-           existingJobs:{
-            ...data
-           } 
-          })
-        }
-        else {
-          console.log('no such document')
-        }
-      })
-    }
+    let data = this
+        .state
+        .data
+        getRate()
+        .then((doc) => {
+            if (doc.exists) {
+                let rate = doc
+                    .data()
+                    .globalRate
+
+                    this
+                    .setState({
+                        data: {
+                            ...data,
+                            rate
+                        }
+                    })
+            } else {
+                console.log('no such document')
+            }
+        })
+
+        getClientData(client)
+        .then((doc) => {
+            if (doc.exists) {
+                let data = doc
+                    .data()
+                    .jobs
+                    this
+                    .setState({
+                        existingJobs: {
+                            ...data
+                        }
+                    })
+            } else {
+                console.log('No clients exist')
+            }
+        })
+}
 
 
     startTimer = () => {
@@ -262,7 +261,7 @@ class Clients extends Component {
     
     
       handleStoreData = () => {
-        
+        let db = app.firestore();
         this.setState({ timerOn: false });
         clearInterval(this.timer);
         clearInterval(this.timeStor);
@@ -292,21 +291,17 @@ class Clients extends Component {
           },
         });
 
- 
-
         setTimeout(() => { 
-          const db = app.firestore();
-          const {currentUser} = app.auth()
-          const userUid = currentUser.uid
-          const client = this.props.name
-          db.settings({
-            timestampsInSnapshots: true
-          });
-         
+
+          let client = this.props.name
+          
           //update jobs
-          const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client);
           if ( this.props.currentJob === null) {
-            clientRef.update({ 
+              
+            db.settings({
+              timestampsInSnapshots: true
+            });
+            queryClientData(client).update({ 
               jobs:app.firestore.FieldValue.arrayUnion({
                 job,
                 jobId,
@@ -315,7 +310,7 @@ class Clients extends Component {
               })
           })
           .then(function() {
-            clientRef.update({
+            queryClientData(client).update({
               currentJob:jobId,
               currentJobName:job
             })
@@ -326,43 +321,43 @@ class Clients extends Component {
           }); 
           }
           else {
-            clientRef.get().then((doc) => {
+            getClientData(client).then((doc) => {
               if (doc.exists) {
-                console.log('doc data', doc.data())
-                
+               
                 //data
-                let jobsData = doc.data().jobs
-                let docData = doc.data()
-              
-                let currentJob = this.props.currentJob
+                  let jobsData = doc.data().jobs
+                  let docData = doc.data()
+                  let currentJob = this.props.currentJob
                 //define selected job
-                let selectedJob = jobsData.find(j => j.jobId === currentJob)
+                  let selectedJob = jobsData.find(j => j.jobId === currentJob)
                 // define tasks of selected job
-                let tasks = selectedJob.tasks
-              
+                  let tasks = selectedJob.tasks
                 //create task
-                this.setState({ 
-                  newJobs:[
-                     {
-                      ...selectedJob,
-                      tasks:[
-                        ...tasks,
-                        {
-                        ...data
-                        }]
-                      }
-                  ]
-                })
+                  this.setState({ 
+                    newJobs:[
+                      {
+                        ...selectedJob,
+                        tasks:[
+                          ...tasks,
+                          {
+                          ...data
+                          }]
+                        }
+                    ]
+                  })
 
                 //merge jobs with new task
 
                 let newJobs = this.state.newJobs
-                let filteredJobs = docData.jobs.filter(job => job.jobId != currentJob);
+                let filteredJobs = docData.jobs.filter(job => job.jobId !== currentJob);
                 let jobs = [...filteredJobs,...newJobs]
-
+  
+                db.settings({
+                  timestampsInSnapshots: true
+                });
                 //send payload
                 setTimeout(()=>{
-                  clientRef.update({
+                  queryClientData(client).update({
                     jobs
                   })
                 },300)
@@ -392,7 +387,6 @@ class Clients extends Component {
               startTime:'',
               logTime:'',
               id:0,
-              pauseTime:'',
               pauses:[],
               resumes:[],
             }
@@ -423,12 +417,8 @@ class Clients extends Component {
 
       setCurrentJob =(e)=>{
         e.preventDefault();
-        let db = app.firestore();
-        let {currentUser} = app.auth()
-        let userUid = currentUser.uid
         let client = this.props.name;
-        const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
-        clientRef.update({
+        queryClientData(client).update({
           currentJob:null
         })
       }
@@ -503,20 +493,11 @@ class Clients extends Component {
         }))
 
         setTimeout(() => { 
-          const client = this.props.name
-          const clientOptions = this.state.clientOptions
-          const clientColor = clientOptions.clientColor
-          const db = app.firestore();
+          let client = this.props.name
+          let clientOptions = this.state.clientOptions
+          let clientColor = clientOptions.clientColor
 
-          let {currentUser} = app.auth()
-          let userUid = currentUser.uid
-          db.settings({
-            timestampsInSnapshots: true
-          });
-              
-          const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client);
-          
-          clientRef.update({ 
+          queryClientData(client).update({ 
             options:{
               ...clientOptions,
               clientColor
@@ -527,15 +508,10 @@ class Clients extends Component {
 
       
     handleClientToggle = (e) => {
-        e.preventDefault()
-        const db = app.firestore();
-      // const {currentUser} = app.auth()
-      const userUid = app.auth().currentUser.uid
-      const client = this.props.name;
-      const ratesRef = db.collection('users').doc(userUid).collection('settings').doc('rates')
-      
+      e.preventDefault()
+    
       let data = this.state.data
-      ratesRef.get().then((doc) => {
+      getRate().then((doc) => {
         if (doc.exists) {
           console.log('doc data', doc.data())
           let rate = doc.data().globalRate
@@ -591,7 +567,7 @@ class Clients extends Component {
 
       handleDeleteClient=()=>{
         let name = this.props.name
-        const {currentUser} = app.auth()
+        let {currentUser} = app.auth()
         let userUid = currentUser.uid
         deleteClient(userUid,name)
       }

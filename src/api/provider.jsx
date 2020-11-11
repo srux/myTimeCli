@@ -10,9 +10,10 @@ export function useData() {
 }
 
 export function DataProvider({ children }) {
-
+    
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
+
 
       function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password)
@@ -37,6 +38,7 @@ export function DataProvider({ children }) {
       function updatePassword(password) {
         return currentUser.updatePassword(password)
       }
+      
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -57,12 +59,14 @@ export function DataProvider({ children }) {
         updateEmail,
         updatePassword,
       }
-    
+      
     
     return (
         <DataContext.Provider value={value}>
             {!loading && children}
         </DataContext.Provider>
     );
+    
+    
 }
 

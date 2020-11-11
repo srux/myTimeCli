@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import app from "firebase";
 
+// api
+import {queryClientData,getClientData} from '../api/data'
+
 // plugins
 import { RiDeleteBackFill} from "react-icons/ri";
 
@@ -13,12 +16,10 @@ class Task extends Component {
     }
 
     componentDidMount(){
-        const db = app.firestore();
-        const userUid = app.auth().currentUser.uid
-        const client = this.props.client;
-        const id = this.props.id
-        const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
-        clientRef.get().then((doc) => {
+        let client = this.props.client;
+        let id = this.props.id
+       
+        getClientData(client).then((doc) => {
           if (doc.exists) {
             let data = doc.data().jobs
             this.setState({
@@ -33,37 +34,26 @@ class Task extends Component {
           }
         })
     }
-    
-
-    // removeIdea = (id) => {
-    //     var ideas = this.state.ideas;
-    //     var filtered = ideas.filter((idea) => {
-    //       return idea.id !== id
-    //     });
-    //     this.setState ({
-    //       ideas: filtered
-    //     });
-    //   }
-      
+     
 
     handleRemoveTask=()=> {
-        const db = app.firestore();
-        const userUid = app.auth().currentUser.uid
-        const client = this.props.client;
-        const clientRef = db.collection('users').doc(userUid).collection('clients').doc(client)
+        let db = app.firestore();
+        let client = this.props.client;
 
-        clientRef.get().then((doc) => {
+        getClientData(client).then((doc) => {
             if (doc.exists) {
-              console.log('doc data', doc.data())
+              db.settings({
+                  timestampsInSnapshots: true
+              });
               let jobsData = doc.data().jobs
               let currentTask = this.state.id
         
               //filter tasks from jobs list
-              const jobs = jobsData.map((job) => {
-                return {...job, tasks: job.tasks.filter((task) => task.id != currentTask)}
+              let jobs = jobsData.map((job) => {
+              return {...job, tasks: job.tasks.filter((task) => task.id !== currentTask)}
               })
               // update database
-              clientRef.update({
+              queryClientData(client).update({
                 jobs
               })
 
@@ -88,13 +78,11 @@ class Task extends Component {
  
 
     render() {
-           let {client,job,tasks,task,startTime,logTime,timerTime,money} = this.props;
-           // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+           let {task,startTime,logTime,timerTime,money} = this.props;
            let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
            let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
            let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
            let {toggleremove} = this.state
-    
 
         return (
 

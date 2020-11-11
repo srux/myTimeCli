@@ -81,6 +81,9 @@
     .header__settings-toggle svg {
         font-size: 2.6em;
         color: #fd4218;
+        filter: drop-shadow(4px 5px 4px #0000002e);
+        border-radius: 50%;
+        height: 1em;
 
     }
     .header__settings-popup input {
