@@ -1,6 +1,5 @@
 .clients {
     display: flex;
-    flex: 1 0 100%;
     flex-direction: row;
     flex-wrap: wrap;
 }
@@ -13,7 +12,6 @@
     width: 19%;
     height: 3em;
     justify-content: center;
-
     margin: 0.5em 1% 0.5em 0;
     overflow: hidden;
     .client__name {

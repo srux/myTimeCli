@@ -90,7 +90,7 @@ class Job extends Component {
     let db = app.firestore();
     let client = this.props.name;
   
-    getClientData().then((doc) => {
+    getClientData(client).then((doc) => {
         if (doc.exists) {
           db.settings({
             timestampsInSnapshots: true
