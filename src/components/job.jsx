@@ -160,6 +160,23 @@ class Job extends Component {
            let jobselect = jobId === currentJob
           //  let confirmDelete = deleteJobInput === selectedJobName 
            let date = new Date(jobId).toString().slice().replace(/\GMT(.*)/g,"");
+           let tasks = this.props.tasks
+
+
+
+           let total = tasks.reduce(function(prev, current) {
+            return prev + +current.money
+          }, 0);
+
+          let totalTime = tasks.reduce(function(prev, current) {
+            return prev + +current.timerTime
+          }, 0);
+
+          let seconds = ("0" + (Math.floor(totalTime / 1000) % 60)).slice(-2);
+          let minutes = ("0" + (Math.floor(totalTime / 60000) % 60)).slice(-2);
+          let hours = ("0" + Math.floor(totalTime / 3600000)).slice(-2);
+
+         
         return (
             <div className="existingjobs__jobContainer">
                 <div onClick={this.handleCurrentJob} style={  jobselect ?  {backgroundColor:'#fd4218'} : {backgroundColor:'#555', cursor:'pointer', borderRadius:'.3em'} } className="existingjobs__jobtab">
@@ -178,14 +195,19 @@ class Job extends Component {
                           {confirmDelete ? <div className="job__removebuttons" style={{display:'flex'}}><div className="theme-button alert-confirmation"  onClick={this.handleRemoveJob}>YES</div> <div className="theme-button alert-confirmation" value={'toggleremove'}  onClick={this.handleDeleteClear}> NO </div></div>: null}</span> 
                           : <span  className="existingjobs__newtask theme--button theme-bsml"><IoMdRemove onClick={this.handleToggle} value={'toggleremove'}/>   </span>}
                     </div> */}
+                    <div className="job__details">
+                    <div className="job__time"><span >{hours != '00' ? hours+' Hrs' : null }  {minutes} Mins {seconds} Secs </span> </div>
+                    <div className="job__total"><span > $ {total.toFixed(2)}</span> </div>
                     {jobselect ? 
-                   <div className="job__archiveblock">
+                    <div className="job__archiveblock">
+                      
                    { togglearchive ? 
                       <span className="existingjobs__remove-confirm">
                         <span>Are you sure you want to archive this job?</span>   
                          <div className="job__removebuttons" style={{display:'flex'}}><div className="theme-button alert-confirmation"  onClick={this.handleArchive}>YES</div> <div className="theme-button alert-confirmation" value={'togglearchive'}  onClick={this.handleToggle}> NO </div></div></span> 
                           : <span  className="existingjobs__newtask theme--button theme-bsml"><RiInboxArchiveLine onClick={this.handleToggle} value={'togglearchive'}/>   </span>}
-                   </div> : null }
+                   </div> : <span style={{width:'2em'}}> </span> }
+                   </div>
                     <span className="existingjobs__jobdate">{date}</span>
                 </div> 
                

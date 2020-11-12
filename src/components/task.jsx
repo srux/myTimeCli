@@ -88,7 +88,7 @@ class Task extends Component {
 
                 <div className="existingjobs__jobitem">
                     <div className="jobitem__name">{task}</div>
-                    <div className="jobitem__time">Start Time: {startTime}</div>
+                    <div className="jobitem__time">Start: {startTime}</div>
                     <div className="jobitem__breaks">
              
                         Breaks:
@@ -101,10 +101,10 @@ class Task extends Component {
                         </div>
                     </div>
 
-                    <div className="jobitem__time">Log Time: {logTime}</div>
-                    <div className="jobitem__time">Total Time:
+                    <div className="jobitem__time">Logged: {logTime}</div>
+                    <div className="jobitem__time">
                     { (hours === '00') ? null : ' '+hours+' Hrs'  }{ (minutes === '00') ? null : ' '+minutes+' Mins'  } {seconds} Secs</div>
-                    <div>$: {Math.round(money * 100) / 100}</div>
+                    <div className="jobitem__money">$: {Math.round(money * 100) / 100}</div>
                     <div className="jobitem__removeblock">
                     { toggleremove ? <span className="jobitem__remove-confirm">Are you sure you want to delete this task? <div className="theme-button alert-confirmation" value={'toggleremove'} onClick={this.handleToggle}> NO </div><div className="theme-button alert-confirmation"  onClick={this.handleRemoveTask}>YES</div></span> : <span  className="jobitem__remove"><RiDeleteBackFill onClick={this.handleToggle} value={'toggleremove'}/>   </span>}
                     </div>

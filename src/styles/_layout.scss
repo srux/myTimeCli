@@ -4,8 +4,10 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: #fff;
-    border-radius: 0.7em;
+    // background-image: linear-gradient(to right top, #fbfeff2d, #f0f5f721, #e9eff12d, #ebf0f147, #e8ecec27, #ebf2f334, #dddddd31, #d0d1d133, #c2c3c43b, #c9cece3d, #c4c9c94a, #d0dad948);
+    background-color: #ffffffe1;
+    backdrop-filter: blur(7px);
+    border-radius: 0.5em;
 }
 
 .header {
@@ -139,9 +141,9 @@
 .overlay {
     position: absolute;
     width: 100vw;
-    top: 0;
+    top: -6em;
     height: 100vh;
-    left: 0;
+    left: -9.5%;
     opacity: 0.5;
     background-color: #cdcdcd;
     z-index: 1;
@@ -200,8 +202,11 @@ span.dollar {
     flex-direction: row;
     background-color: $color-grey;
     padding: 0.5em;
-    border-radius: 0.3em;
     transition: ease all 1s;
+}
+
+.existingjobs__jobitem:nth-last-child(1) {
+    border-radius: 0 0 .3em 0.3em;
 }
 
 .existingjobs__jobitem div {
@@ -209,7 +214,7 @@ span.dollar {
 }
 
 .existingjobs__jobtab {
-    padding: 0.3em 1em;
+    padding: 0.5em 1em;
     background-color: $color-darkgrey;
     border-radius: 0.3em 0.3em 0 0;
     color: $color-light;
@@ -262,6 +267,8 @@ span.dollar {
 .existingjobs__jobdate {
     display: flex;
     justify-self: flex-end;
+    flex: 0 0 15%;
+    justify-content: flex-end;
 }
 
 .ScrollbarsCustom-Content {
@@ -269,6 +276,27 @@ span.dollar {
     flex-direction: column-reverse;
     justify-content: flex-end;
 }
+
+.job__details {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1 1 30%;
+    align-items:center;
+}
+
+.job__total {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 9.2em;
+    margin-right: 1em;
+}
+.job__time {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1em;
+}
+
 
 .job__timer-control {
     flex: 1;
@@ -282,7 +310,7 @@ span.dollar {
     height: 1.6em;
     margin: 0 2em;
     align-items: center;
-    flex: 1;
+    // flex: 1;
 }
 
 .job__timer-notification {
@@ -295,7 +323,14 @@ span.dollar {
 }
 
 .jobitem__time {
-    width: 13em;
+    display: flex;
+    flex: 0 0 14%;
+}
+
+.jobitem__money {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 6em;
 }
 
 .jobitem__pauses {
@@ -317,6 +352,7 @@ span.dollar {
 
 .jobitem__breaks {
     display: flex;
+    flex: 0 0 20%;
     flex-direction: row;
 }
 
@@ -355,6 +391,7 @@ span.dollar {
     padding: 0.2em 0.5em;
     margin-top: -.3em;
     border-radius: 0.3em 0.2em 0.2em 0.3em;
+    clip-path: polygon(0% 0%, 98% 0, 100% 50%, 98% 100%, 0% 100%);
 }
 
 .clpanel__timer span {

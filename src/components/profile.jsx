@@ -4,14 +4,21 @@ import { Link, useHistory } from "react-router-dom"
 //api
 import {useData} from '../api/provider'
 
+
+//plugins
+import { RiImageLine } from "react-icons/ri";
+
 import Dashboard from './dashboard'
+
+//bg images
 // import bgImg from '../assets/profile-bg.jpg';
 // import bgImg1 from '../assets/profile-bg-1.png';
-import bgImg2 from '../assets/profile-bg-2.jpg';
+// import bgImg2 from '../assets/profile-bg-2.jpg';
 // import bgImg3 from '../assets/profile-bg-3.png';
 // import bgImg4 from '../assets/profile-bg-4.png';
 // import bgImg5 from '../assets/profile-bg-5.png';
 // import bgImg6 from '../assets/profile-bg-6.png';
+import bgImg7 from '../assets/profile-bg-7.png';
 import app from "../firebase";
 
 
@@ -60,10 +67,12 @@ export default function Profile() {
   
 
   return (
-    <div className="profile" style={{backgroundImage: `url(${bgImg2})`, backgroundSize:'cover',filter:'blur'}}>
+    <div className="profile" style={{backgroundImage: `url(${bgImg7})`, backgroundSize:'cover',filter:'blur'}}>
+     
         <div className="profile__container">
           <div className="profile__nav">
             {error && <span>{error}</span>}
+            {/* <div className="profile__bg"><RiImageLine/></div> */}
             <span className="profile__email">{currentUser.email}</span>
             <Link to="/update-profile" className="profile__update">
               Update Profile

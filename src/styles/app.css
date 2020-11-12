@@ -136,8 +136,10 @@ svg path {
       -ms-flex-direction: column;
           flex-direction: column;
   height: 100%;
-  background-color: #fff;
-  border-radius: 0.7em;
+  background-color: #ffffffe1;
+  -webkit-backdrop-filter: blur(7px);
+          backdrop-filter: blur(7px);
+  border-radius: 0.5em;
 }
 
 .header {
@@ -331,9 +333,9 @@ svg path {
 .overlay {
   position: absolute;
   width: 100vw;
-  top: 0;
+  top: -6em;
   height: 100vh;
-  left: 0;
+  left: -9.5%;
   opacity: 0.5;
   background-color: #cdcdcd;
   z-index: 1;
@@ -411,9 +413,12 @@ span.dollar {
           flex-direction: row;
   background-color: #efefef;
   padding: 0.5em;
-  border-radius: 0.3em;
   -webkit-transition: ease all 1s;
   transition: ease all 1s;
+}
+
+.existingjobs__jobitem:nth-last-child(1) {
+  border-radius: 0 0 .3em 0.3em;
 }
 
 .existingjobs__jobitem div {
@@ -421,7 +426,7 @@ span.dollar {
 }
 
 .existingjobs__jobtab {
-  padding: 0.3em 1em;
+  padding: 0.5em 1em;
   background-color: #555;
   border-radius: 0.3em 0.3em 0 0;
   color: #f3f3f3;
@@ -503,6 +508,12 @@ span.dollar {
   display: -ms-flexbox;
   display: flex;
   justify-self: flex-end;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 15%;
+          flex: 0 0 15%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .ScrollbarsCustom-Content {
@@ -516,6 +527,45 @@ span.dollar {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+}
+
+.job__details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 30%;
+          flex: 1 1 30%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.job__total {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  min-width: 9.2em;
+  margin-right: 1em;
+}
+
+.job__time {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-right: 1em;
 }
 
 .job__timer-control {
@@ -541,9 +591,6 @@ span.dollar {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
 }
 
 .job__timer-notification {
@@ -560,7 +607,22 @@ span.dollar {
 }
 
 .jobitem__time {
-  width: 13em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 14%;
+          flex: 0 0 14%;
+}
+
+.jobitem__money {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  min-width: 6em;
 }
 
 .jobitem__pauses {
@@ -602,6 +664,9 @@ span.dollar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 20%;
+          flex: 0 0 20%;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -649,6 +714,8 @@ span.dollar {
   padding: 0.2em 0.5em;
   margin-top: -.3em;
   border-radius: 0.3em 0.2em 0.2em 0.3em;
+  -webkit-clip-path: polygon(0% 0%, 98% 0, 100% 50%, 98% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 98% 0, 100% 50%, 98% 100%, 0% 100%);
 }
 
 .clpanel__timer span {
@@ -699,8 +766,8 @@ span.dollar {
 
 .client .client__timer-notification {
   position: absolute;
-  top: 7em;
-  right: 10.7%;
+  top: 8.7em;
+  right: 10%;
   background-color: #333;
   padding: .5em 1em;
   border-radius: .3em;
@@ -986,6 +1053,7 @@ span.dollar {
   padding: 0.7em;
   padding-left: 1.5em;
   right: 0;
+  background-color: #f3f3f3;
 }
 
 .clpanel .clpanel__delete {
@@ -1264,6 +1332,25 @@ span.dollar {
   margin-top: 1.5em;
 }
 
+.profile__bg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0em 1em;
+  padding: .3em;
+  font-size: 1.2em;
+  color: #f3f3f3;
+  border-radius: 50%;
+  background-color: #fd4218;
+  cursor: pointer;
+  -webkit-transition: ease all .5s;
+  transition: ease all .5s;
+}
+
+.profile__bg:hover {
+  background-color: #333;
+}
+
 .profile__update {
   margin: 0em 1.5em;
 }
@@ -1407,7 +1494,7 @@ input {
 .client__input {
   border-radius: .3em 0 0 .3em;
   border: none;
-  background-color: #efefef;
+  background-color: #fafafa;
   margin-right: .2em;
   padding: 0em 0em 0em 1em;
   width: 100%;

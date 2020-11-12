@@ -22,8 +22,8 @@
 
     .client__timer-notification {
         position: absolute;
-        top: 7em;
-        right: 10.7%;
+        top: 8.7em;
+        right: 10%;
         background-color: $color-dark;
         padding: .5em 1em;
         border-radius: .3em;
@@ -240,7 +240,7 @@
         padding: 0.7em;
         padding-left:1.5em;
         right: 0;
-        
+        background-color: $color-light;
     }
     
     .clpanel__delete {

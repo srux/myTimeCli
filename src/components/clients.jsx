@@ -34,11 +34,11 @@ let styles = {
     },
     max: {
         position:'absolute',
-        height:'60vh',
-        width:'81%',
+        height:'68vh',
+        width:'96%',
         zIndex:'2',
-        left:'9%',
-        top:'15.8em',
+        left:'2%',
+        top:'7em',
     },
     flexRow: {
         display:'flex',

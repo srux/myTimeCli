@@ -109,12 +109,27 @@
     margin-top:1.5em;
  }
 
+ .profile__bg {
+    display: flex;
+    margin: 0em 1em;
+    padding: .3em;
+    font-size: 1.2em;
+    color: $color-light;
+    border-radius: 50%;
+    background-color: $color-link;
+    cursor:pointer;
+    transition:ease all .5s;
+}
+
+.profile__bg:hover {
+    background-color: $color-dark;
+}
+
+
 //  .profile__email {
 //      margin:0em 1em;
 //  }
 
- .profile__update {
+.profile__update {
     margin:0em 1.5em;
 }
-
- 
