@@ -31,6 +31,12 @@ export function queryClientData(client) {
     return db.collection('users').doc(userUid).collection('clients').doc(client)
 }
 
+export function queryJobs(client) {
+    let userUid = auth.currentUser.uid
+    return db.collection('users').doc(userUid).collection('clients').doc(client.jobs)
+}
+
+
 export function getClientData(client) {
     let userUid = auth.currentUser.uid
     return db.collection('users').doc(userUid).collection('clients').doc(client).get()

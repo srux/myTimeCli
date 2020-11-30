@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 
 import Job from './job';
-
+import ArchivedJob from './archive-job';
 //api
-import {getRate,getClientData,deleteClient,queryClientData} from '../api/data'
+import {getRate,getClientData,deleteClient,queryClientData,queryJobs} from '../api/data'
 import app from "firebase";
 
 
 //plugins
 
-import { RiListSettingsFill } from "react-icons/ri";
+import { RiListSettingsFill,RiInboxUnarchiveLine } from "react-icons/ri";
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
+import { RiArchiveLine } from "react-icons/ri";
+
+
 import { Beforeunload  } from 'react-beforeunload';
 import Scrollbar from "react-scrollbars-custom";
 
@@ -151,38 +154,53 @@ componentDidMount() {
                 console.log('No clients exist')
             }
         })
+        .then(
+          queryClientData(client).update({
+            currentTask:0,
+            currentJob:null
+          })
+        )
 }
 
 
-    startTimer = () => {
-
-        this.setState({
-          timerOn: true,
-          timerTime: this.state.timerTime,
-          timerStart: Date.now() - this.state.timerTime
-        });
-
-        this.timer = setInterval(() => {
+    startTimer = () => {  
+      let newStart = new Date().toLocaleTimeString();
+      let id = Date.now();
+      let jobId = Date.now();
+      let client = this.props.name;
+      let cTask = this.props.currentTask
+      if ( cTask === 0 ) {
           this.setState({
-            timerTime: Date.now() - this.state.timerStart
-        });
-        }, 10);
+            timerOn: true,
+            timerTime: this.state.timerTime,
+            timerStart: Date.now() - this.state.timerTime
+          });
+       
+          this.timer = setInterval(() => {
+            this.setState({
+              timerTime: Date.now() - this.state.timerStart
+          });
+          }, 10);
+        }
+        else {
+          this.setState({
+            timerOn: true,
+            eTimerTime: cTask.timerTime,
+            timerStart: Date.now()
+          });
 
-        // this.timeStor = setInterval(() => {
-        //   let client = this.state.data.client
-        //   let job = this.state.data.job
-        //   let task = this.state.data.task
-        //   let timer = this.state.timerTime
-        //   localStorage.setItem('client',client)
-        //   localStorage.setItem('Job',job)
-        //   localStorage.setItem('Task',task)
-        //   localStorage.setItem('Job Time',timer)
-        // },10000)
+     
+            this.timer = setInterval(() => {
+              let timer =  Date.now() - this.state.timerStart
+              this.setState({
+                timerTime: timer + this.state.eTimerTime
+            });
+            }, 10);
+   
 
-        let newStart = new Date().toLocaleTimeString();
-        let id = Date.now();
-        let jobId = Date.now();
-        let client = this.props.name;
+        }
+
+        if ( cTask === 0 ) {
           this.setState ({
             data: {
               ...this.state.data,
@@ -199,6 +217,22 @@ componentDidMount() {
             },
     
           });
+        } 
+        else {
+          
+          this.setState ({
+            data: {
+              ...cTask
+            },
+            styling: {
+              ...this.state.styling,
+              logStatus:styles.open,
+              timeStatus:styles.open,
+              inputStatus:styles.hide
+            },
+
+          })
+        }
       };
     
     
@@ -273,6 +307,7 @@ componentDidMount() {
         let addJob = this.state.jobs.concat(data);
         let job = data.job
         let jobId = data.jobId
+        let cTask = this.props.currentTask
         localStorage.clear();
 
         // create payload & switch toggles
@@ -333,6 +368,7 @@ componentDidMount() {
                 // define tasks of selected job
                   let tasks = selectedJob.tasks
                 //create task
+
                   this.setState({ 
                     newJobs:[
                       {
@@ -356,12 +392,67 @@ componentDidMount() {
                   timestampsInSnapshots: true
                 });
                 //send payload
-                setTimeout(()=>{
-                  queryClientData(client).update({
-                    jobs
-                  })
-                },300)
-              }
+                    if ( cTask === 0 ) {
+                        queryClientData(client).update({
+                          jobs
+                        })
+                      console.log('addTask')
+                    }
+
+                    else {
+
+                      this.setState({ 
+                            tasks:[
+                              ...tasks,
+                              {
+                              ...data
+                            }
+                        ]
+                      })
+    
+                        let taskArr = this.state.tasks
+                        const filteredArr = [...new Map(taskArr.map(item => [item.id , item])).values()]
+
+
+                        this.setState({ 
+                          newJobs:[
+                            {
+                              ...selectedJob,
+                              tasks:[
+                                ...filteredArr,
+                              ]
+                              }
+                          ]
+                        })
+      
+                        console.log(filteredArr,'filteredARr')
+
+                        let newJobs = this.state.newJobs
+                        let filteredJobs = docData.jobs.filter(job => job.jobId !== currentJob);
+                        let jobsCombine = [...filteredJobs,...newJobs]
+                        let currentTask = this.state.currentTask
+                        let jobs = jobsCombine.map((job) => {
+                            return {...job, tasks: job.tasks.filter((task) => task.logId !== this.props.currentTask.logId)}
+                          })
+          
+                        //send payload
+                        
+                              setTimeout(()=>{
+                                queryClientData(client).update({
+                                  jobs,
+                                  currentTask:{
+                                    ...currentTask,
+                                    ...data
+                                  }
+                                })
+                              },300)
+                            
+                            console.log('resume task')
+
+                    }
+                }
+
+          
 
               else {
                 console.log('no such document')
@@ -440,6 +531,7 @@ componentDidMount() {
         e.preventDefault();
 
         let newLog = new Date().toLocaleTimeString();
+        let logId = Date.now()
         let {timerStart,timerTime,} = this.state;
         let rate = this.state.data.rate
         let scale = rate/3600000
@@ -449,6 +541,7 @@ componentDidMount() {
           data: {
             ...this.state.data,
             logTime:newLog,
+            logId,
             timerTime,
             timerStart,
             money:total,
@@ -546,13 +639,17 @@ componentDidMount() {
 
    handleClearToggles=(e)=>{
     e.preventDefault()
-   
+    let client = this.props.name
    
     this.setState({
       optionToggle:false,
       colorToggle:false,
       deleteToggle:false,
     });
+
+    queryClientData(client).update({
+      currentTask:0
+    })
    }
 
 
@@ -572,18 +669,79 @@ componentDidMount() {
         deleteClient(userUid,name)
       }
 
+      handleCurrentJob=(e)=>{
+        e.preventDefault()
+        let jobName = this.props.currentJobName
+        let client = this.props.name;
+        let jobId = e.target.getAttribute('value');
+        let job = e.target.getAttribute('id');
+        let data = this.state.data
+        // let {jobId,job} = this.props;
+        this.setState(state  => ({
+          selectedJob:jobId,
+          selectedJobName:job,
+          [jobId]: !this.state[jobId]
+        }));
+        queryClientData(client).update({
+            currentJob:jobId,
+            currentJobName:job
+          })
+       }
+  
+
+      handleRestoreJob=()=> {
+        let db = app.firestore();
+        let client = this.props.name;
+      
+        getClientData(client).then((doc) => {
+            if (doc.exists) {
+              db.settings({
+                timestampsInSnapshots: true
+              });
+              
+              let jobsData = this.props.jobs
+              let existingArchive = this.props.archivedJobs
+              let selectedJob = this.state.currentJob
+              
+              // doc.data().archivedJobs
+              
+              // filter selected job from array
+              let jobsArchived = existingArchive.filter(job => job.jobId === selectedJob);
+              let jobs = [...jobsData,...jobsArchived]
+    
+              queryClientData(client).update({
+                jobs
+              })
+    
+              setTimeout(()=>{
+                let archivedJobs = existingArchive.filter(job => job.jobId !== selectedJob);
+                queryClientData(client).update({
+                  archivedJobs
+                })
+                console.log(archivedJobs,'updated Archive')
+              },300)
+             
+            }
+            else {
+              console.log('no such document')
+            }         
+          })
+    }
+    
+
     render() {
-        let {name,jobs} = this.props
-        let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle} = this.state
+        let {name,jobs,archivedJobs,currentJob,currentJobName} = this.props
+        let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle,selectedJob,existingJobs,timerOn} = this.state
         let {pauseTime,job,task,startTime,resumeTime,rate} = this.state.data
         let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
         let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
         let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
         let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
-
+    
         let scale = rate/3600000
         let total = scale * timerTime
         let clientOptions = this.props.options
+
    
         return (
           
@@ -636,29 +794,54 @@ componentDidMount() {
                   </span>
               </div>
             </div>
-                {clientToggle === name ? <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} id=''>{name}</h3> : <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} id={name}>{name}</h3>}
+                {clientToggle === name ? <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} id=''>{name}</h3> : <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} id={name}>{name}</h3>}
                 
                 {clientToggle === name ? 
                 <> 
                 
                 <div className="clpanel" style={styles.max}>
+                  
                 { colorToggle && !deleteToggle ?
-                    <div className="clpanel__colorspanel">
-                        <div className="clpanel__colorpick">
-                            <ul>
-                                <li className='red' onClick={this.handleColor}></li>
-                                <li className='turq' onClick={this.handleColor}></li>
-                                <li className='black' onClick={this.handleColor}></li>
-                                <li className='purple' onClick={this.handleColor}></li>
-                                <li className='blue' onClick={this.handleColor}></li>
-                                <li className='yellow' onClick={this.handleColor}></li>
-                                <li className='green' onClick={this.handleColor}></li>
-                                <li className='clear' onClick={this.handleColor}></li>
-                            </ul>
+                    <div className="clpanel__optiondash">
+                      <div className="clpanel__colorspanel">
+                          <div className="clpanel__colorpick">
+                              <ul>
+                                  <li className='red' onClick={this.handleColor}></li>
+                                  <li className='turq' onClick={this.handleColor}></li>
+                                  <li className='black' onClick={this.handleColor}></li>
+                                  <li className='purple' onClick={this.handleColor}></li>
+                                  <li className='blue' onClick={this.handleColor}></li>
+                                  <li className='yellow' onClick={this.handleColor}></li>
+                                  <li className='green' onClick={this.handleColor}></li>
+                                  <li className='clear' onClick={this.handleColor}></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div className="clpanel__archivedjobs" >  
+                          <span onClick={this.handleToggle} value={'togglearchive'} className="existingjobs__newtask theme--button theme-bsml" style={{zIndex:3 }}><RiArchiveLine  /></span>
+                          { this.state.togglearchive ?
+                                  <div className="clpanel__archivedpanel">
+                                      <h2>Archived Jobs</h2>
+                                      <ul>
+                                          {this.props.archivedJobs.map((aJob) => { let aJobProps = {
+                                          ...aJob,
+                                          key:aJob.jobId } 
+                                          return  <ArchivedJob {...aJobProps} 
+                                          client={name}
+                                          // archivedJobs={archivedJobs} 
+                                          jobs={existingJobs}
+                                          />
+                                          }) }
+                                      </ul>
+                                  </div>
+                              : null }  
+                              <div  onClick={this.handleToggle} style={{display: this.state.togglearchive ? 'block' : 'none' }} className="archived-overlay"  value={'togglearchive'}></div>
                         </div>
-                    </div>
+                     </div>
+                   
                     : null }
-               
+
+          
                     <div className="clpanel__clientdash">
 
                         <div className="clpanel__clientname">
@@ -711,24 +894,29 @@ componentDidMount() {
                         </div>
                     </div>
                   
-                    <div className="clpanel__task">
-                      <input
+                    <div 
+                    // style={ this.props.currentTask === 0 ? {opacity:1} : {opacity:.5} } 
+                    className="clpanel__task">
+                      { this.props.currentJob === null ? <input
                             style={inputStatus}
                             value={job}
+                            onClick={this.handleClearToggles}
                             onChange={this.handleNewJobInput}
                             onFocus={this.setCurrentJob}
                             name='nj'
                             className="task__input"
-                            placeholder="Job Name..."/>
-                            <input
+                            placeholder="Job Name..."/>: null }
+                            { this.props.currentTask === 0 ?  <input
                             style={inputStatus}
                             value={task}
+                            onClick={this.handleClearToggles}
                             onChange={this.handleNewTaskInput}
                             name='nt'
                             className="task__input"
-                            placeholder="Task Name..."/>
-                        { job === '' ? null :
-                        <div style={inputStatus} className="clpanel__control" onClick={this.startTimer}>Start</div>
+                            placeholder="Task Name..."/> : null }
+                           
+                        { job === '' && this.props.currentTask === 0 ? null :
+                        <div style={inputStatus} className="clpanel__control" onClick={this.startTimer}>{ this.props.currentTask === 0 ? <span>Start</span> :<span>Resume</span> }</div>
                         }
                         <div className="clpanel__timer" style={timeStatus}>
                             <span>{job}</span>
@@ -761,10 +949,10 @@ componentDidMount() {
                 
                   <Scrollbar className="clpanel__tasklist" style={{ padding: '1em' }}>
                         { this.props.jobs.map((job) => { let jobProps = { ...job, key:job.jobId }
-                        return <Job {...jobProps} jobs={jobs} name={name} currentJob={this.props.currentJob} styling={this.state.styling} startTimer={this.startTimer} handleNewTaskInput={this.handleNewTaskInput}  /> }) }
+                        return <Job {...jobProps} jobs={jobs} name={name} currentTask={this.props.currentTask} setCurrentJob={this.props.setCurrentJob} currentJob={this.props.currentJob} styling={this.state.styling} timerOn={timerOn} startTimer={this.startTimer} handleNewTaskInput={this.handleNewTaskInput}  /> }) }
                    </Scrollbar>
                 </div>
-                <div onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} className="overlay"></div> 
+                <div onClick={this.handleClientToggle} onMouseUp={this.setCurrentJob} onMouseDown={this.handleClearToggles} className="overlay"></div> 
                 </>
                 : 
                 <div className={"client__jobInfo"} style={styles.hide}  ></div>}

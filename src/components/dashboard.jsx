@@ -177,7 +177,7 @@ class Dashboard extends Component {
             <div className="header__left">
           
               <div className="header__settings">
-                  <div className="header__logo">myTime</div>
+                  <div className="header__logo">my</div>
                   <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiTimer2Fill style={{pointerEvents:'none'}}/></div>
 
                   { settingsToggle ? <div className="header__settings-popup"></div> : null }

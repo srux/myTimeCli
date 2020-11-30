@@ -403,6 +403,10 @@ span.dollar {
   margin-top: 1em;
 }
 
+.existingjobs__jobname {
+  min-width: 8em;
+}
+
 .existingjobs__jobitem {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -423,10 +427,13 @@ span.dollar {
 
 .existingjobs__jobitem div {
   padding: 0 0.6em;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .existingjobs__jobtab {
-  padding: 0.5em 1em;
+  padding: 0.5em .25em .5em 1em;
   background-color: #555;
   border-radius: 0.3em 0.3em 0 0;
   color: #f3f3f3;
@@ -465,6 +472,15 @@ span.dollar {
   border-radius: 0.3em;
   background-color: #333;
   color: #f3f3f3;
+}
+
+.existingjobs__close {
+  position: absolute;
+  margin-top: -46px !important;
+  background-color: #fd4218 !important;
+  z-index: 9999;
+  left: -8px;
+  height: 1.3em;
 }
 
 .existingjobs__newtask::-webkit-input-placeholder {
@@ -507,13 +523,13 @@ span.dollar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  justify-self: flex-end;
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 15%;
-          flex: 0 0 15%;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  justify-self: flex-start;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 15%;
+          flex: 1 0 15%;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .ScrollbarsCustom-Content {
@@ -545,27 +561,8 @@ span.dollar {
 }
 
 .job__total {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  min-width: 9.2em;
-  margin-right: 1em;
-}
-
-.job__time {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  margin-right: 1em;
+  min-width: 6em;
+  text-align: right;
 }
 
 .job__timer-control {
@@ -604,15 +601,43 @@ span.dollar {
 
 .jobitem__name {
   width: 10em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-.jobitem__time {
+.jobitem__start {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-flex: 0;
       -ms-flex: 0 0 14%;
           flex: 0 0 14%;
+}
+
+.jobitem__date {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 10%;
+          flex: 1 0 10%;
+}
+
+.jobitem__time-money {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 10%;
+          flex: 1 0 10%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.jobitem__time {
+  text-align: right;
 }
 
 .jobitem__money {
@@ -623,6 +648,7 @@ span.dollar {
       -ms-flex-pack: end;
           justify-content: flex-end;
   min-width: 6em;
+  margin-right: 2em;
 }
 
 .jobitem__pauses {
@@ -931,20 +957,12 @@ span.dollar {
 }
 
 .clpanel .clpanel__colorspanel {
-  position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 99%;
-          flex: 1 0 99%;
   left: 0;
-  height: 2.8em;
-  top: -2.5em;
   -webkit-transition: ease all 1s;
   transition: ease all 1s;
-  border-radius: .5em .5em 0em 0;
-  background-color: #fafafa;
   padding: .25em .7em;
   min-height: 2em;
 }
@@ -1020,6 +1038,76 @@ span.dollar {
 }
 
 .clpanel .clpanel__cardclose {
+  cursor: pointer;
+}
+
+.clpanel .clpanel__optiondash {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #fafafa;
+  border-radius: .5em .5em 0em 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  top: -2.5em;
+  position: absolute;
+  height: 2.8em;
+  left: 0;
+}
+
+.clpanel .clpanel__archivedpanel {
+  position: absolute;
+  width: 96%;
+  left: 2%;
+  background-color: #fafafa;
+  height: 64vh;
+  top: 3em;
+  padding: 1em;
+  border-radius: .3em;
+  z-index: 99;
+}
+
+.clpanel .clpanel__archivedpanel ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.clpanel .clpanel__archivedpanel li {
+  padding: .5em 1em;
+  margin: .5em;
+  border-radius: .3em;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #333;
+  color: #f3f3f3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 32%;
+          flex: 0 0 32%;
+  width: 5%;
+}
+
+.clpanel .archived-overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #cdcdcd;
+  opacity: .5;
+  top: 0;
+  left: -12%;
+  top: -10.5em;
   cursor: pointer;
 }
 
@@ -1410,6 +1498,10 @@ input {
   color: #f3f3f3;
 }
 
+.theme--button svg {
+  pointer-events: none;
+}
+
 .theme-bsml {
   height: 1.5em;
   width: auto;
@@ -1494,7 +1586,7 @@ input {
 .client__input {
   border-radius: .3em 0 0 .3em;
   border: none;
-  background-color: #fafafa;
+  background-color: #efefef;
   margin-right: .2em;
   padding: 0em 0em 0em 1em;
   width: 100%;

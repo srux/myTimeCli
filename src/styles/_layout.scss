@@ -197,6 +197,10 @@ span.dollar {
     margin-top: 1em;
 }
 
+.existingjobs__jobname {
+    min-width: 8em;
+}
+
 .existingjobs__jobitem {
     display: flex;
     flex-direction: row;
@@ -211,10 +215,11 @@ span.dollar {
 
 .existingjobs__jobitem div {
     padding: 0 0.6em;
+    align-items: center;
 }
 
 .existingjobs__jobtab {
-    padding: 0.5em 1em;
+    padding: 0.5em .25em .5em 1em;
     background-color: $color-darkgrey;
     border-radius: 0.3em 0.3em 0 0;
     color: $color-light;
@@ -235,14 +240,20 @@ span.dollar {
     margin-right: 1em;
 }
 
-.existingjobs__details div {
-    }
-
 .existingjobs__newtask {
     margin: 0;
     border-radius: 0.3em;
     background-color: $color-dark;
     color: $color-light;
+}
+
+.existingjobs__close {
+    position: absolute;
+    margin-top: -46px !important;
+    background-color: $color-link !important;
+    z-index: 9999;
+    left: -8px;
+    height: 1.3em;
 }
 
 .existingjobs__newtask::placeholder {
@@ -266,9 +277,9 @@ span.dollar {
 
 .existingjobs__jobdate {
     display: flex;
-    justify-self: flex-end;
-    flex: 0 0 15%;
-    justify-content: flex-end;
+    justify-self: flex-start;
+    flex: 1 0 15%;
+    justify-content: flex-start;
 }
 
 .ScrollbarsCustom-Content {
@@ -285,16 +296,14 @@ span.dollar {
 }
 
 .job__total {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    min-width: 9.2em;
-    margin-right: 1em;
+    min-width: 6em;
+    text-align:right;
 }
+
 .job__time {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 1em;
+    // display: flex;
+    // justify-content: flex-end;
+    // margin-right: 1em;
 }
 
 
@@ -320,17 +329,34 @@ span.dollar {
 
 .jobitem__name {
     width: 10em;
+    display: flex;
+}
+
+.jobitem__start {
+    display: flex;
+    flex: 0 0 14%;
+}
+
+.jobitem__date {
+    display: flex;
+    flex: 1 0 10%;
+}
+
+.jobitem__time-money {
+    display: flex;
+    flex: 1 0 10%;
+    justify-content: flex-end;
 }
 
 .jobitem__time {
-    display: flex;
-    flex: 0 0 14%;
+    text-align: right;
 }
 
 .jobitem__money {
     display: flex;
     justify-content: flex-end;
     min-width: 6em;
+    margin-right: 2em;
 }
 
 .jobitem__pauses {

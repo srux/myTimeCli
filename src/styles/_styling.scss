@@ -52,6 +52,10 @@ input {
     color: #f3f3f3;
 }
 
+.theme--button svg {
+    pointer-events: none;
+}
+
 .theme-bsml {
     height:1.5em;
     width:auto;
@@ -133,7 +137,7 @@ input {
 .client__input {
     border-radius: .3em 0 0 .3em;
     border:none;
-    background-color: #fafafa;
+    background-color: $color-grey;
     margin-right: .2em;
     padding:0em 0em 0em 1em;
     width:100%;
