@@ -730,7 +730,7 @@ componentDidMount() {
     
 
     render() {
-        let {name,jobs,archivedJobs,currentJob,currentJobName} = this.props
+        let {name,jobs,archivedJobs,currentTask,currentJob,currentJobName} = this.props
         let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle,selectedJob,existingJobs,timerOn} = this.state
         let {pauseTime,job,task,startTime,resumeTime,rate} = this.state.data
         let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
@@ -759,28 +759,21 @@ componentDidMount() {
                       <h4>On the clock
                       </h4>
 
-                      <div style={logStatus} className="client-pauses">
+                      {/* <div style={logStatus} className="client-pauses">
 
                           <div style={pauseStatus} className="client__timer-button" onClick={this.pauseTimer}>
                               <GrPauseFill/>
                               { pauseStatus === 'Paused' ? 'ed' : null }</div>
-                      </div>
-                      <div style={logStatus} className="client-resumes">
+                      </div> */}
+                      {/* <div style={logStatus} className="client-resumes">
                           <div
                               style={resumeStatus}
                               className="client__timer-button"
                               onClick={this.resumeTimer}>
                               <GrPlayFill/>
                           </div>
-                      </div>
-                      <div style={logStatus} className="client-log">
-                          <div
-                              className="client__timer-button"
-                              onMouseDown={this.handleLog}
-                              onMouseUp={this.handleStoreData}>
-                              <GrShare/>
-                          </div>
-                      </div>
+                      </div> */}
+
                   </div>
                   {name} {job}
                   <span>{hours}</span>
@@ -792,6 +785,14 @@ componentDidMount() {
                   <span className="clpanel__rate">
                       $ {total.toFixed(2)}
                   </span>
+                  <div style={logStatus} className="client-log">
+                          <div
+                              className="client__timer-button"
+                              onMouseDown={this.handleLog}
+                              onMouseUp={this.handleStoreData}>
+                              {/* <GrShare/> */}Log
+                          </div>
+                      </div>
               </div>
             </div>
                 {clientToggle === name ? <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} onMouseUp={this.handleClearToggles} id=''>{name}</h3> : <h3 className={"client__name "+clientOptions.clientColor} onClick={this.handleClientToggle} id={name}>{name}</h3>}
@@ -897,7 +898,7 @@ componentDidMount() {
                     <div 
                     // style={ this.props.currentTask === 0 ? {opacity:1} : {opacity:.5} } 
                     className="clpanel__task">
-                      { this.props.currentJob === null ? <input
+                      { currentJob === null ? <input
                             style={inputStatus}
                             value={job}
                             onClick={this.handleClearToggles}
@@ -906,7 +907,7 @@ componentDidMount() {
                             name='nj'
                             className="task__input"
                             placeholder="Job Name..."/>: null }
-                            { this.props.currentTask === 0 ?  <input
+                            { currentTask === 0 ?  <input
                             style={inputStatus}
                             value={task}
                             onClick={this.handleClearToggles}
@@ -915,8 +916,8 @@ componentDidMount() {
                             className="task__input"
                             placeholder="Task Name..."/> : null }
                            
-                        { job === '' && this.props.currentTask === 0 ? null :
-                        <div style={inputStatus} className="clpanel__control" onClick={this.startTimer}>{ this.props.currentTask === 0 ? <span>Start</span> :<span>Resume</span> }</div>
+                        { (job === '' && currentTask === 0) || (timerOn === true) ? null :
+                        <div style={inputStatus, {marginLeft:'0em'}} className="clpanel__control" onClick={this.startTimer}>{ currentTask === 0 || currentJob === null ? <span>Start</span> :<span>Resume Task</span> }</div>
                         }
                         <div className="clpanel__timer" style={timeStatus}>
                             <span>{job}</span>
@@ -926,7 +927,7 @@ componentDidMount() {
                         <div className="clpanel__timer" onChange={this.timeKeeper} style={timeStatus}>
                         <span className="clpanel__time">{hours}</span> Hrs : <span className="clpanel__time">{minutes}</span> Mins : <span className="clpanel__time">{seconds}</span> Secs at ${rate} per hour<span className="clpanel__rate" style={logStatus}>/ $ {total.toFixed(2)}</span>
                         </div>
-                        <div style={logStatus} className="clpanel__pauses">
+                        {/* <div style={logStatus} className="clpanel__pauses">
                             <div style={pauseStatus} className="clpanel__control" onClick={this.pauseTimer}>Pause{ pauseStatus === 'Paused' ? 'ed' : null }</div>
                             {pauseTime}
                         </div>
@@ -937,7 +938,7 @@ componentDidMount() {
                                 onClick={this.resumeTimer}>Resume
                             </div>
                             {resumeTime}
-                        </div>
+                        </div> */}
 
                         <span
                             style={logStatus}

@@ -417,8 +417,8 @@ span.dollar {
           flex-direction: row;
   background-color: #efefef;
   padding: 0.5em;
-  -webkit-transition: ease all 1s;
-  transition: ease all 1s;
+  -webkit-transition: ease all .7s;
+  transition: ease all .7s;
 }
 
 .existingjobs__jobitem:nth-last-child(1) {
@@ -430,6 +430,14 @@ span.dollar {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.existingjobs__jobitem .job-edit input {
+  padding: 0 .5em;
+}
+
+.existingjobs__jobitem .job-edit div {
+  margin-left: -.5em;
 }
 
 .existingjobs__jobtab {
@@ -524,9 +532,6 @@ span.dollar {
   display: -ms-flexbox;
   display: flex;
   justify-self: flex-start;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 15%;
-          flex: 1 0 15%;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
@@ -648,7 +653,7 @@ span.dollar {
       -ms-flex-pack: end;
           justify-content: flex-end;
   min-width: 6em;
-  margin-right: 2em;
+  margin-right: 1.5em;
 }
 
 .jobitem__pauses {
@@ -699,6 +704,21 @@ span.dollar {
           flex-direction: row;
 }
 
+.jobitem__edit {
+  font-size: 1.4em;
+  cursor: pointer;
+  -webkit-transition: ease all .5s;
+  transition: ease all .5s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 2em;
+}
+
+.jobitem__edit:hover {
+  color: #fd4218;
+}
+
 .jobitem__remove {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -711,13 +731,11 @@ span.dollar {
       -ms-flex-pack: end;
           justify-content: flex-end;
   right: 1em;
-  color: #333;
   position: absolute;
-  -webkit-transition: ease all 0.7s;
-  transition: ease all 0.7s;
+  -webkit-transition: ease all 0.5s;
+  transition: ease all 0.5s;
   cursor: pointer;
   border-radius: 0.2em;
-  background-color: #f3f3f3;
 }
 
 .jobitem__remove svg {
@@ -792,8 +810,8 @@ span.dollar {
 
 .client .client__timer-notification {
   position: absolute;
-  top: 8.7em;
-  right: 10%;
+  top: 7.2em;
+  right: 2.3em;
   background-color: #333;
   padding: .5em 1em;
   border-radius: .3em;
@@ -818,6 +836,10 @@ span.dollar {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+}
+
+.client .client__timer-control h4 {
+  margin-right: 1em;
 }
 
 .client .client__timer-button {
@@ -1465,7 +1487,7 @@ button {
 
 input {
   font-family: Poppins,Roboto;
-  border-radius: .3em 0 0 .3em;
+  border-radius: .2em;
   border: none;
   background-color: #efefef;
   margin-right: .2em;

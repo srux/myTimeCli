@@ -22,14 +22,15 @@
 
     .client__timer-notification {
         position: absolute;
-        top: 8.7em;
-        right: 10%;
-        background-color: $color-dark;
+        top: 7.2em;
+        right: 2.3em;
+        background-color: #333;
         padding: .5em 1em;
         border-radius: .3em;
         color: #fafafa;
     }
 
+    
     .client__timer-notification .clpanel__rate {
         width: 7em;
     }
@@ -39,6 +40,10 @@
         justify-content: space-between;
         align-items: center;
         flex-direction: row;
+    }
+
+    .client__timer-control h4 {
+        margin-right: 1em;
     }
 
     .client__timer-button {

@@ -26,11 +26,8 @@ class Job extends Component {
 
   componentDidMount() {
       let currentJob = this.state.props
-      let client = this
-          .props
-          .name
-          this
-          .setState({selectedJob: currentJob})
+    //   let client = this.props.name 
+      this.setState({selectedJob: currentJob})
 
   }
 
@@ -107,6 +104,7 @@ class Job extends Component {
       })
   }
 
+
   handleToggle = (e) => {
       e.preventDefault()
       let target = e
@@ -173,7 +171,9 @@ class Job extends Component {
                     {jobselect ?  <div className="job__newtask">
                     <div></div>
                     { jobselect ? <>{ currentTask === 0 ? <input type="text" onChange={this.props.handleNewTaskInput} placeholder="New Task" className="existingjobs__newtask"/> :
-                      <div onClick={startTimer} className="existingjobs__newtask theme--button theme-bsml">{currentTask.task} <RiPlayLine/> </div> }
+                      // <div onClick={startTimer} className="existingjobs__newtask theme--button theme-bsml"> <RiPlayLine/> </div> 
+                      <div className="job__taskname">{currentTask.task}</div>
+                      }
                     {!timerOn && currentTask === 0 ?<div onClick={startTimer} className="existingjobs__newtask theme--button theme-bsml"> <RiPlayLine/> </div>: null}</> : null }
                     </div>
                     : <div></div> }

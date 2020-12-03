@@ -38,7 +38,7 @@ export default function Profile() {
           const data = snap.docs.map(doc => doc.data())
           setData(data)
         });
-        //remember to unsubscribe from your realtime listener on unmount or you will create a memory leak
+      
         return () => updateData()
   }, []);
 
