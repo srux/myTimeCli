@@ -30,7 +30,6 @@ class Task extends Component {
         jobs,
         taskData:{
           ...rest,
-          task:'NEWTASK',
           logId:Date.now()
         }
       })
@@ -94,11 +93,6 @@ class Task extends Component {
 
     
             this.setState({ 
-              taskData:{
-                ...data,
-                task:'NEWTASK',
-                logId:Date.now()
-              },
               tasks:[
                 ...tasks,
                 {
