@@ -296,6 +296,10 @@ span.dollar {
     justify-content: flex-end;
 }
 
+.job__archiveblock {
+    display:flex;
+}
+
 .job__details {
     display: flex;
     justify-content: flex-end;
@@ -364,7 +368,7 @@ span.dollar {
     display: flex;
     justify-content: flex-end;
     min-width: 6em;
-    margin-right: 1.5em;
+    margin-right: 3.55em;
 }
 
 .jobitem__pauses {

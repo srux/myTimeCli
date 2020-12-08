@@ -116,6 +116,8 @@ class Clients extends Component {
 componentDidMount() {
     let client = this.props.name;
 
+
+
     let data = this
         .state
         .data
@@ -235,65 +237,6 @@ componentDidMount() {
         }
       };
     
-    
-    
-      pauseTimer = () => {
-        this.setState({ timerOn: false });
-        clearInterval(this.timer);
-        let newPause = new Date().toLocaleTimeString();
-        let addPause = this.state.data.pauses.concat(newPause);
-        
-        this.setState ({
-          data: {
-            ...this.state.data,
-            pauseTime:newPause,
-            pauses:addPause,
-          },
-          styling: {
-            ...this.state.styling,
-            pauseStatus:styles.paused,
-            resumeStatus:styles.playing
-          },
-        })
-    
-      };
-    
-      resumeTimer = () => {
-    
-        this.setState({ timerOn: true });
-        clearInterval(this.timer);
-        
-        this.setState({
-          timerOn: true,
-          timerTime: this.state.timerTime,
-          timerStart: Date.now() - this.state.timerTime
-        });
-        this.timer = setInterval(() => {
-          this.setState({
-            timerTime: Date.now() - this.state.timerStart
-          });
-        }, 10);
-    
-    
-        let newResume = new Date().toLocaleTimeString();
-        let addResume = this.state.data.resumes.concat(newResume)
-        this.setState ({
-          timerOn: true,
-          data: {
-            ...this.state.data,
-            resumeTime:newResume,
-            resumes:addResume
-          },
-          styling: {
-            ...this.state.styling,
-            resumeStatus:styles.paused,
-            pauseStatus:styles.playing,
-          },
-        })
-    
-      };
-    
-    
       handleStoreData = () => {
         let db = app.firestore();
         this.setState({ timerOn: false });
@@ -340,6 +283,7 @@ componentDidMount() {
               jobs:app.firestore.FieldValue.arrayUnion({
                 job,
                 jobId,
+                invoiced:false,
                 tasks:
                   [data]
               })
@@ -355,6 +299,7 @@ componentDidMount() {
               alert("Error adding document: ", error);
           }); 
           }
+          //resume function
           else {
             getClientData(client).then((doc) => {
               if (doc.exists) {
@@ -546,6 +491,13 @@ componentDidMount() {
             timerStart,
             money:total,
           },
+        })
+
+        let client = this.props.name;
+        queryClientData(client).update({
+          currentJob:this.state.data.jobId,
+          currentJobName:this.state.data.job,
+          currentTask:this.state.data,
         })
       } 
     

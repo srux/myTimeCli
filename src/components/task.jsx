@@ -153,6 +153,7 @@ class Task extends Component {
 
     handleCurrentTask = (e) => {  
         e.preventDefault();
+      
         let client = this.props.client;
         
         let taskProps = this.props
@@ -182,7 +183,7 @@ class Task extends Component {
             }
         })
       console.log('rt')
-        
+    
     }
 
     handleUpdateInput =(e)=> {

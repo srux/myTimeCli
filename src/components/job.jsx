@@ -10,6 +10,8 @@ import {queryClientData,getClientData} from '../api/data'
 // plugins
 
 import { RiAddFill,RiSubtractLine,RiCloseLine,RiPlayLine,RiInboxArchiveLine } from "react-icons/ri";
+import { FaFileInvoiceDollar } from "react-icons/fa";
+
 
 
 
@@ -28,7 +30,7 @@ class Job extends Component {
       let currentJob = this.state.props
     //   let client = this.props.name 
       this.setState({selectedJob: currentJob})
-
+  
   }
 
   handleCurrentJob = (e) => {
@@ -68,6 +70,36 @@ class Job extends Component {
               console.log('no such document')
           }
       })
+  }
+
+  handleInvoice = () => {
+    let db = app.firestore();
+    let client = this.props.name;
+    let selectedJob = this.state.selectedJob
+    let jobsData = this.props.jobs
+    let eJobs = jobsData.filter(job => job.jobId !== selectedJob);
+    let invJob = jobsData.filter(job => job.jobId === selectedJob);
+    
+    invJob.push({invoiced:true})
+
+    console.log(invJob)
+
+    getClientData(client).then((doc) => {
+        if (doc.exists) {
+            db.settings({timestampsInSnapshots: true});
+
+            // setTimeout(() => {
+            //     queryClientData(client).update({
+            //         jobs
+            //     })
+         
+            // }, 300)
+        }
+        else {
+           console.log('document doesnt exist')
+        }
+    });
+
   }
 
   handleArchive = () => {
@@ -129,11 +161,14 @@ class Job extends Component {
   }
 
   setCurrentJob = (e) => {
-      e.preventDefault();
-      let client = this.props.name;
-      this.setState({selectedJob: 0})
-      queryClientData(client).update({currentJob: null})
-
+      let timerOn = this.props.timerOn
+      if ( !timerOn ) {
+        e.preventDefault();
+        let client = this.props.name;
+        this.setState({selectedJob: 0})
+        queryClientData(client).update({currentJob: null})
+        console.log('timerOFF')
+      } 
   }
 
     render() {
@@ -191,12 +226,12 @@ class Job extends Component {
                     <div className="job__total"><span > $ {total.toFixed(2)}</span> </div>
                     {jobselect ? 
                     <div className="job__archiveblock">
-                      
+                    
                    { togglearchive ? 
                       <span className="existingjobs__remove-confirm">
                         <span>Are you sure you want to archive this job?</span>   
                          <div className="job__removebuttons" style={{display:'flex'}}><div className="theme-button alert-confirmation" onClick={this.handleArchive}>YES</div> <div className="theme-button alert-confirmation" value={'togglearchive'}  onClick={this.handleToggle}> NO </div></div></span> 
-                          : <span  className="existingjobs__newtask theme--button theme-bsml" onClick={this.handleToggle} value={'togglearchive'}><RiInboxArchiveLine/></span>}
+                          : <><span className="existingjobs__newtask theme--button theme-bsml" style={{marginRight:'0em'}} onClick={this.handleInvoice}><FaFileInvoiceDollar/></span><span  className="existingjobs__newtask theme--button theme-bsml" onClick={this.handleToggle} value={'togglearchive'}><RiInboxArchiveLine/></span></>}
                    </div> : <span style={{width:'2em'}}> </span> }
                    </div>
                     
@@ -206,7 +241,7 @@ class Job extends Component {
                 { jobselect ?                 
                 <div className="existingjobs__taskContainer">  
                 { this.props.tasks.map((task) => { let taskProps = { ...task, key:task.id }
-                        return <Task {...taskProps} currentTask={this.props.currentTask} currentJob={this.props.currentJob} jobs={jobs}/>  }) }
+                        return <Task {...taskProps} currentTask={this.props.currentTask} currentJob={this.props.currentJob} jobs={jobs} jobId={this.props.jobId}  timerOn={this.props.timerOn}/>  }) }
                   </div>: null }
                
                  </div>

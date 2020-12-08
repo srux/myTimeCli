@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    min-height: 72%;
+    border-radius: 0 0 .5em 0.5em;
+    background-color: #efefef;
 }
 
 .client {
