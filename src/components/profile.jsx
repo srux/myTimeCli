@@ -82,7 +82,7 @@ export default function Profile() {
         </button>
           </div>
         </div>
-        <h1 className="mobv">Mobile Version Coming Soon..</h1>
+        {/* <h1 className="mobv">Mobile Version Coming Soon..</h1> */}
       <Dashboard currentUser={currentUser} data={data} settings={settings} />
       </div>
   )

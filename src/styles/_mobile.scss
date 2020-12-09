@@ -1,0 +1,277 @@
+.clients {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+    MAX-HEIGHT: 50%;
+}
+
+.client {
+    width: 100%;
+    min-height: 3em;
+}
+
+.dashboard {
+    height:76%;
+}
+.header {
+    flex-direction: column;
+}
+
+.header .header__left {
+    min-width: 100%;
+    width: auto;
+    
+}
+
+.alert-confirmation {
+    margin:0 1em !important;
+}
+
+.header .header__settings {
+    font-size: 0.9em;
+}
+
+.header .header__rate input {
+    height: 2.68em;
+    padding-left: 2em;
+    margin-right: 0;
+    border-radius: .3em;
+    background-color: #fd4218;
+    color: #f3f3f3;
+    width: 100%;
+    max-width: 12em;
+
+.theme--button {
+    margin-right: 0;
+
+}
+}
+
+.header .header__rate {
+    display: flex;
+    height: 2.3em;
+    align-items: center;
+    justify-self: flex-end;
+    margin-top: -5em;
+    position: absolute;
+    border-radius: .5em;
+    right: 0;
+    height: 4em;
+    font-size: .8em;
+    padding: 1em .7em;
+    background-color: #f7f7f7;
+}
+
+.overlay {
+    top: -4.4em;
+}
+
+.clpanel {
+    background-color: #fafafa;
+    border-radius: .3em;
+    align-items: flex-start;
+    top: .4em !important;
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+    padding: .5em 1em;
+    box-shadow: 0px 0px 100px #0000002e;
+    transition: ease all 1s;
+}
+
+.clpanel .clpanel__optiondash {
+    display: flex;
+    background-color: #fafafa;
+    border-radius: .5em .5em 0em 0;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    top: -2.4em;
+    position: absolute;
+    height: 2.6em;
+    left: 0;
+}
+
+.clpanel .clpanel__colorpick li {
+    width: 1.7em;
+    height: 1.7em;
+    cursor: pointer;
+    border-radius: .3em;
+    margin: .25em;
+}
+
+.clpanel .clpanel__settings-toggle {
+    border-radius: 0.3em;
+    background-color: black;
+    width: 1.7em;
+    height: 1.7em;
+    border: solid 3px;
+    color: white;
+    margin-top: -3.8em;
+    position: absolute;
+    font-size: 1.1em;
+    margin-left: -1em;
+    display: flex;
+    /* right: -12px; */
+    align-items: center;
+    justify-content: center;
+    padding: 0.2em;
+    cursor: pointer;
+    margin-right: 1em;
+    transition: ease all .2s;
+}
+
+.clpanel .clpanel__clientname {
+    display: flex;
+    align-items: center;
+    margin: .5em 0;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.clpanel .clpanel__clientdash {
+    font-size: .9em;
+    flex-direction: column;
+}
+
+.clpanel .clpanel__task {
+    flex-direction: column;
+    align-items: center;
+}
+
+.clpanel .clpanel__timer {
+    display:none;
+}
+
+.task__input {
+    margin: 0.3em 0 0 0;
+    width: 100%;
+}
+
+.clpanel .clpanel__clientname .clientname-panel {
+    padding: 0;
+    border-radius: 0 .4em .4em 0;
+    margin-right: .5em;
+    transition: ease all 1s;
+    text-shadow: 1px 1px 3px #00000036;
+    margin-left:0;
+}
+
+.clpanel .clpanel__optionsdash {
+    display: none;
+}
+
+.clpanel .clpanel__control {
+    width: 100%;
+justify-content: flex-start;
+    margin: .5em 0em;
+}
+
+.clpanel .clpanel__tasklist .spacer {
+    display: none;
+}
+
+.existingjobs__jobitem {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.existingjobs__details {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    display: none;
+}
+
+.job__details {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    flex-direction: column;
+width: 100%
+}
+.job__newtask {
+    margin: 0;
+}
+.job__total {
+    min-width: 6em;
+    text-align: left;
+}
+
+.job__archiveblock {
+    display: flex;
+    align-self: flex-end;
+}
+
+.existingjobs__jobtab {
+    padding: 0.5em .5em 0.5em .5em;
+}
+
+.existingjobs__jobitem div {
+    padding: 0;
+    align-items: flex-start;
+    text-align: left;
+    min-width: auto;
+    margin: 0;
+}
+
+.existingjobs__close {
+    margin-top: 0 !important;
+    right:0;
+    left: auto;
+}
+
+.jobitem__time-money {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 10%;
+    justify-content: flex-end;
+    align-items: flex-start !important;
+}
+.profile__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.profile__update {
+    margin: 0em 1.5em;
+    display: none;
+}
+span.profile__email {
+    display:none;
+}
+
+.profile__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    left: 0;
+    margin:0;
+}
+
+.dashboard__signout {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 0.5em 1em;
+    border-radius: 0 0 0.3em 0;
+    transition: ease all 0.5s;
+    background-color: #afbec4;
+}
+
+.client .client__timer-notification {
+    position: absolute;
+    top: -4.5em;
+    left: -9.5%;
+    background-color: #333;
+    width: 100vw;
+    padding: .5em 1em;
+    border-radius: .3em;
+    color: #fafafa;
+    z-index: 9;
+    h4 {
+        display:none;
+    }
+}

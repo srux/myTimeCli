@@ -716,11 +716,11 @@ componentDidMount() {
 
                   </div>
                   {name} {job}
-                  <span>{hours}</span>
-                  Hrs :
-                  <span>{minutes}</span>
-                  Mins :
-                  <span>{seconds}</span>
+                  <span>{hours} </span>
+                  Hrs
+                  <span>{minutes} </span>
+                  Mins
+                  <span>{seconds} </span>
                   Secs
                   <span className="clpanel__rate">
                       $ {total.toFixed(2)}
