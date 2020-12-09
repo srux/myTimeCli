@@ -82,8 +82,6 @@ class Job extends Component {
     
     invJob.push({invoiced:true})
 
-    console.log(invJob)
-
     getClientData(client).then((doc) => {
         if (doc.exists) {
             db.settings({timestampsInSnapshots: true});
@@ -160,14 +158,18 @@ class Job extends Component {
       this.setState({deleteJobInput: ''})
   }
 
-  setCurrentJob = (e) => {
+  resetCurrentJob = (e) => {
       let timerOn = this.props.timerOn
       if ( !timerOn ) {
         e.preventDefault();
         let client = this.props.name;
-        this.setState({selectedJob: 0})
-        queryClientData(client).update({currentJob: null})
-        console.log('timerOFF')
+        this.setState({
+            selectedJob: 0
+        })
+        queryClientData(client).update({
+            currentJob: null,
+            currentJobName:''
+        })
       } 
   }
 
@@ -200,7 +202,7 @@ class Job extends Component {
         return (
             <div className="existingjobs__jobContainer">
                 <div onClick={this.handleCurrentJob} style={  jobselect ?  {backgroundColor:'#fd4218'} : {backgroundColor:'#555', cursor:'pointer', borderRadius:'.3em'} } className="existingjobs__jobtab">
-                {jobselect ? <div onMouseUp={this.setCurrentJob} value={jobId} className="existingjobs__close theme--button theme-bsml"><RiSubtractLine style={{pointerEvents:'none'}} /></div> : null} 
+                {jobselect ? <div onMouseUp={this.resetCurrentJob} value={jobId} className="existingjobs__close theme--button theme-bsml"><RiSubtractLine style={{pointerEvents:'none'}} /></div> : null} 
                 <div className="existingjobs__jobname">{job}</div>
                 <div className="existingjobs__details">
                     {jobselect ?  <div className="job__newtask">

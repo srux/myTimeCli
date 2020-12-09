@@ -401,6 +401,7 @@ span.dollar {
 
 .existingjobs__jobContainer {
   margin-top: 1em;
+  z-index: 1;
 }
 
 .existingjobs__jobname {
@@ -1036,6 +1037,17 @@ span.dollar {
 .clpanel .clpanel__tasklist {
   width: 100%;
   padding: 0 1em;
+}
+
+.clpanel .clpanel__tasklist .spacer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  position: absolute;
+  cursor: pointer;
 }
 
 .clpanel .clpanel__clientratelabel {

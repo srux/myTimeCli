@@ -117,9 +117,6 @@ class Task extends Component {
                 }
             ]
           })
-       
-    
-          console.log(filteredArr,'filteredARr')
     
           let newJobs = this.state.newJobs
           let filteredJobs = jobsData.filter(job => job.jobId !== currentJob);
@@ -140,7 +137,7 @@ class Task extends Component {
                     }
                   })
                 },300)
-                console.log('EDITED')
+                console.log('Task Edited')
                 this.setState({
                   toggleEdit:false,
                 })
@@ -182,8 +179,6 @@ class Task extends Component {
               console.log('no such document')
             }
         })
-      console.log('rt')
-    
     }
 
     handleUpdateInput =(e)=> {

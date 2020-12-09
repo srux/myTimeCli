@@ -236,6 +236,8 @@ componentDidMount() {
           })
         }
       };
+
+
     
       handleStoreData = () => {
         let db = app.firestore();
@@ -272,10 +274,13 @@ componentDidMount() {
         setTimeout(() => { 
 
           let client = this.props.name
-          
-          //update jobs
-          if ( this.props.currentJob === null) {
-              
+          let eJobs = this.props.jobs
+          let cJobId = this.state.data.jobId
+          let eJobsFilter = eJobs.filter((eJob) => {return eJob.jobId === cJobId}).length > 0
+      
+          //Add new job
+          if ( !eJobsFilter ) {
+            
             db.settings({
               timestampsInSnapshots: true
             });
@@ -307,7 +312,8 @@ componentDidMount() {
                 //data
                   let jobsData = doc.data().jobs
                   let docData = doc.data()
-                  let currentJob = this.props.currentJob
+                  let currentJob = this.state.data.jobId
+                
                 //define selected job
                   let selectedJob = jobsData.find(j => j.jobId === currentJob)
                 // define tasks of selected job
@@ -337,11 +343,11 @@ componentDidMount() {
                   timestampsInSnapshots: true
                 });
                 //send payload
-                    if ( cTask === 0 ) {
+                    if ( !eJobsFilter) {
                         queryClientData(client).update({
                           jobs
                         })
-                      console.log('addTask')
+                      console.log('Task Added')
                     }
 
                     else {
@@ -370,7 +376,6 @@ componentDidMount() {
                           ]
                         })
       
-                        console.log(filteredArr,'filteredARr')
 
                         let newJobs = this.state.newJobs
                         let filteredJobs = docData.jobs.filter(job => job.jobId !== currentJob);
@@ -392,7 +397,7 @@ componentDidMount() {
                                 })
                               },300)
                             
-                            console.log('resume task')
+                            console.log('Task Resume Logged')
 
                     }
                 }
@@ -451,11 +456,18 @@ componentDidMount() {
         })
       }
 
-      setCurrentJob =(e)=>{
+      resetCurrentJob =(e)=>{
         e.preventDefault();
         let client = this.props.name;
+        this.setState({
+          data:{
+            ...this.state.data,
+            job:''
+          }
+        })
         queryClientData(client).update({
-          currentJob:null
+          currentJob:null,
+          currentJobName:''
         })
       }
 
@@ -477,10 +489,11 @@ componentDidMount() {
 
         let newLog = new Date().toLocaleTimeString();
         let logId = Date.now()
-        let {timerStart,timerTime,} = this.state;
+        let {timerStart,timerTime} = this.state;
         let rate = this.state.data.rate
         let scale = rate/3600000
         let total = scale * timerTime
+
 
         this.setState ({ 
           data: {
@@ -491,13 +504,6 @@ componentDidMount() {
             timerStart,
             money:total,
           },
-        })
-
-        let client = this.props.name;
-        queryClientData(client).update({
-          currentJob:this.state.data.jobId,
-          currentJobName:this.state.data.job,
-          currentTask:this.state.data,
         })
       } 
     
@@ -558,10 +564,7 @@ componentDidMount() {
       let data = this.state.data
       getRate().then((doc) => {
         if (doc.exists) {
-          console.log('doc data', doc.data())
           let rate = doc.data().globalRate
-          console.log(rate)
-         
           this.setState({
             data:{
               ...data,
@@ -670,7 +673,7 @@ componentDidMount() {
                 queryClientData(client).update({
                   archivedJobs
                 })
-                console.log(archivedJobs,'updated Archive')
+                console.log('Archived Updated')
               },300)
              
             }
@@ -699,7 +702,7 @@ componentDidMount() {
           
         <div className="client"> 
             { timerTime > 0 ? <Beforeunload onBeforeunload={ () => "You have time running, please log time"} /> : null }
-          
+           
 
             <div
               className="client__timer-notification"
@@ -710,21 +713,6 @@ componentDidMount() {
                 <div style={styles.flexRow}>
                       <h4>On the clock
                       </h4>
-
-                      {/* <div style={logStatus} className="client-pauses">
-
-                          <div style={pauseStatus} className="client__timer-button" onClick={this.pauseTimer}>
-                              <GrPauseFill/>
-                              { pauseStatus === 'Paused' ? 'ed' : null }</div>
-                      </div> */}
-                      {/* <div style={logStatus} className="client-resumes">
-                          <div
-                              style={resumeStatus}
-                              className="client__timer-button"
-                              onClick={this.resumeTimer}>
-                              <GrPlayFill/>
-                          </div>
-                      </div> */}
 
                   </div>
                   {name} {job}
@@ -795,7 +783,7 @@ componentDidMount() {
                     : null }
 
           
-                    <div className="clpanel__clientdash">
+                    <div onClick={this.resetCurrentJob} className="clpanel__clientdash">
 
                         <div className="clpanel__clientname">
                             <h3 className={"clientname-panel "+clientOptions.clientColor}>{name}</h3>
@@ -848,14 +836,14 @@ componentDidMount() {
                     </div>
                   
                     <div 
-                    // style={ this.props.currentTask === 0 ? {opacity:1} : {opacity:.5} } 
+                   
                     className="clpanel__task">
                       { currentJob === null ? <input
                             style={inputStatus}
                             value={job}
                             onClick={this.handleClearToggles}
                             onChange={this.handleNewJobInput}
-                            onFocus={this.setCurrentJob}
+                            onFocus={this.resetCurrentJob}
                             name='nj'
                             className="task__input"
                             placeholder="Job Name..."/>: null }
@@ -879,19 +867,7 @@ componentDidMount() {
                         <div className="clpanel__timer" onChange={this.timeKeeper} style={timeStatus}>
                         <span className="clpanel__time">{hours}</span> Hrs : <span className="clpanel__time">{minutes}</span> Mins : <span className="clpanel__time">{seconds}</span> Secs at ${rate} per hour<span className="clpanel__rate" style={logStatus}>/ $ {total.toFixed(2)}</span>
                         </div>
-                        {/* <div style={logStatus} className="clpanel__pauses">
-                            <div style={pauseStatus} className="clpanel__control" onClick={this.pauseTimer}>Pause{ pauseStatus === 'Paused' ? 'ed' : null }</div>
-                            {pauseTime}
-                        </div>
-                        <div style={logStatus} className="clpanel__resumes">
-                            <div
-                                style={resumeStatus}
-                                className="clpanel__control"
-                                onClick={this.resumeTimer}>Resume
-                            </div>
-                            {resumeTime}
-                        </div> */}
-
+          
                         <span
                             style={logStatus}
                             className="clpanel__control"
@@ -902,10 +878,11 @@ componentDidMount() {
                 
                   <Scrollbar className="clpanel__tasklist" style={{ padding: '1em' }}>
                         { this.props.jobs.map((job) => { let jobProps = { ...job, key:job.jobId }
-                        return <Job {...jobProps} jobs={jobs} name={name} currentTask={this.props.currentTask} setCurrentJob={this.props.setCurrentJob} currentJob={this.props.currentJob} styling={this.state.styling} timerOn={timerOn} startTimer={this.startTimer} handleNewTaskInput={this.handleNewTaskInput}  /> }) }
+                        return <Job {...jobProps} jobs={jobs} name={name} currentTask={this.props.currentTask} resetCurrentJob={this.props.resetCurrentJob} currentJob={this.props.currentJob} styling={this.state.styling} timerOn={timerOn} startTimer={this.startTimer} handleNewTaskInput={this.handleNewTaskInput}  /> }) }
+                        <div onClick={this.resetCurrentJob} className="spacer"></div>
                    </Scrollbar>
                 </div>
-                <div onClick={this.handleClientToggle} onMouseUp={this.setCurrentJob} onMouseDown={this.handleClearToggles} className="overlay"></div> 
+                <div onClick={this.handleClientToggle} onMouseUp={this.resetCurrentJob} onMouseDown={this.handleClearToggles} className="overlay"></div> 
                 </>
                 : 
                 <div className={"client__jobInfo"} style={styles.hide}  ></div>}

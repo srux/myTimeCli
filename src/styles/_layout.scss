@@ -195,6 +195,7 @@ span.dollar {
 
 .existingjobs__jobContainer {
     margin-top: 1em;
+    z-index: 1;
 }
 
 .existingjobs__jobname {
@@ -234,7 +235,6 @@ span.dollar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 }
 
 .existingjobs__details {
