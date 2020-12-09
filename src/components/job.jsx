@@ -34,6 +34,8 @@ class Job extends Component {
   }
 
   handleCurrentJob = (e) => {
+    let timerOn = this.props.timerOn
+    if ( !timerOn ) {
       e.preventDefault()
 
       let client = this.props.name;
@@ -49,6 +51,7 @@ class Job extends Component {
       queryClientData(client).update(
           {currentJob: jobId, currentJobName: job, currentTask: 0}
       )
+    }
   }
 
   handleRemoveJob = () => {

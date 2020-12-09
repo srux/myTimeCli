@@ -312,7 +312,7 @@ componentDidMount() {
                 //data
                   let jobsData = doc.data().jobs
                   let docData = doc.data()
-                  let currentJob = this.state.data.jobId
+                  let currentJob = this.props.currentJob
                 
                 //define selected job
                   let selectedJob = jobsData.find(j => j.jobId === currentJob)
@@ -327,7 +327,7 @@ componentDidMount() {
                         tasks:[
                           ...tasks,
                           {
-                          ...data
+                          ...data,
                           }]
                         }
                     ]
@@ -457,6 +457,8 @@ componentDidMount() {
       }
 
       resetCurrentJob =(e)=>{
+        let timerOn = this.state.timerOn
+        if ( !timerOn ) {
         e.preventDefault();
         let client = this.props.name;
         this.setState({
@@ -465,10 +467,13 @@ componentDidMount() {
             job:''
           }
         })
-        queryClientData(client).update({
-          currentJob:null,
-          currentJobName:''
-        })
+    
+          queryClientData(client).update({
+            currentJob:null,
+            currentJobName:''
+          })
+        }
+
       }
 
           
@@ -493,18 +498,33 @@ componentDidMount() {
         let rate = this.state.data.rate
         let scale = rate/3600000
         let total = scale * timerTime
+        let currentJob = this.props.currentJob
+        if (currentJob !== null) {
+          this.setState ({ 
+            data: {
+              ...this.state.data,
+              jobId:currentJob,
+              logTime:newLog,
+              logId,
+              timerTime,
+              timerStart,
+              money:total,
+            },
+          })
+        }
+        else {
+          this.setState ({ 
+            data: {
+              ...this.state.data,
+              logTime:newLog,
+              logId,
+              timerTime,
+              timerStart,
+              money:total,
+            },
+          })
+        }
 
-
-        this.setState ({ 
-          data: {
-            ...this.state.data,
-            logTime:newLog,
-            logId,
-            timerTime,
-            timerStart,
-            money:total,
-          },
-        })
       } 
     
 

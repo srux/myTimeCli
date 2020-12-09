@@ -1891,8 +1891,8 @@ input {
     width: 100%;
   }
   .clpanel .clpanel__clientname .clientname-panel {
-    padding: 0;
-    border-radius: 0 .4em .4em 0;
+    padding: .2em 1em;
+    border-radius: .3em;
     margin-right: .5em;
     -webkit-transition: ease all 1s;
     transition: ease all 1s;
