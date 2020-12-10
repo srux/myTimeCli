@@ -24,13 +24,20 @@ class Task extends Component {
     componentDidMount() {
       let taskProps = this.props
       let taskData = taskProps
+      let timerTime = taskData.timerTime
       const {currentTask,currentJob,jobs,...rest} = taskData
+      let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+      let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+      let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
 
       this.setState({
         jobs,
+        seconds,
+        minutes,
+        hours,
         taskData:{
           ...rest,
-          logId:Date.now()
+          logId:Date.now(),
         }
       })
 
@@ -121,7 +128,7 @@ class Task extends Component {
           let newJobs = this.state.newJobs
           let filteredJobs = jobsData.filter(job => job.jobId !== currentJob);
           let jobsCombine = [...filteredJobs,...newJobs]
-          let currentTask = this.state.currentTask
+          // let currentTask = this.state.currentTask
           let jobs = jobsCombine.map((job) => {
               return {...job, tasks: job.tasks.filter((task) => task.logId !== this.props.currentTask.logId)}
             })
@@ -131,12 +138,18 @@ class Task extends Component {
                 setTimeout(()=>{
                   queryClientData(client).update({
                     jobs,
-                    currentTask:{
-                      ...currentTask,
-                      ...data
-                    }
+                    currentJob:null,
+                    currentJobName:'',
+                    currentTask:0,
                   })
-                },300)
+                },100)
+                  setTimeout(()=>{
+                    queryClientData(client).update({
+                      currentJob:this.props.currentTask.jobId,
+                      currentJobName:this.props.currentTask.job,
+                    })
+                  },100)
+                
                 console.log('Task Edited')
                 this.setState({
                   toggleEdit:false,
@@ -184,12 +197,51 @@ class Task extends Component {
     handleUpdateInput =(e)=> {
       let taskData = this.state.taskData
       let target = e.target.getAttribute('id');
+      
+      this.setState({   
+        [target]:e.target.value,    
+        taskData:{
+          ...taskData,
+        }
+      });
+
+      let hours = this.state.hours
+      let mins = this.state.minutes
+      let task = this.state.task
+      // let timeParts = time.split(":")
+      let timerTime = (hours * (60000 * 60)) + (mins * 60000)
+      console.log(parseFloat(timerTime));
+
+      let rate =  taskData.rate
+      let scale = rate/3600000
+      let total = scale * timerTime
+
+      // {Math.round(money * 100) / 100}
+
       this.setState({
         taskData:{
           ...taskData,
-          [target]:e.target.value
+          timerTime,
+          money:total,
+          logTime:null,
         }
       });
+  
+
+    }
+
+    handleTaskNameInput =(e)=> {
+      let taskData = this.state.taskData
+      let target = e.target.getAttribute('id');
+      
+      this.setState({       
+        taskData:{
+          ...taskData,
+          [target]:e.target.value,   
+        }
+      });
+
+      
     }
 
     
@@ -224,13 +276,16 @@ class Task extends Component {
                      { cId === id && toggleEdit ?
                      <>
                    
-                     <div className="jobitem__name"><input onChange={this.handleUpdateInput} style={{width:'8em'}} type="text" id="task"  placeholder={task}/></div>
+                     <div className="jobitem__name"><input onChange={this.handleTaskNameInput} style={{width:'8em'}} type="text" id="task"  placeholder={task}/></div>
                      <div className="jobitem__start">Start: <input onChange={this.handleUpdateInput} style={{width:'8em',marginLeft:'.3em'}} type="text" id="startTime" placeholder={startTime}/></div>
  
-                     <div className="jobitem__date">Logged: <input onChange={this.handleUpdateInput} style={{width:'8em',marginLeft:'.3em'}} type="text" id="logTime" placeholder={logTime}/></div>
+                     {/* <div className="jobitem__date">Logged: <input onChange={this.handleUpdateInput} style={{width:'8em',marginLeft:'.3em'}} type="text" id="logTime" placeholder={logTime}/></div> */}
                      <div className="jobitem__time-money">
                        <div className="jobitem__time" style={{display:'flex'}}>
-                       <input onChange={this.handleUpdateInput} style={{width:'4em'}} type="number" id="hours" placeholder={hours}/> Hours <input onChange={this.handleUpdateInput} style={{width:'4em',marginLeft:'.3em'}} id="minutes"   type="number" placeholder={minutes}/> Mins <input onChange={this.handleUpdateInput} style={{width:'4em',marginLeft:'.3em'}}  id="seconds" type="number" placeholder={seconds}/>Secs</div>
+                       <input onChange={this.handleUpdateInput} style={{width:'4em'}} type="number" id="hours" placeholder={hours}/> Hours
+                       <input onChange={this.handleUpdateInput} style={{width:'4em',marginLeft:'.3em'}} id="minutes"   type="number" placeholder={minutes}/> Mins 
+                       {/* <input onChange={this.handleUpdateInput} style={{width:'4em',marginLeft:'.3em'}}  id="seconds" type="number" placeholder={seconds}/>Secs */}
+                       </div>
                        <div className="jobitem__money">$:  <input onChange={this.handleUpdateInput} style={{width:'7em'}}  id="money" type="number" placeholder={Math.round( money * 100) / 100}/></div>
                        <div className="jobitem__removeblock">
                      </div>
@@ -245,10 +300,10 @@ class Task extends Component {
                      <div className="jobitem__name">{task}</div>
                      <div className="jobitem__start">Start: {startTime}</div>
 
-                     <div className="jobitem__date">Logged: {date}</div>
+                     <div className="jobitem__date">{ logTime === null ? null : <>Logged: {date}</> }</div>
                      <div className="jobitem__time-money">
                        <div className="jobitem__time">
-                       { (hours === '00') ? null : ' '+hours+' Hrs'  }{ (minutes === '00') ? null : ' '+minutes+' Mins'  } {seconds} Secs</div>
+                       { (hours === '00') ? null : ' '+hours+' Hrs'  }{ (minutes === '00') ? null : ' '+minutes+' Mins'  }{ (seconds === '00') ? null : ' '+seconds+' Secs'  }</div>
                        <div className="jobitem__money">$: {Math.round(money * 100) / 100}</div>
                        <div className="jobitem__removeblock">
                      </div>
