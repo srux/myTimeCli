@@ -9,9 +9,9 @@ import app from "firebase";
 
 //plugins
 
-import { RiListSettingsFill,RiInboxUnarchiveLine } from "react-icons/ri";
+import { RiListSettingsFill,RiInboxUnarchiveLine,RiArchiveLine } from "react-icons/ri";
 import { GrPauseFill, GrPlayFill,GrShare} from 'react-icons/gr';
-import { RiArchiveLine } from "react-icons/ri";
+import { TiArrowBack } from "react-icons/ti";
 
 
 import { Beforeunload  } from 'react-beforeunload';
@@ -702,13 +702,22 @@ componentDidMount() {
             }         
           })
     }
+
+    jobSum=(a) =>{
+        let total=0;
+        for(let i in a) { 
+            total += a[i];
+        }
+        return total;
+    }
+    
     
 
     render() {
-        let {name,jobs,archivedJobs,currentTask,currentJob,currentJobName} = this.props
-        let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle,selectedJob,existingJobs,timerOn} = this.state
-        let {pauseTime,job,task,startTime,resumeTime,rate} = this.state.data
-        let {timeStatus,logStatus,pauseStatus,inputStatus,resumeStatus} = this.state.styling
+        let {name,jobs,currentTask,currentJob} = this.props
+        let {timerTime,clientToggle,optionToggle,deleteToggle,colorToggle,existingJobs,timerOn} = this.state
+        let {job,task,startTime,rate} = this.state.data
+        let {timeStatus,logStatus,inputStatus} = this.state.styling
         let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
         let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
         let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
@@ -717,13 +726,20 @@ componentDidMount() {
         let total = scale * timerTime
         let clientOptions = this.props.options
 
-   
+        let tasks = this.props.jobs.map((j) => j.tasks)
+        let flat = tasks.reduce((t, j) => [...t, ...j], []);
+        let taskMoney = flat.map((t) => t.money )
+       
+        let totalMoney = this.jobSum(taskMoney);
+        // let taskLoop = tasks.forEach( e => e.map( t => t))
+        
+       
+        // console.log(tasks,'tasks',taskFilter,flat)
         return (
           
         <div className="client"> 
             { timerTime > 0 ? <Beforeunload onBeforeunload={ () => "You have time running, please log time"} /> : null }
            
-
             <div
               className="client__timer-notification"
               onChange={this.timeKeeper}
@@ -761,7 +777,7 @@ componentDidMount() {
                 <> 
                 
                 <div className="clpanel" style={styles.max}>
-                  
+                <div className="client__back" onClick={this.handleClientToggle} onMouseUp={this.resetCurrentJob} onMouseDown={this.handleClearToggles}><TiArrowBack style={{pointerEvents:'none'}}/></div>
                 { colorToggle && !deleteToggle ?
                     <div className="clpanel__optiondash">
                       <div className="clpanel__colorspanel">
@@ -901,6 +917,7 @@ componentDidMount() {
                         return <Job {...jobProps} jobs={jobs} name={name} currentTask={this.props.currentTask} resetCurrentJob={this.props.resetCurrentJob} currentJob={this.props.currentJob} styling={this.state.styling} timerOn={timerOn} startTimer={this.startTimer} handleNewTaskInput={this.handleNewTaskInput}  /> }) }
                         <div onClick={this.resetCurrentJob} className="spacer"></div>
                    </Scrollbar>
+                   <div style={{width:'100%',display:'flex',justifyContent:'flex-end',padding:'1em'}}>Total ${totalMoney.toFixed(2)} </div>
                 </div>
                 <div onClick={this.handleClientToggle} onMouseUp={this.resetCurrentJob} onMouseDown={this.handleClearToggles} className="overlay"></div> 
                 </>

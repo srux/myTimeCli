@@ -115,6 +115,20 @@
     box-shadow: 0px 0px 100px #0000002e;
     transition:ease all 1s;
 
+    .client__back {
+        position: absolute;
+        top: -.7em;
+        font-size: 2em;
+        left: -.5em; 
+        color:$color-dark;
+        transition:ease all .5s;
+        cursor: pointer;
+    }
+
+    .client__back:hover {
+        color:$color-link;
+    }
+
     .clpanel__settings-toggle {
         border-radius: 2em;
         background-color: black;

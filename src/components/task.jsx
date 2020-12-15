@@ -72,17 +72,6 @@ class Task extends Component {
           })
     }
 
-    // updateMessage(newTask) {
-    //   this.setState(prevState => {
-    //     const tasks = [...prevState.jobs.tasks];
-    //     const index = tasks.findIndex(o => o.id === this.props.currentTask.id);
-  
-    //     tasks[index] = newTask;
-  
-    //     return { tasks };
-    //   });
-    // }
-
     handleEditTask=()=> {
       let db = app.firestore();
       let client = this.props.client;

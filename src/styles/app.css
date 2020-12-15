@@ -930,6 +930,21 @@ span.dollar {
   transition: ease all 1s;
 }
 
+.clpanel .client__back {
+  position: absolute;
+  top: -.7em;
+  font-size: 2em;
+  left: -.5em;
+  color: #333;
+  -webkit-transition: ease all .5s;
+  transition: ease all .5s;
+  cursor: pointer;
+}
+
+.clpanel .client__back:hover {
+  color: #fd4218;
+}
+
 .clpanel .clpanel__settings-toggle {
   border-radius: 2em;
   background-color: black;
@@ -1724,7 +1739,7 @@ input {
     min-height: 3em;
   }
   .dashboard {
-    height: 76%;
+    margin: 0;
   }
   .header {
     -webkit-box-orient: vertical;
@@ -1750,7 +1765,7 @@ input {
     background-color: #fd4218;
     color: #f3f3f3;
     width: 100%;
-    max-width: 12em;
+    max-width: 6em;
   }
   .header .header__rate input .theme--button {
     margin-right: 0;
@@ -1764,17 +1779,18 @@ input {
         -ms-flex-align: center;
             align-items: center;
     justify-self: flex-end;
-    margin-top: -5em;
+    margin-top: 0;
     position: absolute;
     border-radius: .5em;
-    right: 0;
+    right: 1.5em;
     height: 4em;
     font-size: .8em;
     padding: 1em .7em;
     background-color: #f7f7f7;
   }
   .overlay {
-    top: -4.4em;
+    top: -2.5em;
+    left: 0;
   }
   .clpanel {
     background-color: #fafafa;
@@ -1782,8 +1798,8 @@ input {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
-    top: .4em !important;
-    height: 100% !important;
+    top: 6% !important;
+    height: 88% !important;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1796,6 +1812,16 @@ input {
             box-shadow: 0px 0px 100px #0000002e;
     -webkit-transition: ease all 1s;
     transition: ease all 1s;
+  }
+  .clpanel .client__back {
+    position: absolute;
+    top: -1.2em;
+    font-size: 2.5em;
+    left: -.2em;
+    color: #333;
+    -webkit-transition: ease all .5s;
+    transition: ease all .5s;
+    cursor: pointer;
   }
   .clpanel .clpanel__optiondash {
     display: -webkit-box;
@@ -1811,9 +1837,9 @@ input {
         -ms-flex-direction: row;
             flex-direction: row;
     width: 100%;
-    top: -2.4em;
+    top: -2.9em;
     position: absolute;
-    height: 2.6em;
+    height: 3em;
     left: 0;
   }
   .clpanel .clpanel__colorpick li {
@@ -1976,7 +2002,7 @@ input {
   }
   .existingjobs__close {
     margin-top: 0 !important;
-    right: 0;
+    right: 1em;
     left: auto;
   }
   .jobitem__time-money {
@@ -2033,8 +2059,11 @@ input {
     cursor: pointer;
     border: none;
     outline: none;
+    position: absolute;
     padding: 0.5em 1em;
-    border-radius: 0 0 0.3em 0;
+    z-index: 999;
+    bottom: 0;
+    border-radius: 0 .3em 0 0;
     -webkit-transition: ease all 0.5s;
     transition: ease all 0.5s;
     background-color: #afbec4;

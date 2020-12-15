@@ -11,7 +11,8 @@
 }
 
 .dashboard {
-    height:76%;
+    // height:76%;
+    margin: 0;
 }
 .header {
     flex-direction: column;
@@ -39,7 +40,7 @@
     background-color: #fd4218;
     color: #f3f3f3;
     width: 100%;
-    max-width: 12em;
+    max-width: 6em;
 
 .theme--button {
     margin-right: 0;
@@ -52,10 +53,10 @@
     height: 2.3em;
     align-items: center;
     justify-self: flex-end;
-    margin-top: -5em;
+    margin-top: 0;
     position: absolute;
     border-radius: .5em;
-    right: 0;
+    right: 1.5em;
     height: 4em;
     font-size: .8em;
     padding: 1em .7em;
@@ -63,21 +64,33 @@
 }
 
 .overlay {
-    top: -4.4em;
+    top: -2.5em;
+    left: 0;
 }
 
 .clpanel {
     background-color: #fafafa;
     border-radius: .3em;
     align-items: flex-start;
-    top: .4em !important;
-    height: 100% !important;
+    top: 6% !important;
+    height: 88% !important;
     display: flex;
     flex-direction: column;
     padding: .5em 1em;
     box-shadow: 0px 0px 100px #0000002e;
     transition: ease all 1s;
 }
+
+.clpanel .client__back {
+    position: absolute;
+    top: -1.2em;
+    font-size: 2.5em;
+    left: -.2em;
+    color:$color-dark;
+    transition: ease all .5s;
+    cursor: pointer;
+}
+
 
 .clpanel .clpanel__optiondash {
     display: flex;
@@ -86,10 +99,11 @@
     align-items: center;
     flex-direction: row;
     width: 100%;
-    top: -2.4em;
+    top: -2.9em;
     position: absolute;
-    height: 2.6em;
+    height: 3em;
     left: 0;
+    
 }
 
 .clpanel .clpanel__colorpick li {
@@ -219,7 +233,7 @@ width: 100%
 
 .existingjobs__close {
     margin-top: 0 !important;
-    right:0;
+    right:1em;
     left: auto;
 }
 
@@ -255,8 +269,11 @@ span.profile__email {
     cursor: pointer;
     border: none;
     outline: none;
+    position: absolute;
     padding: 0.5em 1em;
-    border-radius: 0 0 0.3em 0;
+    z-index: 999;
+    bottom: 0;
+    border-radius: 0 .3em 0 0;
     transition: ease all 0.5s;
     background-color: #afbec4;
 }
