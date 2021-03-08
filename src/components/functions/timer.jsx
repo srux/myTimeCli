@@ -18,15 +18,7 @@ const Timer = (props) => {
         
         Context.dispatch({type:ACTIONS.UPDATE_TIMER,payload:{counter:c.timer.counter+1,second:secondCounter,minute:minuteCounter}})
       }, 1000);
-      if (timerOn && c.timer.counter === 60) {
-        let j = c.job
-        Context.dispatch({type:ACTIONS.LOG_TIME,payload:{job:{...j,client:c.job.client,job:c.name}}})
-      }
     }
-
-
-
-    
     return () => clearInterval(intervalId);
   }, [timerOn, c.timer.counter]);
 
