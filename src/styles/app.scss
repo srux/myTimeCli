@@ -39,8 +39,18 @@ button:hover {
 @import "_auth.scss";
 @import "_styling.scss";
 @import "_color.scss";
+@import "_animation.scss";
 
 
 @media only screen and (max-width: 64em) {
     @import "_mobile.scss";
 }
+
+//misc 
+// .ScrollbarsCustom-Wrapper {
+//     overflow:visible !important;
+//     .ScrollbarsCustom-Scroller {
+//         overflow:visible !important;
+//     }
+// }
+

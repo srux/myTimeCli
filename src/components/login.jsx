@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
-import {useData} from '../api/provider'
+import {useData} from '../api/auth-provider'
 import app from "firebase";
 
 export default function Login() {

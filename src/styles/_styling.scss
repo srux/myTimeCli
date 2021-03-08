@@ -21,6 +21,16 @@ span {
 
 button {
     font-family:Poppins,Roboto;
+    cursor: pointer;
+    border:none;
+    padding:.5em;
+    border-radius:.5em;
+}
+
+button {
+    svg {
+        position: absolute;
+    }
 }
 
 input {
@@ -30,142 +40,27 @@ input {
     background-color: #efefef;
     margin-right: .2em;
     padding:0em 0em 0em 1em;
+    margin:.25em;
+}
+
+.subheading {
+    margin:.5em 0;
 }
 //theme
 
-.theme--button {
-    border: none;
-    cursor: pointer;
-    border-radius: 0.3em;
-    transition: ease all .3s;
-    padding: .6em 1em;
-    background-color: #efefef;
-    color: #333;
-    margin: .3em;
-    display: flex;
+.add {
+    display:flex;
     justify-content: center;
     align-items: center;
-}
-
-.theme--button:hover {
-    background-color: #fd4218;
-    color: #f3f3f3;
-}
-
-.theme--button svg {
-    pointer-events: none;
-}
-
-.theme-bsml {
+    padding:1em;
+    width:1.5em;
     height:1.5em;
-    width:auto;
-    cursor: pointer;
-    padding:.3em;
-    background-color:$color-link-alt;
-    color:$color-light;
-    margin:0 .5em;
+    font-size:1.5em;
+    margin:.3em;
 }
 
-.theme-bsml:hover {
-    background-color: $color-dark;
-    color: #f3f3f3;
-}
-.theme-button {
-    transition:ease all .7s;
-    cursor: pointer;
-}
-
-.theme-button:hover {
-    background-color: #fd4218;
-    color: #f3f3f3;
-}
-
-//alerts
-.alert {
-    color:$color-link-alt;
-}
-
-.alert-confirmation {
-    background-color:$color-dark;
-    color:$color-light;
-    margin:0 .3em;
-    border-radius: .3em;
-    padding:.7em;
-    cursor: pointer;
-}
-
-.alert-button {
-    background-color:$color-link-alt;
-    color:$color-light;
-    padding:.5em;
-    width:10em;
-    border-radius: .2em;
-    align-self: center;
-    margin:.5em;
-}
-
-
-.newJob__button {
-    border: none;
-    transform: skew(-17deg, 0deg) rotate(0deg) translate(5px, 1px);
-    cursor: pointer;
-    border-radius: 0.3em;
-    transition:ease all .3s;
-    padding:.3em .6em;
-}
-
-// options panel
-
-.newJob__button:hover {
-    background-color:#333;
-    color:#fff;
-}
-
-.newJob__jobInfo {
-    font-style:italic;
-    color:#333;
-}
-
-//forms
-
-.signup-form {
-    display:flex;
-    align-items: center;
-}
-
-//inputs
-.client__input {
-    border-radius: .3em 0 0 .3em;
-    border:none;
-    background-color: $color-grey;
-    margin-right: .2em;
-    padding:0em 0em 0em 1em;
-    width:100%;
-}
-.client__add {
-    display:flex;
-    align-items: center;
-    padding:.5em 1em;
-    background-color: #efefef;
-    color:#555;
-    transition: ease all .5s;
-    cursor: pointer;
-    border-radius:0 .3em .3em 0;
-}
-
-.client__input:focus {
-    outline:none;
+.add-inputs {
 
 }
 
 
-.clpanel__input:focus {
-    outline:none;
-}
-
-//buttons 
-.submit {
-    width: 5em;
-    height:1.9em;
-    cursor:pointer;
-}

@@ -1,222 +1,157 @@
-import React, { Component } from 'react';
-import Clients from './clients';
+import React, {useState,useContext,useEffect,useRef,useReducer} from 'react';
 
-//api
-import {setRate,addClient} from '../api/data'
+//plugins 
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
-//plugins
-import { RiTimer2Fill } from "react-icons/ri";
+import Scrollbar from 'react-scrollbars-custom'
 
-let styles = {
-  jobInfo:{
-    paddingTop:'1em'
-  },
-  close:{
-    visibility:'hidden',
-  },
-  open:{
-    visibility:'visible',
-  },
-  paused:{
-    backgroundColor:'#dfdfdf',
-    pointerEvents:'none',
-    color:'#fff',
-  },
-  playing:{
-    pointerEvents:'initial',
-  }
-}
+import {DataContext} from '../api/data-provider';
 
-class Dashboard extends Component {
-  constructor(props) {
-    super(props)
-      this.state = {
-        settingsToggle:false,
-        settings:{
-          setGlobalRate:false,
-          globalRate:'',
-        },
-        styling:{
-          logStatus:styles.close,
-          timeStatus:styles.close,
-          pauseStatus:styles.playing,
-          inputStatus:styles.open,
-          addStatus:styles.paused
-        },
-        clientInfo:{
-          id:0,
-          name:'',
-          options:{
-            clientColor:'#fff'
-          },
-        },
-        clients:[],
-      
-      } 
-  }
+import app from "../firebase";
+import {auth} from "../firebase";
+//functions
+import useToggle from './functions/useToggle'
+import usePrevious from './functions/usePrevious'
+import {addClient,deleteClient} from '../api/db-actions'
+
+//components
+import Client from './client'
+import Sidebar from './ui/sidebar'
+import ClientActivity from './client-activity';
+import Timer from './functions/timer';
 
 
-  handleGlobalRateInput = (e) => {
-    e.preventDefault();
-    let globalRate = e.target.value
-    this.setState({
-      settings:{
-        globalRate:parseInt(globalRate),
-        setGlobalRate:true,
-      }
-    })
-  }
+const Dashboard = () => { 
+  // data context
+  const Context = useContext(DataContext);
+  const clients = Context.data
+  const cli = Context.cli
+  const dispatch = Context.dispatch
 
-  handleSetGlobalRate = (e) => {
-    e.preventDefault();
-    let {globalRate,setGlobalRate} = this.state.settings
-    setRate(globalRate,setGlobalRate).then(() => {
-      console.log('Rate $'+globalRate+' Set' )
 
-    }).catch((error)=>{
-       alert("Error setting rate: ", error);
-    })
-  }
-
-  handleResetGlobalRate = (e) => {
-    e.preventDefault();
-    
-    this.setState({
-      settings:{
-        globalRate:'',
-        setGlobalRate:false
-      }
-    })
-    
-    setTimeout(() =>{
-      let {globalRate,setGlobalRate} = this.state.settings
-      setRate(globalRate,setGlobalRate).then(() => {
-        console.log('Global rate reset' )
+  const [isOn, toggleIsOn] = useToggle();
+  const [order, orderBy] = useState()
+  const [filter, filterBy] = useState('')
   
-      }).catch((error)=>{
-         alert("Error resetting rate: ", error);
-      })
-    },300)
+  // prev filter state
+  const prevFilter = usePrevious(filter)
 
-  }
+  // filtering out categories
+  const catMap = [...clients].map((i) => i.category).filter((i) => i !== '')
+  const cats = new Set(catMap);
+  const categories = [...cats]
+  const clientsFilter = clients.filter((i) => i.category === filter )
 
-  handleClientInput = (e) => {
-    e.preventDefault();
-    let id = Date.now()
-    let clientInfo = this.state.clientInfo
-    
-    this.setState({
-      clientInfo:{
-        ...clientInfo,
-        name:e.target.value,
-        jobs:[],
-        archivedJobs:[],
-        id
-      }
-    })
-  }
-
-  handleClientAdd = (e) => {
-    e.preventDefault();
-
-    let data = this.state.clientInfo
-    let client = this.state.clientInfo.name
-    let clients = this.state.clients;
-  
-    this.setState({
-        ...clients,
-        clientInfo:{
-          ...this.state.clientInfo,
-        }
-    })
-
-    addClient(data,client).then(() => {
-      console.log("Client", client, "Created");
-    })
-    .catch((error) => {
-        alert("Error adding document: ", error);
-    });
-    
+  const handleOrderReset = () => {
     setTimeout(() => {
-      this.setState({
-        clientInfo:{
-          id:0,
-          name:'',
-          options:{
-            clientColor:'#fff'
-          },
-          jobs:[],
-          archivedJobs:[]   
-        },
-      })
-    },300)
+      toggleIsOn(!isOn)
+    },100)
   }
 
-  handleToggle=(e)=>{
-    e.preventDefault()
-    let target = e.target.getAttribute('value');
-   
-    this.setState(state  => ({
-      [target]: !this.state[target]
-    }));
-   }
-
-
-  render() {  
+  const filterConditions = () =>{
+    if (prevFilter === filter) {
+      setTimeout(() => {
+        filterBy('')
+      },100)
+    }
+  }
   
-    let {clientInfo,settingsToggle} = this.state
-    let {globalRate} = this.state.settings
-    let {addStatus} = this.state.styling
-    let clientsProps = this.props.data
-    let findClient = clientsProps.find(client => client.name === clientInfo.name);
+  const ClientsOrderBy = clients.sort((a,b)=>{
 
-    return (
-        <>
-      <div className="dashboard"> 
-          <header className="header">
-            <div className="header__left">
+    if (order === 'date' ) {
+      return new Date(b.id) - new Date(a.id);
+    } 
+    if (order === 'name') {
+      if (b.name > a.name) {
+       return -1
+      }
+    }
+    if (order === 'colour') {
+      if (b.color > a.color) {
+        return -1
+       }
+    }
+    console.log('ClientsOrderBy')
+  })
+
+  const currClient = clients.filter((c) => c.id === cli.id)
+
+  
+
+  return (
+    <div className="view dashboard">
+      <Sidebar/>
+      <div className="view clients">
+        <div className="client-dash-timer"><Timer/></div>
+      
+          <div className="view clients-dash">
           
-              <div className="header__settings">
-                  <div className="header__logo">my</div>
-                  <div className="header__settings-toggle" onClick={this.handleToggle} value={'settingsToggle'} ><RiTimer2Fill style={{pointerEvents:'none'}}/></div>
-
-                  { settingsToggle ? <div className="header__settings-popup"></div> : null }
-
-                 
-              </div>
-             
-              <div className="header__clientlabel">
-                <input style={null} value={clientInfo.name} onChange={this.handleClientInput}  name='nc' className="client__input" placeholder="New Client..."/>
-                <div style={clientInfo.name ==='' || findClient ? addStatus : null } onClick={this.handleClientAdd} className="client__add theme-button">ADD</div>
-
-              </div>
+          <div className="view client-filter drop-down" >
+            <div className="text" onClick={toggleIsOn} style={{cursor:'pointer'}}>Filter by: {order}</div>
+            { isOn ?       
+            <div className="view">            
+              <div className="text" onClick={() => {orderBy('date')}} onMouseUp={handleOrderReset}>Date Created</div>
+              <div className="text" onClick={() => {orderBy('name')}}  onMouseUp={handleOrderReset}>Name</div>
+              <div className="text" onClick={() => {orderBy('colour')}} onMouseUp={handleOrderReset}>Colour</div>
+            </div> : null }
+          </div>
+         
+          <div className="view client-categories">
+             {
+                categories.sort().map((cat) => {
+                  return <div className="text" style={cat === filter ? {backgroundColor:'#333',color:'#f1f1f1'} : {backgroundColor:'#f1f1f1'} } onClick={() => {filterBy(cat) }}   key={cat}>{cat}</div> 
+                })
+              }
+              {filter !== '' ? <div className="text filter-cancel" onClick={() => {filterBy('')}} >X</div> : null }
             </div>
-            {this.props.settings.map((setting,i) => 
-            <div key={i} className="header__rate">
-                    <div className="header__dollar">$</div>
-                    <input
-                        value={setting.setGlobalRate ? setting.globalRate : globalRate }
-                        onChange={this.handleGlobalRateInput}
-                        placeholder={'Hourly Rate'}
-                        type="number"/>                   
-                      { setting.setGlobalRate ?  <div className="header__rateset theme--button" onClick={this.handleResetGlobalRate}>CLEAR</div>  : <div className="header__rateset theme--button" onClick={this.handleSetGlobalRate}>SET</div> }
-              </div>   )}
-          </header>
-          <div className="clients">
-                {
-                    this.props.data.map((client) => {
+            
+          </div>
+          <div className="view client-panel">
+          { filter === '' ?  
+           
+            <Scrollbar noScrollX style={{overflow:'visible',width:'15em'}}>
+              <div className="view client-tabs">
+                  {ClientsOrderBy.map((client) => {
                       let clientProps = {
                         ...client,
-                        key:client.id
+                        key:client.id,
                       } 
-                      return (<Clients {...clientProps} settings={this.props.settings}/>) 
+                      return (<Client cli={cli} dispatch={dispatch} {...clientProps}/>) 
+                    })
+                  }</div>
+              </Scrollbar>
+              :  
+                  <Scrollbar noScrollX style={{overflow:'visible',width:'15em'}}><div className="view client-tabs">
+                  {clientsFilter.map((client) => {
+                      let clientProps = {
+                        ...client,
+                        key:client.id,
+                      } 
+                      return (<Client cli={cli} dispatch={dispatch} {...clientProps}/>) 
                     })
                   }
-          </div>
-        </div>  
-        </>
-    )
-  }
+              </div>
+              </Scrollbar> }
+              
+                {
+                  currClient.map((client) => {
+                    let clientProps = {
+                      ...client,
+                      key:client.id,
+                      cli,
+                      dispatch
+                    } 
+                    return <ClientActivity {...clientProps}/>
+                  })
+                }
+
+         </div>
+      </div>
+      
+    </div>
+
+  );
 }
 
 export default Dashboard;

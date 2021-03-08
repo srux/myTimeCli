@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { useData } from "../api/provider"
+import { useData } from "../api/auth-provider"
 import { Link, useHistory } from "react-router-dom"
 
 export default function UpdateProfile() {

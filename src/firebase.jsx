@@ -1,17 +1,16 @@
 
-
 import firebase from "firebase/app"
 import "firebase/auth"
 
 const app = firebase.initializeApp({
-  apiKey: "AIzaSyDd0_zMvzyi7TTV_ERQdh9GSKdJE9FT7wQ",
-  authDomain: "mytime-client.firebaseapp.com",
-  databaseURL: "https://mytime-client.firebaseio.com",
-  projectId: "mytime-client",
-  storageBucket: "mytime-client.appspot.com",
-  messagingSenderId: "903370992041",
-  appId: "1:903370992041:web:42a0b196938ee29030bcb8",
-  measurementId: "G-3X27VK8LLS"
+  apiKey: "AIzaSyCuA3XLTwBkecfYSEoD-ighxWkBCa3cMV8",
+  authDomain: "mytimecli.firebaseapp.com",
+  databaseURL: "https://mytimecli-default-rtdb.firebaseio.com",
+  projectId: "mytimecli",
+  storageBucket: "mytimecli.appspot.com",
+  messagingSenderId: "857728615291",
+  appId: "1:857728615291:web:d79b8ad269bd6e7410f3de",
+  measurementId: "G-RDM6XQKC1E"
 })
 
 export const auth = app.auth()

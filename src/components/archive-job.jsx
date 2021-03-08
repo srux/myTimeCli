@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 //api
 import app from "../firebase";
-import {useData} from '../api/provider'
+import {useData} from '../api/auth-provider'
 import {auth} from "../firebase";
 import {getRate,getClientData,deleteClient,queryClientData} from '../api/data'
 import { RiListSettingsFill,RiInboxUnarchiveLine } from "react-icons/ri";

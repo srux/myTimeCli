@@ -1,454 +1,322 @@
 
+//dashboard
+
 .dashboard {
-    margin: 2em 8% 4em;
+    margin: 2em 2% 2%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
-    // background-image: linear-gradient(to right top, #fbfeff2d, #f0f5f721, #e9eff12d, #ebf0f147, #e8ecec27, #ebf2f334, #dddddd31, #d0d1d133, #c2c3c43b, #c9cece3d, #c4c9c94a, #d0dad948);
     background-color: #ffffffe1;
+    -webkit-backdrop-filter: blur(7px);
     backdrop-filter: blur(7px);
     border-radius: 0.5em;
 }
 
-.header {
-    display: flex;
-    justify-self: auto;
-    align-items: flex-start;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 2em;
-    .header__left {
-        min-width: 16em;
-        width: 20em;
-    }
-    .header__logo {
-        color: $color-link;
-        font-weight: 700;
-        font-size: 3em;
-        padding: 0.5em 0;
-        margin-right: 0.2em;
-    }
-    .header__rate {
-        display: flex;
-        height: 2.3em;
-        align-items: center;
-        justify-self: flex-end;
-        margin-top: 1em;
-    }
-    .header__rate input {
-        height: 2.68em;
-        padding-left: 2em;
-        margin-right:0;
-        border-radius: .3em;
-        background-color: $color-link;
-        color:$color-light;
-    }
-    .header__rate input::placeholder {
-        color:$color-grey;
-    }
-    .header__clientlabel {
-        display: flex;
-        height: 3.3em;
-    }
-    .header__settings {
-        display: flex;
-        height: 3.3em;
-        align-items: center;
-        margin: 0 0 2em;
-    }
-    .header__settings-toggle {
-        height: 100%;
-        display: flex;
-        margin-right: 1em;
-        margin-top: -2em;
-        margin-left: -.7em;
-        cursor: pointer;
-    }
-    .header__settings-popup {
-        margin-top: -2.3em;
-        display: flex;
-        align-items: center;
+.sidebar {
+    display:flex;
+    flex:1 0 30%;
+ 
+    .colorpicker {
+        margin: .25em;
+        background-color: #f1f1f1;
+        padding: 1em;
+        border-radius: .2em;
     }
 
-    .header__dollar {
-        color: $color-light;
-        position: absolute;
-        margin-left: 0.7em;
-    }
-
-    .header__rateset {
-        // height: 2.3em;
-    }
-
-    .header__settings-toggle svg {
-        font-size: 2.6em;
-        color: #fd4218;
-        filter: drop-shadow(4px 5px 4px #0000002e);
-        border-radius: 50%;
-        height: 1em;
-
-    }
-    .header__settings-popup input {
-        height: 2.3em;
-        width: 10em;
-        border-radius: 0.3em;
-        padding: 0 1em 0 2em;
-        color: $color-light;
-        background-color: $color-link;
-    }
-
-    .header__settings-popup input::placeholder {
-        color: $color-light;
+    .new-client {
+            margin: .25em;
+            box-shadow: 0 0 1.5em #00000026;
+            border-radius: .2em;
+        button {
+            margin: .25em .25em .25em .25em;  
+            border-radius: .2em;
+        }
     }
 
 }
+
+.ui {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 5%;
+}
+
+.new-grp {
+    display: flex;
+    align-items: center;
+}
+
+.button-new {
+    width: 3em;
+    display: flex;
+    height: 3em;
+    border-radius: .2em;
+    justify-content: center;
+    align-items: center;
+    margin: .5em;
+}
+
+.button-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5em;
+    width: 1.5em;
+    height: 1.5em;
+}
+
 
 .clients {
-    padding: 1em 2em;
-    margin-top: 1em;
-    align-content: start;
-    .clients__jobs {
-        display: flex;
+    display:flex;
+    flex:1 0 69%;
+    flex-direction: column; 
+    padding:.5em 1em;
+}
+
+.clients-dash {
+    margin: 0 0em 0 .3em;
+    height: 3.5em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color:$color-grey;
+    border-radius: .2em;
+}
+
+.client-dash-timer {
+    position: absolute;
+    margin: -4em 0 0 .3em;
+    display: flex;
+    align-items: center;
+}
+
+.client-back {
+    font-size: 2em;
+    position: absolute;
+    margin-top: .2em;
+    transform: translate(-1.5em,.1em);
+    cursor: pointer;
+    transition:ease all .5s;
+}
+
+.client-back:hover {
+    color:$color-link !important
+}
+
+.client-filter {
+    display: flex;
+    flex-direction: column;
+    z-index: 99999;
+    background-color: #f1f1f1;
+    border-radius: .2em;
+    padding: .4em;
+    position: absolute;
+    width: 15em;
+}
+
+.client-categories {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3em;
+    margin-left: 14.3em;
+    padding: .5em 2em;
+}
+
+.client-categories .text {
+   margin: 0 .7em;
+   background-color: #f1f1f1;
+   padding:.3em .7em;
+   border-radius: .2em;
+   cursor:pointer;
+   padding: 0em 1em;
+   display: flex;
+   height: 3em;
+   align-items: center;
+}
+
+.client-category {
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f1f1;
+    border-radius: .2em;
+    padding: 0;
+    margin: .25em;
+    .text {
+        margin-left: .3em;
+    }
+    input {
+        margin-left: .3em;
+        padding: .4em .7em;
     }
 }
 
-.dashboard__auth {
-    align-self: flex-end;
+.client-panel {
+    height: 100%;
+    display: flex;
 }
 
-.dashboard__signin {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    padding: 0.5em 1em;
-    border-radius: 0.3em;
-    transition: ease all 0.5s;
-}
-
-.dashboard__signin:hover {
-    background-color: #333;
-    color: #fafafa;
-}
-
-.dashboard__signout {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    padding: 0.5em 1em;
-    border-radius: 0.3em;
-    transition: ease all 0.5s;
-}
-
-.overlay {
-    position: absolute;
-    width: 100vw;
-    top: -6em;
-    height: 100vh;
-    left: -9.5%;
-    opacity: 0.5;
-    background-color: #cdcdcd;
-    z-index: 1;
-    cursor: pointer;
-}
-
-.container {
+.client-tabs {
     display: flex;
     flex-direction: column;
-}
-
-.task__input {
-    border-radius: 0.3em;
-    border: none;
-    background-color: #efefef;
-    margin-right: 0.2em;
-    padding: 0.6em 1em;
-    margin: 0.3em 1em 0 0;
-
-}
-
-span.dollar {
-    padding: 0.1em 0.1em 0 0;
-    opacity: 0.7;
-}
-
-#confirm-client {
-    width: 10em;
-    margin: 0.3em;
-    align-self: center;
-}
-
-.existingjobs {
-    display: flex;
-    flex: 1 0 30%;
-    flex-direction: column;
-}
-
-.existingjobs h3 {
-    padding: 0.6em 0;
-}
-
-.existingjobs__client {
-    width: 100%;
-    transition: ease all 1s;
-    margin-left: 0.5em;
-    cursor: pointer;
-}
-
-.existingjobs__jobContainer {
     margin-top: 1em;
-    z-index: 1;
 }
 
-.existingjobs__jobname {
-    min-width: 8em;
-}
-
-.existingjobs__jobitem {
+.client-tab {
     display: flex;
-    flex-direction: row;
-    background-color: $color-grey;
-    padding: 0.5em;
-    transition: ease all .7s;
+    border-radius: .2em;
+    width: 15em;
 }
 
-.existingjobs__jobitem:nth-last-child(1) {
-    border-radius: 0 0 .3em 0.3em;
-}
-
-.existingjobs__jobitem div {
-    padding: 0 0.6em;
-    align-items: center;
-}
-
-.existingjobs__jobitem .job-edit input {
-    padding: 0 .5em;
-}
-
-.existingjobs__jobitem .job-edit div {
-    margin-left:  -.5em;
-}
-
-.existingjobs__jobtab {
-    padding: 0.5em .25em .5em 1em;
-    background-color: $color-darkgrey;
-    border-radius: 0.3em 0.3em 0 0;
-    color: $color-light;
+.client-activity {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex: 1 0 50%;
+    margin: 1em 0em 0em 2em;
+    flex-direction: column;
+    border-radius: .7em;
+    background-color: #b1e3f123;
+    box-shadow: 0em 0em 4em #5a8e9c5c;
+    animation:client-activity-display .7s;
 }
 
-.existingjobs__details {
+.client-info {
+    .text {
+        height: 2.5em;
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.client-jobs {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     flex: 1;
-    justify-content: space-between;
+    padding: .7em;
 }
 
-.existingjobs__details span {
-    margin-right: 1em;
+.client {
+    padding: .7em 1em;
+    margin: .3em;
+    border-radius: .2em;
+    height: 2.5em;
+    line-height: 1.2;
+    cursor:pointer;
 }
 
-.existingjobs__newtask {
-    margin: 0;
-    border-radius: 0.3em;
-    background-color: $color-dark;
-    color: $color-light;
+.client:hover {
+    opacity: .8;
+
 }
 
-.existingjobs__close {
-    position: absolute;
-    margin-top: -46px !important;
-    background-color: $color-link !important;
-    z-index: 9999;
-    left: -8px;
-    height: 1.3em;
-}
-
-.existingjobs__newtask::placeholder {
-    color: $color-grey;
-    opacity: 0.7;
-}
-
-// .existingjobs__starttask {
-//     border-radius: 0 .3em .3em 0 !important;
-// }
-
-.existingjobs__remove-confirm {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.existingjobs__remove-confirm div {
-    padding: 0 0.6em;
-}
-
-.existingjobs__jobdate {
-    display: flex;
-    justify-self: flex-start;
-    // flex: 1 0 15%;
-    justify-content: flex-start;
-}
-
-.ScrollbarsCustom-Content {
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-end;
-}
-
-.job__archiveblock {
+.client-timer {
+    margin: .7em 0;
     display:flex;
-}
-
-.job__details {
-    display: flex;
-    justify-content: flex-end;
-    flex: 1 1 30%;
     align-items:center;
+    .add {
+        padding: 0;
+        margin:0 .3em 0 0;
+        height: 1.7em;
+        width:1.7em;
+        box-shadow: 0px 0px 10px #2a3f4240;
+        border: solid thin #dadada;
+    }
+    input {
+        height: 100%;
+        margin:0 .3em 0 0;
+        box-shadow: 0px 0px .7em #3c4f5234;
+        border: solid thin #dadada;
+    }
+    span {
+        box-shadow: 0px 0px .7em #3c4f5234;
+        border: solid thin #dadada;
+    }
+    button {
+        box-shadow: 0px 0px .7em #3c4f5234;
+        border: solid thin #dadada;
+    }
+    
+    .container {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        button {
+            border-radius:.2em;
+            width:5em;
+            margin:0 .3em 0 0;
+        }
+        .client-date {
+            margin:0 .5em 0 .5em;
+            height: 2.5em;
+            display: flex;
+            align-items: center;
+            background-color: $color-grey;
+            padding:.3em 1em;
+            border-radius: .2em;
+        }
+        .time {
+            background-color:$color-dark;
+            color:$color-light-alt;
+            height:2.5em;
+            display:flex;
+            flex:1 0 5%;
+            justify-content: flex-end;
+            align-items: center;
+            padding:.3em 1em;
+            border-radius: .2em;
+            span {
+                margin:0 0em 0 .3em;
+                box-shadow: none;
+                border: none;
+            }
+        }
+    }
+
 }
 
-.job__total {
-    min-width: 6em;
-    text-align:right;
-}
-
-.job__time {
-    // display: flex;
-    // justify-content: flex-end;
-    // margin-right: 1em;
-}
-
-
-.job__timer-control {
-    flex: 1;
+.job {
     display: flex;
-    justify-content: space-between;
-    align-content: space-between;
-}
-
-.job__newtask {
-    display: flex;
-    height: 1.6em;
-    margin: 0 2em;
     align-items: center;
-    // flex: 1;
+    background-color: #f1f1f1;
+    margin: .2em 0;
+    border-radius: .2em;
+    padding: .5em 1em;
+    justify-content: space-between;
 }
 
-.job__timer-notification {
-    display: flex;
-    flex: 1;
+.drop-down .view {
+    margin-top: .2em;
+    padding-left: .3em;
 }
 
-.jobitem__name {
-    width: 10em;
-    display: flex;
-}
-
-.jobitem__start {
-    display: flex;
-    flex: 0 0 14%;
-}
-
-.jobitem__date {
-    display: flex;
-    flex: 1 0 10%;
-}
-
-.jobitem__time-money {
-    display: flex;
-    flex: 1 0 10%;
-    justify-content: flex-end;
-}
-
-.jobitem__time {
-    text-align: right;
-}
-
-.jobitem__money {
-    display: flex;
-    justify-content: flex-end;
-    min-width: 6em;
-    margin-right: 3.55em;
-}
-
-.jobitem__pauses {
-    padding: 0 0.3em !important;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-.jobitem__resumes {
-    padding: 0 !important;
-    display: flex;
-    margin-left: -1.3em;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-.jobitem__breaks {
-    display: flex;
-    flex: 0 0 20%;
-    flex-direction: row;
-}
-
-.jobitem__edit {
-    font-size: 1.4em;
+.drop-down .view .text {
+    padding: .4em .7em;
     cursor: pointer;
-    transition: ease all .5s;
-    display: flex;
-    margin-right: 2em;
 }
 
-.jobitem__edit:hover {
-    color:$color-link;
-}
-
-.jobitem__remove {
-    display: flex;
-    align-self: center;
-    font-size: 1.4em;
-    position: absolute;
-    justify-content: flex-end;
-    right: 1em;
-    position: absolute;
-    transition: ease all 0.5s;
+.drop-down .text {
+    padding: .5em .7em;
+    height: 2.5em;
     cursor: pointer;
-    border-radius: 0.2em;
-
-
-}
-
-.jobitem__remove svg {
-    transform: scaleX(-1);
-}
-
-.jobitem__remove:hover {
-    color: $color-link;
-    // background-color:$color-link;
-
-}
-
-.jobitem__remove-confirm {
+    align-items: center;
     display: flex;
-    position: absolute;
-    right: 0;
-    background-color: #333;
-    color: #fafafa;
-    padding: 0.2em 0.5em;
-    margin-top: -.3em;
-    border-radius: 0.3em 0.2em 0.2em 0.3em;
-    clip-path: polygon(0% 0%, 98% 0, 100% 50%, 98% 100%, 0% 100%);
 }
 
-.clpanel__timer span {
-    padding: 0 0.5em;
+.drop-down .text:hover{
+    padding: .4em .7em;
+    cursor: pointer;
+    background-color:#fafafa;
 }
 
-.clpanel__add:hover {
-    background-color: #333;
-    color: #efefef;
+.drop-down .view .text:hover {
+    padding: .4em .7em;
+    cursor: pointer;
+    background-color:#fafafa;
+}
+
+.text.filter-cancel {
+    padding: 0em 1em;
+    display: flex;
+    height: 3em;
+    align-items: center;
 }

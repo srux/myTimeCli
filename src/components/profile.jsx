@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link, useHistory } from "react-router-dom"
 
 //api
-import {useData} from '../api/provider'
+import {useData} from '../api/auth-provider'
 
 
 //plugins
@@ -23,6 +23,7 @@ import app from "../firebase";
 
 
 export default function Profile() {
+
   const [error, setError] = useState("")
   const { currentUser, logout } = useData()
   // const [profileBg, setBg] = useState("../assets/profile-bg.jpg")
@@ -67,7 +68,9 @@ export default function Profile() {
   
 
   return (
-    <div className="profile" style={{backgroundImage: `url(${bgImg7})`, backgroundSize:'cover',filter:'blur'}}>
+    <div className="profile" 
+    // style={{backgroundImage: `url(${bgImg7})`, backgroundSize:'cover',filter:'blur'}}
+    >
      
         <div className="profile__container">
           <div className="profile__nav">
@@ -83,7 +86,7 @@ export default function Profile() {
           </div>
         </div>
         {/* <h1 className="mobv">Mobile Version Coming Soon..</h1> */}
-      <Dashboard currentUser={currentUser} data={data} settings={settings} />
+      <Dashboard/>
       </div>
   )
 }
