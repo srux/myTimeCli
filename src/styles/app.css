@@ -142,6 +142,59 @@ svg path {
   border-radius: 0.5em;
 }
 
+.clients .new-client {
+  height: 3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.clients .new-client .button-new {
+  margin: .25em .3em;
+  padding: 0em;
+  height: 2.5em;
+  width: 2.5em;
+}
+
+.clients .new-client .subheading {
+  margin: .25em;
+  height: 2.45em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: .2em;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #f1f1f1;
+  padding: 0 1em;
+  /* justify-content: center; */
+}
+
+.clients .new-client .drop-down .view {
+  margin-top: .2em;
+  padding-left: .3em;
+  position: absolute;
+  margin-top: 2.2em;
+  border-radius: .2em;
+  background-color: #f1f1f1;
+}
+
+.clients .new-client .colourPicker {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+
+.clients .new-client button {
+  font-family: Poppins,Roboto;
+  cursor: pointer;
+  border: none;
+  padding: .5em;
+  margin: 0.25em;
+  border-radius: .3em;
+  height: 2.5em;
+}
+
 .sidebar {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -244,9 +297,9 @@ svg path {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   background-color: #efefef;
   border-radius: .2em;
 }
@@ -288,7 +341,7 @@ svg path {
   z-index: 99999;
   background-color: #f1f1f1;
   border-radius: .2em;
-  padding: .4em;
+  padding: .3em;
   position: absolute;
   width: 15em;
 }
@@ -344,7 +397,7 @@ svg path {
 
 .client-category input {
   margin-left: .3em;
-  padding: .4em .7em;
+  padding: .3em .7em;
 }
 
 .client-panel {

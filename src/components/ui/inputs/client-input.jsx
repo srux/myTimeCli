@@ -1,11 +1,8 @@
 import React, {useState,useContext,useEffect} from 'react';
-import {DataContext} from '../../../api/data-provider';
+import {DataContext,ACTIONS} from '../../../api/data-provider';
 
 import app from "../../../firebase";
 import {auth} from "../../../firebase";
-
-//ACTIONS
-import {ACTIONS} from '../../../api/data-provider'
 
 //functions
 import useToggle from '../../functions/useToggle'
@@ -29,6 +26,7 @@ const ClientInput = () => {
 
 
     const handleClientInput = (e) =>{ 
+        Context.dispatch({type:ACTIONS.TOGGLE_CLIENT,payload:{id:0,toggles:{cliPanel:true}}})
         setClient({...client, [e.currentTarget.id]:e.target.value,id:Date.now()})
     }
 
@@ -48,9 +46,8 @@ const ClientInput = () => {
     const handleAddClient = () => {    
         dispatch({type:ACTIONS.ADD_CLIENT,payload:{...client}})
         setTimeout(() => {
-            setClient({name:'',rate:'',category:'',color:'#fafafa',id:Date.now()})
+            setClient({name:'',rate:'',category:'',color:'#fafafa',id:Date.now(),jobs:{}})
         },100)
-
     }
 
     // const handlePayload = () => {

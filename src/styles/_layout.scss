@@ -12,6 +12,47 @@
     border-radius: 0.5em;
 }
 
+.clients .new-client {
+    height: 3em;
+    display: flex;
+    .button-new {
+        margin: .25em .3em;
+        padding: 0em;
+        height: 2.5em;
+        width: 2.5em;
+    }
+    .subheading {
+        margin: .25em;
+        height: 2.45em;
+        display: flex;
+        border-radius: .2em;
+        align-items: center;
+        background-color: #f1f1f1;
+        padding: 0 1em;
+        /* justify-content: center; */
+    }
+    .drop-down .view {
+        margin-top: .2em;
+        padding-left: .3em;
+        position: absolute;
+        margin-top: 2.2em;
+        border-radius: .2em;
+        background-color: #f1f1f1;
+    }
+    .colourPicker {
+        transform:scale(.95)
+    }
+    button {
+        font-family: Poppins,Roboto;
+        cursor: pointer;
+        border: none;
+        padding: .5em;
+        margin: 0.25em;
+        border-radius: .3em;
+        height: 2.5em;
+    }
+}
+
 .sidebar {
     display:flex;
     flex:1 0 30%;
@@ -78,7 +119,7 @@
     height: 3.5em;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     background-color:$color-grey;
     border-radius: .2em;
 }
@@ -109,7 +150,7 @@
     z-index: 99999;
     background-color: #f1f1f1;
     border-radius: .2em;
-    padding: .4em;
+    padding: .3em;
     position: absolute;
     width: 15em;
 }
@@ -147,7 +188,7 @@
     }
     input {
         margin-left: .3em;
-        padding: .4em .7em;
+        padding: .3em .7em;
     }
 }
 

@@ -4,8 +4,7 @@ import React, {useState,useEffect,useContext} from 'react';
 import { TiArrowBack,TiPlus,TiMinus } from "react-icons/ti";
 
 //api
-import {DataContext} from '../../api/data-provider';
-
+import {DataContext,ACTIONS} from '../../api/data-provider';
 //functions
 import useToggle from '../functions/useToggle'
 
@@ -21,6 +20,7 @@ const Sidebar = () => {
     
 
     const toggleClientInput = () => {
+        Context.dispatch({type:ACTIONS.TOGGLE_CLIENT,payload:{id:0,toggles:{cliPanel:true}}})
         if (Input === 'client') {
             setInput('')
         }

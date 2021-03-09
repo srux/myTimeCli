@@ -18,12 +18,12 @@ const Client = (props,cli) => {
   }
 
   return (
-    <div className="view client-tab" style={ props.cli.id === props.id ? {backgroundColor:'#f1f1f1',position:'absolute',transition:'ease-in .2s', transform:' translateX(16.6em)',order:'1'} : {height:'3em',backgroundColor:'#fff',transition:'none'}}>
+    <div className="view client-tab" style={ props.cli.id === props.id ? {backgroundColor:'#f1f1f1',position:'absolute',transition:'ease-in .2s', transform:' translateX(16.6em)',order:'1'} : {height:'3em',backgroundColor:'transparent',transition:'none'}}>
       <div onClick={handlePayload} 
         className="view client" 
         style={ props.cli.id === props.id ? {backgroundColor:props.color,position:'absolute'} : {backgroundColor:props.color,transition:'none'}} 
         >
-          <div className="text" style={ props.color !== '#fafafa' ? {color:'#fafafa'} : {color:'#000'} }>
+          <div className="text" style={ props.color !== '#f1f1f1' ? {color:'#fafafa'} : {color:'#000'} }>
           {props.name}
           </div>
       </div>

@@ -37,8 +37,7 @@ export const DataProvider =({children}) => {
       // console.log('cliIndex',cliIndex)
       switch(action.type) {  
         case ACTIONS.ADD_CLIENT:
-          let cData = action.payload
-          addClient(cData)
+          addClient(action.payload)
         case ACTIONS.DELETE_CLIENT:
           deleteClient(removeCli[0])
         case ACTIONS.TOGGLE_CLIENT:

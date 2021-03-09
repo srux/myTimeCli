@@ -1,8 +1,7 @@
 import React,{useState,useContext,useEffect} from 'react';
 import Timer from './functions/timer';
 
-import {ACTIONS} from '../api/data-provider'
-import {DataContext} from '../api/data-provider';
+import {DataContext,ACTIONS} from '../api/data-provider';
 
 import { TiArrowBack,TiChevronLeft,TiPlus,TiMinus } from "react-icons/ti";
 import { BiTrashAlt } from "react-icons/bi";
@@ -25,7 +24,7 @@ const ClientActivity = (props) => {
      let year = new Date().toDateString();
 
      const [isOn, toggleIsOn] = useToggle(timerOn);
-     const [jobData,setJobData] = useState({client:props.name,name:'',id:0,created:`${year} at ${time}`})
+     const [jobData,setJobData] = useState({client:props.name,name:c.job.name,id:c.job.id,created:c.job.created})
      const [currJob,setCurrJob] = useState({id:0})
 
     const jobs = Object.entries(props.jobs)
@@ -85,13 +84,13 @@ const ClientActivity = (props) => {
         <div className="view client-activity">
           
             <div className="view client-info">
-                <div className="text" style={ props.color !== '#fafafa' ? 
+                <div className="text" style={ props.color !== '#f1f1f1' ? 
                   {backgroundColor:props.color,padding:'.7em 1em',borderRadius:'.2em'} : 
                   {backgroundColor:props.color,padding:'.7em 1em',borderRadius:'.2em',color:'#000'} }>
                   <div className="view client-back"
-                      style={  props.color !== '#fafafa' ? {color:props.color} : {color:'#555'}}
+                      style={  props.color !== '#f1f1f1' ? {color:props.color} : {color:'#555'}}
                       onClick={handleToggleCLient}><TiChevronLeft/></div>
-                  <span className="text">{props.name}</span>
+                  <span className="text" style={props.color !== '#f1f1f1' ? { color:'#fafafa' } : {color:'#000'}}>{props.name}</span>
                   <div className="view client-r-options" >
                     <button className="button-icon" onClick={handleDelete}><BiTrashAlt/></button>
                   </div>
